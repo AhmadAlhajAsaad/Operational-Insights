@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "(no-op)",
+			"type": "shell",
+			"command": "echo",
+			"args": [
+				"noop"
+			],
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}
