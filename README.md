@@ -1,6 +1,6 @@
 # Equans Operational Insights Dashboard
 
-  This is a code bundle for Equans Operational Insights Dashboard. The original project is available at <https://www.figma.com/design/VJIfn1gdpknKW89byHgZo4> Equans-Operational-Insights-Dashboard.
+  This is a code bundle for Equans Operational Insights Dashboard. 
 
 ## Running the code
 
