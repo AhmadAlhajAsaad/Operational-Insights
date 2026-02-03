@@ -1,12 +1,12 @@
 ﻿import React from 'react';
 import { 
-  LayoutDashboard, 
   Building2, 
   Users, 
   Package,
   PackageSearch,
   LogOut 
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 interface SidebarProps {
   currentPage: string;
@@ -14,8 +14,9 @@ interface SidebarProps {
 }
 
 export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
+  const { logout } = useAuth();
+
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'organizations', label: 'Organizations', icon: Building2 },
     { id: 'users', label: 'Users', icon: Users },
     { id: 'products', label: 'Product Breakdown', icon: Package },
@@ -84,6 +85,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
       {/* Logout Button */}
       <div className="p-4 border-t border-neutral-100">
         <button 
+          onClick={logout}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-neutral-600 transition-all"
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = '#FCECED';
