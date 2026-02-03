@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Sidebar } from './components/layout/Sidebar';
 import { Topbar } from './components/layout/Topbar';
-import { Dashboard } from './pages/Dashboard';
 import { OrganizationOverview } from './pages/OrganizationOverview';
 import { OrganizationDetail } from './pages/OrganizationDetail';
 import { Users } from './pages/Users';
 import { UserDetail } from './pages/UserDetail';
 import { ProductBreakdown } from './pages/ProductBreakdown';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState('organizations');
   const [selectedOrganization, setSelectedOrganization] = useState<string | null>(null);
-  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<number | null>(null);
 
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
@@ -24,7 +24,7 @@ function App() {
     setCurrentPage('organization-detail');
   };
 
-  const handleNavigateToUser = (userId: string) => {
+  const handleNavigateToUser = (userId: number) => {
     setSelectedUser(userId);
     setCurrentPage('user-detail');
   };
@@ -41,8 +41,6 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'dashboard':
-        return <Dashboard />;
       case 'organizations':
         return <OrganizationOverview onNavigateToOrganization={handleNavigateToOrganization} />;
       case 'organization-detail':
@@ -67,16 +65,14 @@ function App() {
           <Users onNavigateToUser={handleNavigateToUser} />
         );
       case 'products':
-        return <ProductBreakdown />;
+        return <ProductBreakdown onNavigateToUser={handleNavigateToUser} />;
       default:
-        return <Dashboard />;
+        return <OrganizationOverview onNavigateToOrganization={handleNavigateToOrganization} />;
     }
   };
 
   const getPageTitle = () => {
     switch (currentPage) {
-      case 'dashboard':
-        return 'Dashboard';
       case 'organizations':
         return 'Organizations';
       case 'organization-detail':
@@ -88,14 +84,12 @@ function App() {
       case 'products':
         return 'Product Breakdown';
       default:
-        return 'Dashboard';
+        return 'Organizations';
     }
   };
 
   const getBreadcrumb = () => {
     switch (currentPage) {
-      case 'dashboard':
-        return 'Home';
       case 'organizations':
         return 'Home / Organizations';
       case 'organization-detail':
@@ -107,22 +101,24 @@ function App() {
       case 'products':
         return 'Home / Products';
       default:
-        return 'Home';
+        return 'Home / Organizations';
     }
   };
 
   return (
-    <div className="flex h-screen bg-background">
-      <Sidebar currentPage={currentPage} onNavigate={handleNavigate} />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Topbar title={getPageTitle()} breadcrumb={getBreadcrumb()} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto">
-            {renderPage()}
-          </div>
-        </main>
+    <ProtectedRoute>
+      <div className="flex h-screen bg-background">
+        <Sidebar currentPage={currentPage} onNavigate={handleNavigate} />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Topbar title={getPageTitle()} breadcrumb={getBreadcrumb()} />
+          <main className="flex-1 overflow-y-auto p-6">
+            <div className="max-w-7xl mx-auto">
+              {renderPage()}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
 
