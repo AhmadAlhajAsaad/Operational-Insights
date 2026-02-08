@@ -6,6 +6,7 @@ import { msalConfig } from './config/msalConfig';
 import { AuthProvider } from './context/AuthContext';
 import App from './App.tsx';
 import './index.css';
+import './styles/globals.css'; 
 
 // Create MSAL instance
 const msalInstance = new PublicClientApplication(msalConfig);
