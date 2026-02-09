@@ -1,12 +1,7 @@
-﻿import React from 'react';
-import { 
-  Building2, 
-  Users, 
-  Package,
-  PackageSearch,
-  LogOut 
-} from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+﻿import React from "react";
+import { Building2, Users, Package, PackageSearch, LogOut } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import logo from "../../assets/logo.png";
 
 interface SidebarProps {
   currentPage: string;
@@ -17,29 +12,39 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
   const { logout } = useAuth();
 
   const menuItems = [
-    { id: 'organizations', label: 'Organizations', icon: Building2 },
-    { id: 'users', label: 'Users', icon: Users },
-    { id: 'products', label: 'Product Breakdown', icon: Package },
-    { id: 'product-details', label: 'Product Details', icon: PackageSearch },
+    { id: "organizations", label: "Organizations", icon: Building2 },
+    { id: "products", label: "Product Details", icon: PackageSearch },
+    { id: "users", label: "Users", icon: Users },
+    // { id: 'products', label: 'Product Breakdown', icon: Package },
   ];
 
   return (
-    <div className="w-64 bg-white border-r border-neutral-200 flex flex-col h-full">
-      {/* Logo Header */}
-      <div 
-        className="p-6 border-b border-neutral-100"
-        style={{ background: 'linear-gradient(135deg, #EAF1F9 0%, #F1F8FE 100%)' }}
+    <div className="sidebar w-64 flex flex-col h-full">
+      {/* Logo Header - Equans Corporate Style */}
+      <div
+        className="p-6 border-b"
+        style={{
+          // backgroundColor: 'var(--color-surface)',
+          borderColor: "var(--color-neutral-100)",
+        }}
       >
-        <div className="flex items-center gap-3">
-          <div 
-            className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white text-lg"
-            style={{ backgroundColor: '#276FD1' }}
-          >
-            E
-          </div>
+        <div className="flex flex-col items-center gap-2">
+          <img
+            src={logo}
+            alt="EQUANS Logo"
+            className="w-16 h-16 rounded-xl object-contain"
+          />
           <div>
-            <h1 className="font-bold text-lg text-neutral-900">EQUANS</h1>
-            <p className="text-xs font-medium" style={{ color: '#276FD1' }}>Operational Insights</p>
+            <p
+              className="text-sm font-medium text-center data-primary"
+              style={{
+                color: "var(--color-primary)",
+                fontFamily: "Roboto, sans-serif",
+                fontWeight: 500,
+              }}
+            >
+              Operational Insights
+            </p>
           </div>
         </div>
       </div>
@@ -54,27 +59,24 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
               <li key={item.id}>
                 <button
                   onClick={() => onNavigate(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                    isActive
-                      ? 'text-white shadow-md'
-                      : 'text-neutral-600 hover:text-[#276FD1]'
-                  }`}
+                  className={`
+                    sidebar-nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
+                    ${isActive ? "active" : ""}
+                  `}
                   style={{
-                    backgroundColor: isActive ? '#276FD1' : 'transparent',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isActive) {
-                      e.currentTarget.style.backgroundColor = '#EAF1F9';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive) {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                    }
+                    backgroundColor: isActive
+                      ? "var(--color-equans-turquoise)"
+                      : "transparent",
+                    color: isActive
+                      ? "var(--color-text-white)"
+                      : "var(--color-equans-azure-blue)",
+                    fontFamily: "Roboto, sans-serif",
+                    border: "2px solid var(--color-equans-azure-blue)",
+                    fontWeight: isActive ? 500 : 400,
                   }}
                 >
-                  <Icon className="w-5 h-5" strokeLinejoin="round" strokeLinecap="round" strokeWidth={1.8} />
-                  {item.label}
+                  <Icon size={20} />
+                  <span className="text-sm">{item.label}</span>
                 </button>
               </li>
             );
@@ -83,21 +85,22 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
       </nav>
 
       {/* Logout Button */}
-      <div className="p-4 border-t border-neutral-100">
-        <button 
+      <div
+        className="p-4 border-t"
+        style={{ borderColor: "var(--color-neutral-100)" }}
+      >
+        <button
           onClick={logout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-neutral-600 transition-all"
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#FCECED';
-            e.currentTarget.style.color = '#ef4444';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent';
-            e.currentTarget.style.color = '#4a5568';
+          className="sidebar-nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors"
+          style={{
+            color: "var(--color-text-secondary)",
+            fontFamily: "Roboto, sans-serif",
+            border: "3px solid var(--color-equans-azure-blue)",
+            fontWeight: 400,
           }}
         >
-          <LogOut className="w-5 h-5" strokeLinejoin="round" strokeLinecap="round" strokeWidth={1.8} />
-          Logout
+          <LogOut size={20} />
+          <span className="text-sm">Sign Out</span>
         </button>
       </div>
     </div>
