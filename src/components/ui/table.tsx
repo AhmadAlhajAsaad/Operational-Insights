@@ -14,9 +14,11 @@ interface TableProps extends Omit<React.ComponentProps<"table">, 'children'> {
   data?: any[];
   onRowClick?: (row: any) => void;
   children?: React.ReactNode;
+  headerClassName?: string;
+    rowClassName?: (row: any, index: number) => React.CSSProperties;
 }
 
-function Table({ className, columns, data, onRowClick, children, ...props }: TableProps) {
+function Table({ className, columns, data, onRowClick, headerClassName, rowClassName, children, ...props }: TableProps) {
   if (columns && data) {
     return (
       <div data-slot="table-container" className="relative w-full overflow-x-auto">
@@ -25,14 +27,14 @@ function Table({ className, columns, data, onRowClick, children, ...props }: Tab
           className={cn("w-full caption-bottom text-sm", className)}
           {...props}
         >
-          <thead data-slot="table-header" className="[&_tr]:border-b">
+          <thead data-slot="table-header" className={cn("[&_tr]:border-b", headerClassName)}>
             <tr data-slot="table-row">
               {columns.map((column) => (
                 <th
                   key={column.key}
                   data-slot="table-head"
                   className={cn(
-                    "text-foreground h-10 px-2 align-middle font-medium whitespace-nowrap",
+                    "text-[color:var(--color-text-secondary)] h-10 px-2 align-middle font-medium whitespace-nowrap",
                     column.align === 'center' && "text-center",
                     column.align === 'right' && "text-right",
                     !column.align && "text-left"
@@ -52,6 +54,7 @@ function Table({ className, columns, data, onRowClick, children, ...props }: Tab
                   "border-b transition-colors",
                   onRowClick && "hover:bg-muted/50 cursor-pointer"
                 )}
+                style={rowClassName ? rowClassName(row, index) : undefined}
                 onClick={() => onRowClick?.(row)}
               >
                 {columns.map((column) => (
@@ -139,7 +142,8 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+     // "text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+         "text-[color:var(--color-text-secondary)] h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className,
       )}
       {...props}

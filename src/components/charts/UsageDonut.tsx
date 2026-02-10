@@ -1,11 +1,23 @@
-import React from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import React from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
 
 interface UsageDonutProps {
   data: Array<{ name: string; value: number }>;
 }
 
-const COLORS = ['#00c4a7', '#008c6a', '#00bda7', '#cbd5e0', '#4a5568'];
+const COLORS = [
+  "var(--color-equans-turquoise)",
+  "var(--color-equans-dark-green)",
+  "var(--color-equans-dark-blue)",
+  "var(--color-equans-azure-blue)",
+];
 
 export function UsageDonut({ data }: UsageDonutProps) {
   return (
@@ -24,18 +36,15 @@ export function UsageDonut({ data }: UsageDonutProps) {
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip 
+        <Tooltip
           contentStyle={{
-            backgroundColor: '#ffffff',
-            border: '1px solid #e1e7ef',
-            borderRadius: '8px',
-            padding: '8px 12px'
+            backgroundColor: "#ffffff",
+            border: "1px solid #e1e7ef",
+            borderRadius: "8px",
+            padding: "8px 12px",
           }}
         />
-        <Legend 
-          wrapperStyle={{ fontSize: '12px' }}
-          iconType="circle"
-        />
+        <Legend wrapperStyle={{ fontSize: "12px" }} iconType="circle" />
       </PieChart>
     </ResponsiveContainer>
   );
