@@ -2,14 +2,7 @@
 import { StatCard } from "../components/ui/StatCard";
 import { Card } from "../components/ui/card";
 import { CylindricalMonthlyChart } from "../components/charts/CylindricalMonthlyChart";
-import {
-  Building2,
-  DollarSign,
-  Users,
-  TrendingUp,
-  Search,
-  EuroIcon,
-} from "lucide-react";
+import { Building2, DollarSign, Users, Search, EuroIcon } from "lucide-react";
 import { organizations } from "../data/organizationData";
 
 interface OrganizationOverviewProps {
@@ -34,7 +27,6 @@ export function OrganizationOverview({
     (sum, org) => sum + org.activeUsers,
     0,
   );
-  const avgUtilization = Math.round((totalActiveUsers / totalLicenses) * 100);
 
   // Prepare data for cylindrical chart - Last 6 months by business unit
   const cylindricalChartData = organizations[0].costTrend.map(
@@ -83,7 +75,6 @@ export function OrganizationOverview({
     { key: "totalLicenses", label: "Total Licenses", align: "center" as const },
     { key: "activeUsers", label: "Active Users", align: "center" as const },
     { key: "monthlyCost", label: "Monthly Cost", align: "right" as const },
-    { key: "utilization", label: "Utilization", align: "center" as const },
   ];
 
   // Filter organizations based on search term
@@ -93,22 +84,6 @@ export function OrganizationOverview({
       org.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       org.businessUnit.toLowerCase().includes(searchTerm.toLowerCase()),
   );
-
-  const tableData = filteredOrganizations.map((org) => ({
-    ...org,
-    monthlyCost: `€${org.monthlyCost.toLocaleString()}`,
-    utilization: (
-      <span
-        className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${
-          (org.activeUsers / org.totalLicenses) * 100 >= 75
-            ? "bg-[#E9FDF2] text-[#059669]"
-            : "bg-[#FEFBEA] text-[#b45309]"
-        }`}
-      >
-        {Math.round((org.activeUsers / org.totalLicenses) * 100)}%
-      </span>
-    ),
-  }));
 
   return (
     <div className="space-y-6">
@@ -150,7 +125,7 @@ export function OrganizationOverview({
             />
           }
           label="Monthly chargeback amount"
-          value={`${avgUtilization}%`}
+          value={`€${totalCost.toLocaleString()}`}
           change={{ value: "+2.3% vs last month", trend: "up" }}
           variant="green"
         />
@@ -289,12 +264,9 @@ export function OrganizationOverview({
                 </tr>
               </thead>
               <tbody>
-                {filteredOrganizations.map((org, index) => {
+                {filteredOrganizations.map((org) => {
                   const bgColor = getBusinessUnitBackgroundColor(
                     org.businessUnit,
-                  );
-                  const utilization = Math.round(
-                    (org.activeUsers / org.totalLicenses) * 100,
                   );
 
                   return (
@@ -344,17 +316,6 @@ export function OrganizationOverview({
                           €{org.monthlyCost.toLocaleString()}
                         </span>
                       </td>
-                      <td className="p-4 align-middle whitespace-nowrap text-center">
-                        <span
-                          className={`inline-flex px-3 py-1.5 rounded-full text-xs font-bold ${
-                            utilization >= 75
-                              ? "bg-[#E9FDF2] text-[#059669]"
-                              : "bg-[#FEFBEA] text-[#b45309]"
-                          }`}
-                        >
-                          {utilization}%
-                        </span>
-                      </td>
                     </tr>
                   );
                 })}
@@ -365,106 +326,50 @@ export function OrganizationOverview({
       </Card>
 
       {/* Cost Distribution Insights */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card
-          className="bg-[#F1F8FE] shadow-sm border-[#EAF1F9]"
-          style={{ borderRadius: "16px" }}
-        >
-          <div className="p-6">
-            <h3 className="text-lg font-bold text-neutral-900 mb-4">
-              Top Cost Drivers
-            </h3>
-            <div className="space-y-3">
-              {[...organizations]
-                .sort((a, b) => b.monthlyCost - a.monthlyCost)
-                .slice(0, 5)
-                .map((org, index) => (
-                  <div
-                    key={org.id}
-                    className="flex items-center justify-between bg-white p-3 rounded-full"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-[#276FD1] text-white rounded-full flex items-center justify-center font-bold text-sm">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <div className="font-semibold text-neutral-900">
-                          {org.name}
-                        </div>
-                        <div className="text-xs text-neutral-500">
-                          {org.businessUnit}
-                        </div>
-                      </div>
+      <Card
+        className="bg-[#F1F8FE] shadow-sm border-[#EAF1F9]"
+        style={{ borderRadius: "16px" }}
+      >
+        <div className="p-6">
+          <h3 className="text-lg font-bold text-neutral-900 mb-4">
+            Top Cost Drivers
+          </h3>
+          <div className="space-y-3">
+            {[...organizations]
+              .sort((a, b) => b.monthlyCost - a.monthlyCost)
+              .slice(0, 5)
+              .map((org, index) => (
+                <div
+                  key={org.id}
+                  className="flex items-center justify-between bg-white p-3 rounded-full"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-[#276FD1] text-white rounded-full flex items-center justify-center font-bold text-sm">
+                      {index + 1}
                     </div>
-                    <div className="text-right">
-                      <div className="font-bold text-[#276FD1]">
-                        €{org.monthlyCost.toLocaleString()}
+                    <div>
+                      <div className="font-semibold text-neutral-900">
+                        {org.name}
                       </div>
                       <div className="text-xs text-neutral-500">
-                        {Math.round((org.monthlyCost / totalCost) * 100)}% of
-                        total
+                        {org.businessUnit}
                       </div>
                     </div>
                   </div>
-                ))}
-            </div>
-          </div>
-        </Card>
-
-        <Card
-          className="bg-[#EDFCF5] shadow-sm border-[#E9FDF2]"
-          style={{ borderRadius: "16px" }}
-        >
-          <div className="p-6">
-            <h3 className="text-lg font-bold text-neutral-900 mb-4">
-              Utilization Leaders
-            </h3>
-            <div className="space-y-3">
-              {[...organizations]
-                .sort(
-                  (a, b) =>
-                    b.activeUsers / b.totalLicenses -
-                    a.activeUsers / a.totalLicenses,
-                )
-                .slice(0, 5)
-                .map((org, index) => {
-                  const utilization = Math.round(
-                    (org.activeUsers / org.totalLicenses) * 100,
-                  );
-                  return (
-                    <div
-                      key={org.id}
-                      className="flex items-center justify-between bg-white p-3 rounded-xl"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-[#10b981] text-white rounded-lg flex items-center justify-center font-bold text-sm">
-                          {index + 1}
-                        </div>
-                        <div>
-                          <div className="font-semibold text-neutral-900">
-                            {org.name}
-                          </div>
-                          <div className="text-xs text-neutral-500">
-                            {org.activeUsers} / {org.totalLicenses} users
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className={`px-3 py-1.5 rounded-full text-sm font-bold ${
-                          utilization >= 75
-                            ? "bg-[#E9FDF2] text-[#059669]"
-                            : "bg-[#FEFBEA] text-[#b45309]"
-                        }`}
-                      >
-                        {utilization}%
-                      </div>
+                  <div className="text-right">
+                    <div className="font-bold text-[#276FD1]">
+                      €{org.monthlyCost.toLocaleString()}
                     </div>
-                  );
-                })}
-            </div>
+                    <div className="text-xs text-neutral-500">
+                      {Math.round((org.monthlyCost / totalCost) * 100)}% of
+                      total
+                    </div>
+                  </div>
+                </div>
+              ))}
           </div>
-        </Card>
-      </div>
+        </div>
+      </Card>
     </div>
   );
 }
