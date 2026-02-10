@@ -2,7 +2,14 @@
 import { StatCard } from "../components/ui/StatCard";
 import { Card } from "../components/ui/card";
 import { CylindricalMonthlyChart } from "../components/charts/CylindricalMonthlyChart";
-import { Building2, DollarSign, Users, TrendingUp, Search } from "lucide-react";
+import {
+  Building2,
+  DollarSign,
+  Users,
+  TrendingUp,
+  Search,
+  EuroIcon,
+} from "lucide-react";
 import { organizations } from "../data/organizationData";
 
 interface OrganizationOverviewProps {
@@ -132,18 +139,20 @@ export function OrganizationOverview({
           change={{ value: "+5.2% vs last month", trend: "up" }}
           variant="blue"
         />
+
         <StatCard
           icon={
-            <Building2
+            <EuroIcon
               className="w-5 h-5"
               strokeLinejoin="round"
               strokeLinecap="round"
               strokeWidth={1.8}
             />
           }
-          label="Organizations"
-          value={organizations.length.toString()}
-          variant="purple"
+          label="Monthly chargeback amount"
+          value={`${avgUtilization}%`}
+          change={{ value: "+2.3% vs last month", trend: "up" }}
+          variant="green"
         />
         <StatCard
           icon={
@@ -160,17 +169,16 @@ export function OrganizationOverview({
         />
         <StatCard
           icon={
-            <TrendingUp
+            <Building2
               className="w-5 h-5"
               strokeLinejoin="round"
               strokeLinecap="round"
               strokeWidth={1.8}
             />
           }
-          label="Avg Utilization"
-          value={`${avgUtilization}%`}
-          change={{ value: "+2.3% vs last month", trend: "up" }}
-          variant="green"
+          label="Organizations"
+          value={organizations.length.toString()}
+          variant="purple"
         />
       </div>
 
@@ -460,26 +468,25 @@ export function OrganizationOverview({
     </div>
   );
 }
-// Helper function to get Equans corporate colors for business units
+
 function getBusinessUnitColor(businessUnit: string): string {
   const equansColors: { [key: string]: string } = {
-    "Digital Services": "var(--color-equans-turquoise)", // Main Corporate: Turquoise Green
-    "IT Operations": "var(--color-equans-dark-green)", // Accompanying: Dark Green
-    "Smart Energy": "var(--color-equans-turquoise)", // Main Corporate: Turquoise Green
-    "Building Solutions": "var(--color-equans-azure-blue)", // Main Corporate: Azure Blue
-    "Field Operations": "var(--color-equans-dark-blue)", // Accompanying: Dark Blue
+    "Digital Services": "var(--color-equans-turquoise)",
+    "IT Operations": "var(--color-equans-dark-green)",
+    "Smart Energy": "var(--color-equans-turquoise)",
+    "Building Solutions": "var(--color-equans-azure-blue)",
+    "Field Operations": "var(--color-equans-dark-blue)",
   };
-  return equansColors[businessUnit] || "#002439"; // Default to Dark Blue
+  return equansColors[businessUnit] || "var(--color-equans-dark-blue)";
 }
 
-// Helper function to get Equans-compliant background colors (20% opacity rule)
 function getBusinessUnitBackgroundColor(businessUnit: string): string {
   const equansBackgroundColors: { [key: string]: string } = {
-    "Digital Services": "rgba(0, 222, 232, 0.08)", // Light Blue with 20% opacity
-    "IT Operations": "rgba(0, 129, 99, 0.08)", // Dark Green with 20% opacity
-    "Smart Energy": "rgba(112, 189, 149, 0.08)", // Turquoise Green with 20% opacity
-    "Building Solutions": "rgba(0, 89, 206, 0.08)", // Azure Blue with 20% opacity
-    "Field Operations": "rgba(0, 36, 57, 0.05)", // Dark Blue with 5% opacity (to differentiate from default)
+    "Digital Services": "var(--equans-lightblue-20)",
+    "IT Operations": "var(--equans-green-20)",
+    "Smart Energy": "var(--color-accent-20)",
+    "Building Solutions": "var(--equans-blue-20)",
+    "Field Operations": "var(--color-primary-20)",
   };
-  return equansBackgroundColors[businessUnit] || "rgba(0, 36, 57, 0.05)";
+  return equansBackgroundColors[businessUnit] || "var(--color-primary-20)";
 }
