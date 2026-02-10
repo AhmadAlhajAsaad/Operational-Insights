@@ -127,10 +127,10 @@ export function OrganizationOverview({ onNavigateToOrganization }: OrganizationO
       </div>
 
       {/* Cylindrical Monthly Cost Chart by Business Unit */}
-      <Card className="bg-white shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
+      <Card className="bg-white shadow-sm border-[var(--color-primary-20)] chart-container" style={{ borderRadius: '16px' }}>
         <div className="p-6">
-          <h3 className="mb-2 text-lg font-bold text-neutral-900">Monthly Cost Trend by Business Unit</h3>
-          <p className="text-sm text-neutral-500 mb-6">
+          <h3 className="mb-2 text-lg font-bold" style={{ color: 'var(--color-text-primary)' }}>Monthly Cost Trend by Business Unit</h3>
+          <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>
             Hover over each business unit segment to view detailed costs and percentages
           </p>
           <CylindricalMonthlyChart data={cylindricalChartData} />
@@ -253,11 +253,11 @@ export function OrganizationOverview({ onNavigateToOrganization }: OrganizationO
 // Helper function to get color for business unit
 function getBusinessUnitColor(businessUnit: string): string {
   const colors: { [key: string]: string } = {
-    'Digital Services': '#276FD1',
-    'IT Operations': '#10B981',
-    'Smart Energy': '#F59E0B',
-    'Building Solutions': '#A855F7',
-    'Field Operations': '#EC4899',
+    'Digital Services': 'var(--color-equans-dark-green)',
+    'IT Operations': 'var(--color-equans-light-blue)',
+    'Smart Energy': 'var(--color-equans-turquoise)',
+    'Building Solutions': 'var(--color-equans-azure-blue)',
+    'Field Operations': 'var(--color-equans-orange)',
   };
-  return colors[businessUnit] || '#6B7280';
+  return colors[businessUnit] || 'var(--color-text-secondary)';
 }

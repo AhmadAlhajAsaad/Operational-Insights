@@ -19,11 +19,11 @@ interface CylindricalMonthlyChartProps {
 }
 
 const BUSINESS_UNIT_COLORS: { [key: string]: string } = {
-  "Digital Services": "#3B82F6",
-  "IT Operations": "#10B981",
-  "Smart Energy": "#F59E0B",
-  "Building Solutions": "#8B5CF6",
-  "Field Operations": "#EC4899",
+  "Digital Services": "var(--color-equans-dark-green)",
+  "IT Operations": "var(--color-equans-light-blue)",
+  "Smart Energy": "var(--color-equans-turquoise)",
+  "Building Solutions": "var(--color-equans-azure-blue)",
+  "Field Operations": "var(--color-equans-orange)",
 };
 
 interface HoveredSegment {
@@ -64,31 +64,31 @@ export function CylindricalMonthlyChart({ data }: CylindricalMonthlyChartProps) 
             left: `${mousePosition.x + 15}px`,
             top: `${mousePosition.y - 10}px`,
             zIndex: 1000,
-            background: "white",
-            border: "2px solid #10b981",
+            background: "var(--color-surface)",
+            border: "2px solid var(--color-equans-dark-green)",
             borderRadius: "12px",
             padding: "14px 18px",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+            boxShadow: "0 8px 24px rgba(0, 36, 57, 0.15)",
             minWidth: "220px",
             textAlign: "left",
             pointerEvents: "none",
             transform: "translateY(-50%)"
           }}
         >
-          <div style={{ fontSize: "15px", fontWeight: 700, color: "#111827", marginBottom: "10px" }}>
+          <div style={{ fontSize: "15px", fontWeight: 700, color: "var(--color-text-primary)", marginBottom: "10px" }}>
             {hoveredSegment.month}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
             <div style={{ width: "14px", height: "14px", borderRadius: "4px", background: hoveredSegment.color }} />
-            <span style={{ fontSize: "13px", fontWeight: 600, color: "#374151" }}>{hoveredSegment.businessUnit}</span>
+            <span style={{ fontSize: "13px", fontWeight: 600, color: "var(--color-text-primary)" }}>{hoveredSegment.businessUnit}</span>
           </div>
-          <div style={{ fontSize: "14px", color: "#10b981", fontWeight: 600 }}>
+          <div style={{ fontSize: "14px", color: "var(--color-equans-dark-green)", fontWeight: 600 }}>
             Cost: €{hoveredSegment.cost.toLocaleString()}
           </div>
-          <div style={{ fontSize: "13px", color: "#276FD1", fontWeight: 600, marginTop: "4px" }}>
+          <div style={{ fontSize: "13px", color: "var(--color-equans-azure-blue)", fontWeight: 600, marginTop: "4px" }}>
             Active Users: {hoveredSegment.activeUsers.toLocaleString()}
           </div>
-          <div style={{ fontSize: "12px", color: "#6b7280", marginTop: "4px" }}>
+          <div style={{ fontSize: "12px", color: "var(--color-text-secondary)", marginTop: "4px" }}>
             Share: {hoveredSegment.percentage.toFixed(1)}%
           </div>
         </div>
@@ -107,10 +107,10 @@ export function CylindricalMonthlyChart({ data }: CylindricalMonthlyChartProps) 
 
               <div className="relative" style={{ width: "88px", height: `${cylinderHeight}px` }}>
                 {/* Top ellipse */}
-                <div className="absolute top-0 left-0 right-0" style={{ height: "18px", borderRadius: "999px", background: "linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(200,200,200,0.25) 100%)", border: "1px solid rgba(0,0,0,0.08)", zIndex: 10 }} />
+                <div className="absolute top-0 left-0 right-0" style={{ height: "18px", borderRadius: "999px", background: "linear-gradient(180deg, var(--color-equans-white) 0%, var(--color-primary-20) 100%)", border: "1px solid var(--color-primary-20)", zIndex: 10 }} />
 
                 {/* Cylinder body */}
-                <div style={{ marginTop: "9px", marginBottom: "9px", height: "calc(100% - 18px)", borderRadius: "12px", background: "#f3f4f6", boxShadow: "inset -4px 0 10px rgba(0,0,0,0.22), 4px 0 10px rgba(0,0,0,0.10)", overflow: "hidden", border: "1px solid rgba(0,0,0,0.08)" }}>
+                <div style={{ marginTop: "9px", marginBottom: "9px", height: "calc(100% - 18px)", borderRadius: "12px", background: "var(--color-primary-20)", boxShadow: "inset -4px 0 10px var(--color-primary-60), 4px 0 10px var(--color-primary-20)", overflow: "hidden", border: "1px solid var(--color-primary-60)" }}>
                   {monthData.businessUnits.map((bu, buIndex) => {
                     const isHovered = hoveredSegment?.month === monthData.month && hoveredSegment?.businessUnit === bu.businessUnit;
                     return (
@@ -122,10 +122,10 @@ export function CylindricalMonthlyChart({ data }: CylindricalMonthlyChartProps) 
                           width: '100%',
                           height: `${bu.percentage}%`,
                           background: bu.color,
-                          borderTop: buIndex > 0 ? "1px solid rgba(255,255,255,0.35)" : "none",
+                          borderTop: buIndex > 0 ? "1px solid var(--color-equans-white)" : "none",
                           filter: isHovered ? "brightness(1.3)" : "brightness(1)",
                           transform: isHovered ? "scaleX(1.08)" : "scaleX(1)",
-                          outline: isHovered ? "3px solid #111827" : "none",
+                          outline: isHovered ? "3px solid var(--color-text-primary)" : "none",
                         }}
                         onMouseEnter={() => setHoveredSegment({ 
                           month: monthData.month, 
@@ -142,7 +142,7 @@ export function CylindricalMonthlyChart({ data }: CylindricalMonthlyChartProps) 
                 </div>
 
                 {/* Bottom ellipse */}
-                <div className="absolute bottom-0 left-0 right-0" style={{ height: "18px", borderRadius: "999px", background: "linear-gradient(180deg, rgba(120,120,120,0.38) 0%, rgba(60,60,60,0.55) 100%)", border: "1px solid rgba(0,0,0,0.12)", zIndex: 10 }} />
+                <div className="absolute bottom-0 left-0 right-0" style={{ height: "18px", borderRadius: "999px", background: "linear-gradient(180deg, var(--color-primary-60) 0%, var(--color-primary-100) 100%)", border: "1px solid var(--color-primary-100)", zIndex: 10 }} />
               </div>
 
               <div className="mt-3 text-center"><div className="text-sm font-semibold text-neutral-700">{monthData.month}</div></div>
@@ -151,11 +151,11 @@ export function CylindricalMonthlyChart({ data }: CylindricalMonthlyChartProps) 
         })}
       </div>
 
-      <div className="mt-6 flex flex-wrap justify-center gap-4 px-4">
+      <div className="mt-6 flex flex-wrap justify-center gap-6 px-4">
         {Object.entries(BUSINESS_UNIT_COLORS).map(([unit, color]) => (
-          <div key={unit} className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded" style={{ background: color }} />
-            <span className="text-xs font-medium text-neutral-700">{unit}</span>
+          <div key={unit} className="flex items-center gap-3">
+            <div className="w-4 h-4 rounded" style={{ background: color, border: '1px solid var(--color-primary-20)' }} />
+            <span className="text-xs font-medium" style={{ color: 'var(--color-text-secondary)' }}>{unit}</span>
           </div>
         ))}
       </div>

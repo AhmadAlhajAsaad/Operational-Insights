@@ -32,7 +32,7 @@ function Table({ className, columns, data, onRowClick, children, ...props }: Tab
                   key={column.key}
                   data-slot="table-head"
                   className={cn(
-                    "text-foreground h-10 px-2 align-middle font-medium whitespace-nowrap",
+                    "text-[color:var(--color-text-secondary)] h-10 px-2 align-middle font-medium whitespace-nowrap",
                     column.align === 'center' && "text-center",
                     column.align === 'right' && "text-right",
                     !column.align && "text-left"
@@ -139,7 +139,7 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "text-[color:var(--color-text-secondary)] h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className,
       )}
       {...props}
