@@ -326,11 +326,11 @@ export function OrganizationOverview({
       </Card>
 
       {/* Cost Distribution Insights */}
-      <Card
+      {/* <Card
         className="bg-[#F1F8FE] shadow-sm border-[#EAF1F9]"
         style={{ borderRadius: "16px" }}
       >
-        <div className="p-6">
+        <div className="p-6"> 
           <h3 className="text-lg font-bold text-neutral-900 mb-4">
             Top Cost Drivers
           </h3>
@@ -369,6 +369,80 @@ export function OrganizationOverview({
               ))}
           </div>
         </div>
+      </Card> */}
+      {/* Cost Distribution Insights */}
+      <Card
+        className="shadow-sm"
+        style={{
+          borderRadius: "16px",
+          backgroundColor: "#e1f2ea",
+          borderColor: "var(--color-secondary-20)",
+        }}
+      >
+        <div className="p-6">
+          <h3
+            className="text-lg font-bold mb-4"
+            style={{
+              color: "var(--color-text-primary)",
+              fontFamily: "Roboto, sans-serif",
+            }}
+          >
+            Top Cost Drivers
+          </h3>
+          <div className="space-y-3">
+            {[...organizations]
+              .sort((a, b) => b.monthlyCost - a.monthlyCost)
+              .slice(0, 5)
+              .map((org, index) => (
+                <div
+                  key={org.id}
+                  className="flex items-center justify-between p-3 rounded-full"
+                  style={{ backgroundColor: "var(--color-equans-white)" }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
+                      style={{
+                        backgroundColor: "var(--color-equans-dark-green)",
+                        color: "var(--color-equans-white)",
+                      }}
+                    >
+                      {index + 1}
+                    </div>
+                    <div>
+                      <div
+                        className="font-semibold"
+                        style={{ color: "var(--color-text-primary)" }}
+                      >
+                        {org.name}
+                      </div>
+                      <div
+                        className="text-xs"
+                        style={{ color: "var(--color-text-secondary)" }}
+                      >
+                        {org.businessUnit}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div
+                      className="font-bold"
+                      style={{ color: "var(--color-equans-dark-green)" }}
+                    >
+                      €{org.monthlyCost.toLocaleString()}
+                    </div>
+                    <div
+                      className="text-xs"
+                      style={{ color: "var(--color-text-secondary)" }}
+                    >
+                      {Math.round((org.monthlyCost / totalCost) * 100)}% of
+                      total
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
       </Card>
     </div>
   );
@@ -376,9 +450,9 @@ export function OrganizationOverview({
 
 function getBusinessUnitColor(businessUnit: string): string {
   const equansColors: { [key: string]: string } = {
-    "Digital Services": "var(--color-equans-turquoise)",
-    "IT Operations": "var(--color-equans-dark-green)",
+    "Digital Services": "var(--color-equans-apple-green)",
     "Smart Energy": "var(--color-equans-turquoise)",
+    "IT Operations": "var(--color-equans-dark-green)",
     "Building Solutions": "var(--color-equans-azure-blue)",
     "Field Operations": "var(--color-equans-dark-blue)",
   };
@@ -388,8 +462,8 @@ function getBusinessUnitColor(businessUnit: string): string {
 function getBusinessUnitBackgroundColor(businessUnit: string): string {
   const equansBackgroundColors: { [key: string]: string } = {
     "Digital Services": "var(--equans-lightblue-20)",
-    "IT Operations": "var(--equans-green-20)",
     "Smart Energy": "var(--color-accent-20)",
+    "IT Operations": "var(--equans-green-20)",
     "Building Solutions": "var(--equans-blue-20)",
     "Field Operations": "var(--color-primary-20)",
   };
