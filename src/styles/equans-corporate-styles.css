@@ -1,0 +1,58 @@
+/* EQUANS CORPORATE STYLE - UPDATED DESIGN SYSTEM */
+@theme {
+  /* === MAIN CORPORATE COLORS === */
+  --color-equans-dark-blue: #002439;
+  --color-equans-dark-green: #008163;
+  --color-equans-turquoise: #70BD95;
+  --color-equans-white: #FFFFFF;
+
+  /* === ACCOMPANYING COLORS === */
+  --color-equans-azure-blue: #0059CE;
+  --color-equans-orange: #FF9600;
+  --color-equans-yellow: #FFCA00;
+  --color-equans-apple-green: #76C512;
+  --color-equans-violet: #C865FF;
+  --color-equans-pink: #FF0080;
+  --color-equans-lime-green: #B7F100;
+  --color-equans-light-blue: #00DEE8;
+
+  /* === OPACITY VARIATIONS (for hierarchy) === */
+  /* Dark Blue variations */
+  --color-equans-dark-blue-100: rgba(0, 36, 57, 1);    /* 100% opacity */
+  --color-equans-dark-blue-60: rgba(0, 36, 57, 0.6);   /* 60% opacity */
+  --color-equans-dark-blue-20: rgba(0, 36, 57, 0.2);   /* 20% opacity */
+
+  /* Dark Green variations */
+  --color-equans-dark-green-100: rgba(0, 129, 99, 1);
+  --color-equans-dark-green-60: rgba(0, 129, 99, 0.6);
+  --color-equans-dark-green-20: rgba(0, 129, 99, 0.2);
+
+  /* Turquoise variations */
+  --color-equans-turquoise-100: rgba(112, 189, 149, 1);
+  --color-equans-turquoise-60: rgba(112, 189, 149, 0.6);
+  --color-equans-turquoise-20: rgba(112, 189, 149, 0.2);
+
+  /* === SEMANTIC MAPPINGS === */
+  --color-primary: var(--color-equans-dark-blue);
+  --color-primary-60: var(--color-equans-dark-blue-60);
+  --color-primary-20: var(--color-equans-dark-blue-20);
+  
+  --color-secondary: var(--color-equans-dark-green);
+  --color-secondary-60: var(--color-equans-dark-green-60);
+  --color-secondary-20: var(--color-equans-dark-green-20);
+  
+  --color-accent: var(--color-equans-turquoise);
+  --color-accent-60: var(--color-equans-turquoise-60);
+  --color-accent-20: var(--color-equans-turquoise-20);
+
+  /* Background colors */
+  --color-background: var(--color-equans-white);
+  --color-surface: var(--color-equans-white);
+  --color-surface-hover: var(--color-equans-dark-blue-20);
+
+  /* Text colors */
+  --color-text-primary: var(--color-equans-dark-blue);
+  --color-text-secondary: var(--color-equans-dark-blue-60);
+  --color-text-muted: var(--color-equans-dark-blue-20);
+  --color-text-white: var(--color-equans-white);
+}
