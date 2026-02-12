@@ -98,29 +98,26 @@ export function ProductBreakdown({ onNavigateToUser }: ProductBreakdownProps) {
         <StatCard
           icon={<Package className="w-5 h-5" />}
           label="Total Licenses"
+          variant="blue"
           value={currentProduct.totalLicenses.toString()}
         />
         <StatCard
           icon={<Users className="w-5 h-5" />}
           label="Active Licenses"
+          variant="green"
           value={currentProduct.activeLicenses.toString()}
         />
         <StatCard
           icon={<DollarSign className="w-5 h-5" />}
           label="Monthly Cost"
+          variant="cyan"
           value={`€${currentProduct.monthlyCost.toLocaleString()}`}
         />
         <StatCard
           icon={<TrendingUp className="w-5 h-5" />}
-          label="Utilization Rate"
-          value={`${currentProduct.utilizationRate}%`}
-          change={{
-            value:
-              currentProduct.utilizationRate >= 80
-                ? "Excellent"
-                : "Needs improvement",
-            trend: currentProduct.utilizationRate >= 80 ? "up" : "down",
-          }}
+          label="Total Active Users"
+          variant="purple"
+          value={currentProduct.activeLicenses.toString()}
         />
       </div>
 
@@ -189,10 +186,11 @@ export function ProductBreakdown({ onNavigateToUser }: ProductBreakdownProps) {
             headerClassName="custom-table-header"
             rowClassName={(row: any, index: number) => {
               const colors = [
+                "var(--equans-lightblue-20)",
                 "var(--equans-green-20)",
-                "var(--equans-lime-20)",
-                // "var(--equans-yellow-20)",
-                // "var(--equans-orange-20)",
+                "var(--color-accent-20)",
+                "var(--equans-blue-20)",
+                "var(--color-primary-20)",
               ];
               return { backgroundColor: colors[index % colors.length] };
             }}
