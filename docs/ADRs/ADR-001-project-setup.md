@@ -31,11 +31,11 @@ We adopt the following monorepo structure with clear separation of concerns:
 
 ```
 Equans-operational-insights/
-├── backend/                    # Rust (Axum) API server
-│   ├── src/
-│   │   ├── main.rs
-│   │   ├── routes.rs
-│   │   └── ...
+├── backend/src/
+│   ├── main.rs
+│   ├── atlassian.rs  (combines routes, services, models)
+│   ├── github.rs     (combines routes, services, models)
+│   ├── health.rs     (health check handlers)
 │   ├── Cargo.toml
 │   └── tests/
 │
@@ -55,14 +55,16 @@ Equans-operational-insights/
 │
 ├── docs/
 │   ├── ADRs/                   # Architecture Decision Records
+│   │   ├── ADR-000-template.md
+│   │   └── ADR-001-project-setup.md    
 │   ├── requirements/           # Functional & non-functional specs
 │   ├── architecture-overview.md
-│   └── api-specs/
-│
+│   └── api-specs/        # API documentation and specs
+│       ├── atlassian/
 ├── scripts/                    # Utility scripts for development
 ├── tests/                      # Integration tests
 ├── .github/
-│   └── workflows/              # CI/CD pipelines (GitHub Actions)
+│    └── workflows/              # CI/CD pipelines (GitHub Actions)
 │
 ├── README.md
 ├── .gitignore
@@ -117,37 +119,15 @@ For local development, the frontend dev server (Vite) proxies `/api/*` requests 
 
 ---
 
-## Alternatives Considered
+### Rust Backend
 
-### 1. Monolithic Folder Structure
+**Description:** Use Rust (Axum/SQLx) for backend API
 
-**Description:** Put all code (backend, frontend) at the root level
-
-**Why Rejected:**
-- Creates confusion about module responsibilities
-- Harder to manage dependencies separately
-- Scales poorly with team growth
-- Makes CI/CD logic more complex
-
-### 2. Python Backend Instead of Rust
-
-**Description:** Use Python (FastAPI/Django) for backend API
-
-**Why Rejected:**
+**Why Rust:**
 - Rust is the established standard for this team
 - Offers superior performance characteristics for data processing
 - Compile-time type safety reduces production bugs
 - Better memory efficiency for long-running services
-
-### 3. Microservices from Day One
-
-**Description:** Split backend into separate service repos (user auth, data collection, reporting, etc.)
-
-**Why Rejected:**
-- Adds operational complexity without corresponding benefits at current scale
-- Makes local development setup more difficult
-- Premature optimization that can be revisited in ADR-002 if needed
-- Monorepo can evolve to microservices when justified
 
 ---
 
@@ -190,34 +170,4 @@ For local development, the frontend dev server (Vite) proxies `/api/*` requests 
 - First-time setup involves installing Rust, Node.js, Docker, and PostgreSQL
 - Some developers may need environment troubleshooting support
 - Docker daemon management adds one more system dependency
-
-### Risk Mitigation
-
-- **Documentation:** Maintain comprehensive setup guides and troubleshooting docs (see README.md)
-- **Automation:** Use cleanup scripts and Docker Compose to minimize manual steps
-- **Mentoring:** Pair new developers with experienced team members during onboarding
-- **Revisit:** Schedule ADR reviews quarterly to assess if structure still fits project needs
-
 ---
-
-## References and Related Documents
-
-- **README.md:** Project setup and local development guide
-- **Architecture Overview:** High-level system design and data flow
-- **Requirements Documentation:** Functional and non-functional specifications
-- **ADR-000 Template:** Template for future architecture decision records
-- **.github/workflows/:** CI/CD pipeline configurations
-
----
-
-## Implementation Status
-
-- ✅ **Repository Structure:** Established and in use
-- ✅ **Backend:** Rust (Axum) with basic API endpoints
-- ✅ **Frontend:** React + TypeScript with Vite dev server
-- ✅ **Documentation:** ADR structure initialized, comprehensive README created
-- ⏳ **Docker Compose:** Configured and ready for testing
-- ⏳ **CI/CD Pipelines:** GitHub Actions workflows to be implemented in ADR-002
-
----
-
