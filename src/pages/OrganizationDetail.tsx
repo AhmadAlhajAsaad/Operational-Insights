@@ -3,7 +3,7 @@ import { StatCard } from '../components/ui/StatCard';
 import { Card } from '../components/ui/card';
 import { TrendChart } from '../components/charts/TrendChart';
 import { Button } from '../components/ui/button';
-import { DollarSign, Users, Package, TrendingUp, ArrowLeft, User } from 'lucide-react';
+import { DollarSign, Users, Package, TrendingUp, ArrowLeft, User, Briefcase, Clock, EuroIcon } from 'lucide-react';
 import { organizations } from '../data/organizationData';
 import { users as allUsers } from '../data/mockData';
 
@@ -28,8 +28,8 @@ export function OrganizationDetail({
 
   const utilization = Math.round((organization.activeUsers / organization.totalLicenses) * 100);
   
-  // Get users for this organization (for now using all users, will be filtered when mockData is updated)
-  const orgUsers = allUsers.slice(0, 5); // Temporary - will use organizationId filter
+  // Get users for this organization
+  const orgUsers = allUsers.slice(0, 5);
 
   const productColumns = [
     { key: 'name', label: 'Product' },
@@ -47,28 +47,14 @@ export function OrganizationDetail({
     { key: 'status', label: 'Status', align: 'center' as const },
   ];
 
-  // Array of vibrant background colors for product rows
   const productColors = [
-    '#EFF6FF', // Light Blue
-    '#ECFDF5', // Light Green
-    '#FEF3C7', // Light Orange
-    '#F3E8FF', // Light Purple
-    '#FCE7F3', // Light Pink
-    '#DBEAFE', // Blue
-    '#D1FAE5', // Green
-    '#FDE68A', // Yellow
+    '#EFF6FF', '#ECFDF5', '#FEF3C7', '#F3E8FF',
+    '#FCE7F3', '#DBEAFE', '#D1FAE5', '#FDE68A',
   ];
 
-  // Array of vibrant background colors for user rows
-   const userColors = [
-    '#EFF6FF', // Light Blue
-    '#ECFDF5', // Light Green
-    '#FEF3C7', // Light Orange
-    '#F3E8FF', // Light Purple
-    '#FCE7F3', // Light Pink
-    '#DBEAFE', // Blue
-    '#D1FAE5', // Green
-    '#FDE68A', // Yellow
+  const userColors = [
+    '#EFF6FF', '#ECFDF5', '#FEF3C7', '#F3E8FF',
+    '#FCE7F3', '#DBEAFE', '#D1FAE5', '#FDE68A',
   ];
 
   return (
@@ -97,48 +83,71 @@ export function OrganizationDetail({
         </p>
       </div>
 
-      {/* Organization KPIs with Vibrant Colors */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Organization KPIs with Consultancy */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         <StatCard
           icon={<DollarSign className="w-5 h-5" />}
-          label="Monthly Cost"
-          value={`€${organization.monthlyCost.toLocaleString()}`}
-          change={{ value: '+4.1% vs last month', trend: 'up' }}
+          label="License Cost"
+          value={`EUR ${organization.licenseCost.toLocaleString()}`}
+          change={{ value: '+3.2% vs last month', trend: 'up' }}
           variant="blue"
         />
         <StatCard
-          icon={<Package className="w-5 h-5" />}
-          label="Total Licenses"
-          value={organization.totalLicenses.toString()}
-          change={{ value: `${organization.products.length} products`, trend: 'neutral' }}
+          icon={<Briefcase className="w-5 h-5" />}
+          label="Consultancy Cost"
+          value={`EUR ${organization.consultancyCost.toLocaleString()}`}
+          change={{ value: '+4.8% vs last month', trend: 'up' }}
           variant="purple"
         />
         <StatCard
-          icon={<Users className="w-5 h-5" />}
-          label="Active Users"
-          value={organization.activeUsers.toString()}
-          change={{ value: `${orgUsers.length} total users`, trend: 'neutral' }}
+          icon={<DollarSign className="w-5 h-5" />}
+          label="Total Monthly Cost"
+          value={`EUR ${organization.monthlyCost.toLocaleString()}`}
+          change={{ value: '+4.1% vs last month', trend: 'up' }}
           variant="cyan"
         />
         <StatCard
           icon={<TrendingUp className="w-5 h-5" />}
+          label="Forecast (Next Mo)"
+          value={`EUR ${organization.forecast.nextMonth.toLocaleString()}`}
+          change={{ value: `+${organization.forecast.percentageChange}%`, trend: organization.forecast.trend }}
+          variant="yellow"
+        />
+        <StatCard
+          icon={<EuroIcon className="w-5 h-5" />}
+          label="Chargeback"
+          value={`EUR ${organization.chargebackAmount.toLocaleString()}`}
+          change={{ value: 'Complete', trend: 'neutral' }}
+          variant="green"
+        />
+        <StatCard
+          icon={<Users className="w-5 h-5" />}
           label="Utilization Rate"
           value={`${utilization}%`}
-          change={{ value: '+1.8% vs last month', trend: 'up' }}
-          variant="green"
+          change={{ value: `${organization.activeUsers} active`, trend: 'neutral' }}
+          variant="mint"
         />
       </div>
 
-      {/* Cost Trend */}
+      {/* Cost Trend with Stacked Areas */}
       <Card className="bg-white shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
         <div className="p-6">
-          <h3 className="text-lg font-bold text-neutral-900 mb-4">Cost Trend - {organization.name}</h3>
-          <TrendChart data={organization.costTrend} />
+          <h3 className="text-lg font-bold text-neutral-900 mb-1">
+            Cost Trend - {organization.name}
+          </h3>
+          <p className="text-sm text-neutral-500 mb-4">
+            License and consultancy costs over time
+          </p>
+          <TrendChart 
+            data={organization.costTrend} 
+            showForecast={true}
+            forecastData={organization.forecast}
+          />
         </div>
       </Card>
 
-      {/* Products Table - Interactive Drill-down with Colorful Rows */}
-      <Card className="bg-white  shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
+      {/* Products Table */}
+      <Card className="bg-white shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -147,10 +156,15 @@ export function OrganizationDetail({
                 Click any product to view user-level details
               </p>
             </div>
+            <div className="text-right">
+              <span className="text-2xl font-bold" style={{ color: 'var(--color-equans-dark-green)' }}>
+                EUR {organization.licenseCost.toLocaleString()}
+              </span>
+              <p className="text-xs text-neutral-500">Total license cost</p>
+            </div>
           </div>
 
-          {/* Custom Colorful Table */}
-          <div className="relative w-full overflow-x-auto rounded-full border border-[#EAF1F9]">
+          <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
             <table className="w-full caption-bottom text-sm">
               <thead className="border-b border-[#EAF1F9]" style={{ backgroundColor: 'var(--color-equans-turquoise)' }}>
                 <tr>
@@ -192,7 +206,7 @@ export function OrganizationDetail({
                         <span className="font-semibold text-neutral-900">{product.activeUsers}</span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-right">
-                        <span className="font-bold text-neutral-900">€{product.cost.toLocaleString()}</span>
+                        <span className="font-bold text-neutral-900">EUR {product.cost.toLocaleString()}</span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-center">
                         <span className={`inline-flex px-3 py-1.5 rounded-full text-xs font-bold ${
@@ -212,22 +226,82 @@ export function OrganizationDetail({
         </div>
       </Card>
 
-      {/* Users in Organization with Colorful Rows */}
+      {/* Consultancy Services Table */}
+      <Card className="bg-white shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-bold text-neutral-900 mb-1">Consultancy Services</h3>
+              <p className="text-sm text-neutral-500">
+                External consultancy costs breakdown
+              </p>
+            </div>
+            <div className="text-right">
+              <span className="text-2xl font-bold" style={{ color: '#C865FF' }}>
+                EUR {organization.consultancyCost.toLocaleString()}
+              </span>
+              <p className="text-xs text-neutral-500">Total this month</p>
+            </div>
+          </div>
+
+          <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
+            <table className="w-full caption-bottom text-sm">
+              <thead className="border-b border-[#EAF1F9]" style={{ backgroundColor: '#C865FF' }}>
+                <tr>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-left">Service Type</th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-center">Hours</th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-right">Hourly Rate</th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-right">Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                {organization.consultancyServices.map((service, index) => (
+                  <tr
+                    key={service.type}
+                    className="border-b border-[#EAF1F9] last:border-0"
+                    style={{ backgroundColor: index % 2 === 0 ? '#F3E8FF' : '#EDE9FE' }}
+                  >
+                    <td className="p-4 align-middle whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <Briefcase className="w-4 h-4 text-purple-600" strokeWidth={2} />
+                        <span className="font-semibold text-neutral-900">{service.type}</span>
+                      </div>
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap text-center">
+                      <div className="flex items-center justify-center gap-1">
+                        <Clock className="w-3 h-3 text-neutral-500" />
+                        <span className="font-semibold text-neutral-900">{service.hours}h</span>
+                      </div>
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap text-right">
+                      <span className="text-neutral-600">EUR {service.hourlyRate}/hr</span>
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap text-right">
+                      <span className="font-bold" style={{ color: '#C865FF' }}>EUR {service.cost.toLocaleString()}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Card>
+
+      {/* Users in Organization */}
       <Card className="bg-white shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-lg font-bold text-neutral-900 mb-1">Users in Organization</h3>
               <p className="text-sm text-neutral-500">
-                <span className="font-semibold text-[#276FD1]">{orgUsers.length} users</span> · Click to view individual details
+                <span className="font-semibold text-[#276FD1]">{orgUsers.length} users</span> - Click to view individual details
               </p>
             </div>
           </div>
 
-          {/* Custom Colorful Users Table */}
-          <div className="relative w-full overflow-x-auto rounded-full border border-[#EAF1F9]">
+          <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
             <table className="w-full caption-bottom text-sm">
-             <thead className="border-b border-[#EAF1F9]" style={{ backgroundColor: 'var(--color-equans-turquoise)' }}>
+              <thead className="border-b border-[#EAF1F9]" style={{ backgroundColor: 'var(--color-equans-turquoise)' }}>
                 <tr>
                   {userColumns.map((column) => (
                     <th
