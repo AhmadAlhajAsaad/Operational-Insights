@@ -2,7 +2,7 @@
 import { StatCard } from "../components/ui/StatCard";
 import { Card } from "../components/ui/card";
 import { CylindricalMonthlyChart } from "../components/charts/CylindricalMonthlyChart";
-import { Building2, DollarSign, Users, Search, EuroIcon } from "lucide-react";
+import { Building2, DollarSign, Users, Search, EuroIcon, Briefcase, TrendingUp } from "lucide-react";
 import { organizations } from "../data/organizationData";
 
 interface OrganizationOverviewProps {
@@ -14,18 +14,34 @@ export function OrganizationOverview({
 }: OrganizationOverviewProps) {
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Calculate aggregate metrics
+  // Calculate aggregate metrics with consultancy
+  const totalLicenseCost = organizations.reduce(
+    (sum, org) => sum + org.licenseCost,
+    0
+  );
+  const totalConsultancyCost = organizations.reduce(
+    (sum, org) => sum + org.consultancyCost,
+    0
+  );
   const totalCost = organizations.reduce(
     (sum, org) => sum + org.monthlyCost,
-    0,
+    0
+  );
+  const totalChargeback = organizations.reduce(
+    (sum, org) => sum + org.chargebackAmount,
+    0
+  );
+  const totalForecast = organizations.reduce(
+    (sum, org) => sum + org.forecast.nextMonth,
+    0
   );
   const totalLicenses = organizations.reduce(
     (sum, org) => sum + org.totalLicenses,
-    0,
+    0
   );
   const totalActiveUsers = organizations.reduce(
     (sum, org) => sum + org.activeUsers,
-    0,
+    0
   );
 
   // Prepare data for cylindrical chart - Last 6 months by business unit
@@ -72,9 +88,10 @@ export function OrganizationOverview({
     { key: "id", label: "Organization ID", align: "left" as const },
     { key: "name", label: "Organization Name" },
     { key: "businessUnit", label: "Business Unit" },
-    { key: "totalLicenses", label: "Total Licenses", align: "center" as const },
-    { key: "activeUsers", label: "Active Users", align: "center" as const },
-    { key: "monthlyCost", label: "Monthly Cost", align: "right" as const },
+    { key: "licenseCost", label: "License Cost", align: "right" as const },
+    { key: "consultancyCost", label: "Consultancy", align: "right" as const },
+    { key: "monthlyCost", label: "Total Cost", align: "right" as const },
+    { key: "chargebackAmount", label: "Chargeback", align: "right" as const },
   ];
 
   // Filter organizations based on search term
@@ -98,62 +115,54 @@ export function OrganizationOverview({
         </p>
       </div>
 
-      {/* KPI Cards - Organization Level with Vibrant Colors */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* KPI Cards - Complete Cost Overview with Consultancy */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         <StatCard
-          icon={
-            <DollarSign
-              className="w-5 h-5"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth={1.8}
-            />
-          }
-          label="Total Monthly Cost"
-          value={`€${totalCost.toLocaleString()}`}
-          change={{ value: "+5.2% vs last month", trend: "up" }}
+          icon={<DollarSign className="w-5 h-5" strokeWidth={1.8} />}
+          label="License Costs"
+          value={`EUR ${totalLicenseCost.toLocaleString()}`}
+          change={{ value: "+3.8% vs last month", trend: "up" }}
           variant="blue"
         />
 
         <StatCard
-          icon={
-            <EuroIcon
-              className="w-5 h-5"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth={1.8}
-            />
-          }
-          label="Monthly chargeback amount"
-          value={`€${totalCost.toLocaleString()}`}
-          change={{ value: "+2.3% vs last month", trend: "up" }}
-          variant="green"
+          icon={<Briefcase className="w-5 h-5" strokeWidth={1.8} />}
+          label="Consultancy Costs"
+          value={`EUR ${totalConsultancyCost.toLocaleString()}`}
+          change={{ value: "+5.2% vs last month", trend: "up" }}
+          variant="purple"
         />
+
         <StatCard
-          icon={
-            <Users
-              className="w-5 h-5"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth={1.8}
-            />
-          }
-          label="Total Active Users"
-          value={totalActiveUsers.toString()}
+          icon={<DollarSign className="w-5 h-5" strokeWidth={1.8} />}
+          label="Total Monthly Cost"
+          value={`EUR ${totalCost.toLocaleString()}`}
+          change={{ value: "+4.1% vs last month", trend: "up" }}
           variant="cyan"
         />
+
         <StatCard
-          icon={
-            <Building2
-              className="w-5 h-5"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth={1.8}
-            />
-          }
-          label="Organizations"
-          value={organizations.length.toString()}
-          variant="purple"
+          icon={<EuroIcon className="w-5 h-5" strokeWidth={1.8} />}
+          label="Chargeback Amount"
+          value={`EUR ${totalChargeback.toLocaleString()}`}
+          change={{ value: "Complete", trend: "neutral" }}
+          variant="green"
+        />
+
+        <StatCard
+          icon={<TrendingUp className="w-5 h-5" strokeWidth={1.8} />}
+          label="Forecast (Next Month)"
+          value={`EUR ${totalForecast.toLocaleString()}`}
+          change={{ value: "+2.8% projected", trend: "up" }}
+          variant="yellow"
+        />
+
+        <StatCard
+          icon={<Users className="w-5 h-5" strokeWidth={1.8} />}
+          label="Active Users"
+          value={totalActiveUsers.toString()}
+          change={{ value: `${organizations.length} orgs`, trend: "neutral" }}
+          variant="mint"
         />
       </div>
 
@@ -192,9 +201,9 @@ export function OrganizationOverview({
         </div>
       </Card>
 
-      {/* Organizations Table with Colorful Rows */}
+      {/* Organizations Table with Consultancy Column */}
       <Card
-        className="'var(--color-text-secondary)' shadow-sm border chart-container"
+        className="shadow-sm border chart-container"
         style={{
           borderRadius: "16px",
           borderColor: "var(--color-primary-20)",
@@ -239,13 +248,12 @@ export function OrganizationOverview({
           </div>
 
           {/* Custom Table with Colored Rows */}
-          <div className="relative w-full overflow-x-auto rounded-full  border border-[#EAF1F9]">
+          <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
             <table className="w-full caption-bottom text-sm">
               <thead
                 className="border-b border-[#EAF1F9]"
                 style={{ backgroundColor: "var(--color-equans-turquoise)" }}
               >
-                {" "}
                 <tr>
                   {tableColumns.map((column) => (
                     <th
@@ -301,19 +309,24 @@ export function OrganizationOverview({
                           </span>
                         </span>
                       </td>
-                      <td className="p-4 align-middle whitespace-nowrap text-center">
-                        <span className="font-semibold text-neutral-900">
-                          {org.totalLicenses}
+                      <td className="p-4 align-middle whitespace-nowrap text-right">
+                        <span className="font-medium text-neutral-700">
+                          EUR {org.licenseCost.toLocaleString()}
                         </span>
                       </td>
-                      <td className="p-4 align-middle whitespace-nowrap text-center">
-                        <span className="font-semibold text-neutral-900">
-                          {org.activeUsers}
+                      <td className="p-4 align-middle whitespace-nowrap text-right">
+                        <span className="font-medium" style={{ color: '#C865FF' }}>
+                          EUR {org.consultancyCost.toLocaleString()}
                         </span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-right">
                         <span className="font-bold text-neutral-900">
-                          €{org.monthlyCost.toLocaleString()}
+                          EUR {org.monthlyCost.toLocaleString()}
+                        </span>
+                      </td>
+                      <td className="p-4 align-middle whitespace-nowrap text-right">
+                        <span className="font-bold" style={{ color: 'var(--color-equans-dark-green)' }}>
+                          EUR {org.chargebackAmount.toLocaleString()}
                         </span>
                       </td>
                     </tr>
@@ -325,51 +338,6 @@ export function OrganizationOverview({
         </div>
       </Card>
 
-      {/* Cost Distribution Insights */}
-      {/* <Card
-        className="bg-[#F1F8FE] shadow-sm border-[#EAF1F9]"
-        style={{ borderRadius: "16px" }}
-      >
-        <div className="p-6"> 
-          <h3 className="text-lg font-bold text-neutral-900 mb-4">
-            Top Cost Drivers
-          </h3>
-          <div className="space-y-3">
-            {[...organizations]
-              .sort((a, b) => b.monthlyCost - a.monthlyCost)
-              .slice(0, 5)
-              .map((org, index) => (
-                <div
-                  key={org.id}
-                  className="flex items-center justify-between bg-white p-3 rounded-full"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#276FD1] text-white rounded-full flex items-center justify-center font-bold text-sm">
-                      {index + 1}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-neutral-900">
-                        {org.name}
-                      </div>
-                      <div className="text-xs text-neutral-500">
-                        {org.businessUnit}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-bold text-[#276FD1]">
-                      €{org.monthlyCost.toLocaleString()}
-                    </div>
-                    <div className="text-xs text-neutral-500">
-                      {Math.round((org.monthlyCost / totalCost) * 100)}% of
-                      total
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-      </Card> */}
       {/* Cost Distribution Insights */}
       <Card
         className="shadow-sm"
@@ -424,19 +392,32 @@ export function OrganizationOverview({
                       </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div
-                      className="font-bold"
-                      style={{ color: "var(--color-equans-dark-green)" }}
-                    >
-                      €{org.monthlyCost.toLocaleString()}
+                  <div className="flex items-center gap-6">
+                    <div className="text-right">
+                      <div className="text-xs text-neutral-500">Licenses</div>
+                      <div className="font-medium text-neutral-700">
+                        EUR {org.licenseCost.toLocaleString()}
+                      </div>
                     </div>
-                    <div
-                      className="text-xs"
-                      style={{ color: "var(--color-text-secondary)" }}
-                    >
-                      {Math.round((org.monthlyCost / totalCost) * 100)}% of
-                      total
+                    <div className="text-right">
+                      <div className="text-xs text-neutral-500">Consultancy</div>
+                      <div className="font-medium" style={{ color: '#C865FF' }}>
+                        EUR {org.consultancyCost.toLocaleString()}
+                      </div>
+                    </div>
+                    <div className="text-right pl-4 border-l border-neutral-200">
+                      <div
+                        className="font-bold"
+                        style={{ color: "var(--color-equans-dark-green)" }}
+                      >
+                        EUR {org.monthlyCost.toLocaleString()}
+                      </div>
+                      <div
+                        className="text-xs"
+                        style={{ color: "var(--color-text-secondary)" }}
+                      >
+                        {Math.round((org.monthlyCost / totalCost) * 100)}% of total
+                      </div>
                     </div>
                   </div>
                 </div>
