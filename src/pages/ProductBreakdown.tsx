@@ -1,8 +1,8 @@
 ﻿import React, { useState } from "react";
-import { Card } from "../components/ui/Card";
+import { Card } from "../components/ui/card";
 import { StatCard } from "../components/ui/StatCard";
 import * as Select from "../components/ui/select";
-import { Table } from "../components/ui/Table";
+import { Table } from "../components/ui/table";
 import { LicenseChart } from "../components/charts/LicenseChart";
 import { UsageDonut } from "../components/charts/UsageDonut";
 import { Package, Users, DollarSign, TrendingUp } from "lucide-react";
