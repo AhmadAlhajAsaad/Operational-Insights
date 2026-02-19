@@ -1,5 +1,5 @@
 ﻿import React from "react";
-import { Building2, Users, Package, PackageSearch, LogOut } from "lucide-react";
+import { Building2, Users, Package, PackageSearch, LogOut, UploadCloud } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo.png";
 
@@ -15,6 +15,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
     { id: "organizations", label: "Organizations", icon: Building2 },
     { id: "products", label: "Product Details", icon: PackageSearch },
     { id: "users", label: "Users", icon: Users },
+    { id: "import", label: "Import", icon: UploadCloud },
     // { id: 'products', label: 'Product Breakdown', icon: Package },
   ];
 
