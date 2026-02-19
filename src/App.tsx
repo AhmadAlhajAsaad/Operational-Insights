@@ -6,6 +6,7 @@ import { OrganizationDetail } from './pages/OrganizationDetail';
 import { Users } from './pages/Users';
 import { UserDetail } from './pages/UserDetail';
 import { ProductBreakdown } from './pages/ProductBreakdown';
+import { ImportPage } from './pages/Import';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 function App() {
@@ -66,6 +67,8 @@ function App() {
         );
       case 'products':
         return <ProductBreakdown onNavigateToUser={handleNavigateToUser} />;
+      case 'import':
+        return <ImportPage />;
       default:
         return <OrganizationOverview onNavigateToOrganization={handleNavigateToOrganization} />;
     }
@@ -83,6 +86,8 @@ function App() {
         return 'User Detail';
       case 'products':
         return 'Product Breakdown';
+      case 'import':
+        return 'Import Data';
       default:
         return 'Organizations';
     }
@@ -100,6 +105,8 @@ function App() {
         return 'Home / Users / Detail';
       case 'products':
         return 'Home / Products';
+      case 'import':
+        return 'Home / Import';
       default:
         return 'Home / Organizations';
     }
