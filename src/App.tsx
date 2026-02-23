@@ -6,13 +6,13 @@ import { OrganizationDetail } from './pages/OrganizationDetail';
 import { Users } from './pages/Users';
 import { UserDetail } from './pages/UserDetail';
 import { ProductBreakdown } from './pages/ProductBreakdown';
-import { ImportPage } from './pages/Import';
+import { DataImport } from './pages/DataImport';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('organizations');
   const [selectedOrganization, setSelectedOrganization] = useState<string | null>(null);
-  const [selectedUser, setSelectedUser] = useState<number | null>(null);
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
@@ -25,9 +25,13 @@ function App() {
     setCurrentPage('organization-detail');
   };
 
-  const handleNavigateToUser = (userId: number) => {
+  const handleNavigateToUser = (userId: string) => {
     setSelectedUser(userId);
     setCurrentPage('user-detail');
+  };
+
+  const handleNavigateToProduct = (orgId: string, productName: string) => {
+    setCurrentPage('products');
   };
 
   const handleBackToOrganizations = () => {
@@ -49,7 +53,8 @@ function App() {
           <OrganizationDetail 
             organizationId={selectedOrganization} 
             onBack={handleBackToOrganizations}
-            onNavigateToUser={handleNavigateToUser}
+            onNavigateToProduct={handleNavigateToProduct}
+            onNavigateToUser={(userId: number) => handleNavigateToUser(String(userId))}
           />
         ) : (
           <OrganizationOverview onNavigateToOrganization={handleNavigateToOrganization} />
@@ -59,16 +64,16 @@ function App() {
       case 'user-detail':
         return selectedUser !== null ? (
           <UserDetail 
-            userId={selectedUser} 
+            userId={Number(selectedUser)} 
             onBack={handleBackToUsers}
           />
         ) : (
           <Users onNavigateToUser={handleNavigateToUser} />
         );
       case 'products':
-        return <ProductBreakdown onNavigateToUser={handleNavigateToUser} />;
+        return <ProductBreakdown onNavigateToUser={(userId: number) => handleNavigateToUser(String(userId))} />;
       case 'import':
-        return <ImportPage />;
+        return <DataImport />;
       default:
         return <OrganizationOverview onNavigateToOrganization={handleNavigateToOrganization} />;
     }
@@ -87,7 +92,7 @@ function App() {
       case 'products':
         return 'Product Breakdown';
       case 'import':
-        return 'Import Data';
+        return 'Data Import';
       default:
         return 'Organizations';
     }
@@ -106,7 +111,7 @@ function App() {
       case 'products':
         return 'Home / Products';
       case 'import':
-        return 'Home / Import';
+        return 'Home / Data Import';
       default:
         return 'Home / Organizations';
     }
