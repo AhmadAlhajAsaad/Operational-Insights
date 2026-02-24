@@ -136,28 +136,6 @@ export function UserDetail({ userId, onBack }: UserDetailProps) {
                 </span>
               </div>
             </div>
-            <div className="flex gap-2">
-              <Button
-                variant="secondary"
-                size="sm"
-                style={{
-                  borderColor: "var(--color-ui-blue-primary)",
-                  color: "var(--color-ui-blue-primary)",
-                }}
-              >
-                Edit User
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                style={{
-                  backgroundColor: "var(--color-ui-blue-primary)",
-                  color: "white",
-                }}
-              >
-                Manage Licenses
-              </Button>
-            </div>
           </div>
         </div>
       </Card>
@@ -182,7 +160,7 @@ export function UserDetail({ userId, onBack }: UserDetailProps) {
               {user.licenses.map((license, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-white rounded-xl transition-colors"
+                  className="flex items-center p-3 bg-white rounded-xl transition-colors"
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.backgroundColor =
                       "var(--color-ui-blue-lighter)")
@@ -207,29 +185,11 @@ export function UserDetail({ userId, onBack }: UserDetailProps) {
                       </p>
                     </div>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    style={{ color: "var(--color-ui-red)" }}
-                  >
-                    Remove
-                  </Button>
                 </div>
               ))}
             </div>
-            <Button
-              variant="secondary"
-              className="w-full mt-4"
-              style={{
-                borderColor: "var(--color-ui-blue-primary)",
-                color: "var(--color-ui-blue-primary)",
-              }}
-            >
-              Add New License
-            </Button>
           </div>
         </Card>
-
         <Card
           className="shadow-sm border"
           style={{
