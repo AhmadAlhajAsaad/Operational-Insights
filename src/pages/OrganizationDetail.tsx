@@ -1,11 +1,21 @@
-﻿import React from 'react';
-import { StatCard } from '../components/ui/StatCard';
-import { Card } from '../components/ui/card';
-import { TrendChart } from '../components/charts/TrendChart';
-import { Button } from '../components/ui/button';
-import { DollarSign, Users, Package, TrendingUp, ArrowLeft, User, Briefcase, Clock, EuroIcon } from 'lucide-react';
-import { organizations } from '../data/organizationData';
-import { users as allUsers } from '../data/mockData';
+﻿import React from "react";
+import { StatCard } from "../components/ui/StatCard";
+import { Card } from "../components/ui/card";
+import { TrendChart } from "../components/charts/TrendChart";
+import { Button } from "../components/ui/button";
+import {
+  DollarSign,
+  Users,
+  Package,
+  TrendingUp,
+  ArrowLeft,
+  User,
+  Briefcase,
+  Clock,
+  EuroIcon,
+} from "lucide-react";
+import { organizations } from "../data/organizationData";
+import { users as allUsers } from "../data/mockData";
 
 interface OrganizationDetailProps {
   organizationId: string;
@@ -14,55 +24,69 @@ interface OrganizationDetailProps {
   onNavigateToUser: (userId: number) => void;
 }
 
-export function OrganizationDetail({ 
-  organizationId, 
-  onBack, 
+export function OrganizationDetail({
+  organizationId,
+  onBack,
   onNavigateToProduct,
-  onNavigateToUser 
+  onNavigateToUser,
 }: OrganizationDetailProps) {
-  const organization = organizations.find(org => org.id === organizationId);
-  
+  const organization = organizations.find((org) => org.id === organizationId);
+
   if (!organization) {
     return <div>Organization not found</div>;
   }
 
-  const utilization = Math.round((organization.activeUsers / organization.totalLicenses) * 100);
-  
+  const utilization = Math.round(
+    (organization.activeUsers / organization.totalLicenses) * 100,
+  );
+
   // Get users for this organization
   const orgUsers = allUsers.slice(0, 5);
 
   const productColumns = [
-    { key: 'name', label: 'Product' },
-    { key: 'licenses', label: 'Licenses', align: 'center' as const },
-    { key: 'activeUsers', label: 'Active Users', align: 'center' as const },
-    { key: 'cost', label: 'Monthly Cost', align: 'right' as const },
-    { key: 'utilization', label: 'Utilization', align: 'center' as const },
+    { key: "name", label: "Product" },
+    { key: "licenses", label: "Licenses", align: "center" as const },
+    { key: "activeUsers", label: "Active Users", align: "center" as const },
+    { key: "cost", label: "Monthly Cost", align: "right" as const },
+    { key: "utilization", label: "Utilization", align: "center" as const },
   ];
 
   const userColumns = [
-    { key: 'name', label: 'User Name' },
-    { key: 'email', label: 'Email' },
-    { key: 'department', label: 'Department' },
-    { key: 'licenseCount', label: 'Licenses', align: 'center' as const },
-    { key: 'status', label: 'Status', align: 'center' as const },
+    { key: "name", label: "User Name" },
+    { key: "email", label: "Email" },
+    { key: "department", label: "Department" },
+    { key: "licenseCount", label: "Licenses", align: "center" as const },
+    { key: "status", label: "Status", align: "center" as const },
   ];
 
   const productColors = [
-    '#EFF6FF', '#ECFDF5', '#FEF3C7', '#F3E8FF',
-    '#FCE7F3', '#DBEAFE', '#D1FAE5', '#FDE68A',
+    "#EFF6FF",
+    "#ECFDF5",
+    "#FEF3C7",
+    "#F3E8FF",
+    "#FCE7F3",
+    "#DBEAFE",
+    "#D1FAE5",
+    "#FDE68A",
   ];
 
   const userColors = [
-    '#EFF6FF', '#ECFDF5', '#FEF3C7', '#F3E8FF',
-    '#FCE7F3', '#DBEAFE', '#D1FAE5', '#FDE68A',
+    "#EFF6FF",
+    "#ECFDF5",
+    "#FEF3C7",
+    "#F3E8FF",
+    "#FCE7F3",
+    "#DBEAFE",
+    "#D1FAE5",
+    "#FDE68A",
   ];
 
   return (
     <div className="space-y-6">
       {/* Back Button and Header */}
       <div className="flex items-center gap-4">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={onBack}
           className="border-[#EAF1F9] hover:bg-[#F1F8FE] hover:border-[#276FD1] text-neutral-700"
         >
@@ -89,48 +113,57 @@ export function OrganizationDetail({
           icon={<DollarSign className="w-5 h-5" />}
           label="License Cost"
           value={`EUR ${organization.licenseCost.toLocaleString()}`}
-          change={{ value: '+3.2% vs last month', trend: 'up' }}
+          change={{ value: "+3.2% vs last month", trend: "up" }}
           variant="blue"
         />
         <StatCard
           icon={<Briefcase className="w-5 h-5" />}
           label="Consultancy Cost"
           value={`EUR ${organization.consultancyCost.toLocaleString()}`}
-          change={{ value: '+4.8% vs last month', trend: 'up' }}
+          change={{ value: "+4.8% vs last month", trend: "up" }}
           variant="purple"
         />
         <StatCard
           icon={<DollarSign className="w-5 h-5" />}
           label="Total Monthly Cost"
           value={`EUR ${organization.monthlyCost.toLocaleString()}`}
-          change={{ value: '+4.1% vs last month', trend: 'up' }}
+          change={{ value: "+4.1% vs last month", trend: "up" }}
           variant="cyan"
         />
         <StatCard
           icon={<TrendingUp className="w-5 h-5" />}
           label="Forecast (Next Mo)"
           value={`EUR ${organization.forecast.nextMonth.toLocaleString()}`}
-          change={{ value: `+${organization.forecast.percentageChange}%`, trend: organization.forecast.trend }}
+          change={{
+            value: `+${organization.forecast.percentageChange}%`,
+            trend: organization.forecast.trend,
+          }}
           variant="yellow"
         />
         <StatCard
           icon={<EuroIcon className="w-5 h-5" />}
           label="Chargeback"
           value={`EUR ${organization.chargebackAmount.toLocaleString()}`}
-          change={{ value: 'Complete', trend: 'neutral' }}
+          change={{ value: "Complete", trend: "neutral" }}
           variant="green"
         />
         <StatCard
           icon={<Users className="w-5 h-5" />}
           label="Utilization Rate"
           value={`${utilization}%`}
-          change={{ value: `${organization.activeUsers} active`, trend: 'neutral' }}
+          change={{
+            value: `${organization.activeUsers} active`,
+            trend: "neutral",
+          }}
           variant="mint"
         />
       </div>
 
       {/* Cost Trend with Stacked Areas */}
-      <Card className="bg-white shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
+      <Card
+        className="bg-white shadow-sm border-[#EAF1F9]"
+        style={{ borderRadius: "16px" }}
+      >
         <div className="p-6">
           <h3 className="text-lg font-bold text-neutral-900 mb-1">
             Cost Trend - {organization.name}
@@ -138,8 +171,8 @@ export function OrganizationDetail({
           <p className="text-sm text-neutral-500 mb-4">
             License and consultancy costs over time
           </p>
-          <TrendChart 
-            data={organization.costTrend} 
+          <TrendChart
+            data={organization.costTrend}
             showForecast={true}
             forecastData={organization.forecast}
           />
@@ -147,17 +180,25 @@ export function OrganizationDetail({
       </Card>
 
       {/* Products Table */}
-      <Card className="bg-white shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
+      <Card
+        className="bg-white shadow-sm border-[#EAF1F9]"
+        style={{ borderRadius: "16px" }}
+      >
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="text-lg font-bold text-neutral-900 mb-1">Products & Licenses</h3>
+              <h3 className="text-lg font-bold text-neutral-900 mb-1">
+                Products & Licenses
+              </h3>
               <p className="text-sm text-neutral-500">
                 Click any product to view user-level details
               </p>
             </div>
             <div className="text-right">
-              <span className="text-2xl font-bold" style={{ color: 'var(--color-equans-dark-green)' }}>
+              <span
+                className="text-2xl font-bold"
+                style={{ color: "var(--color-equans-dark-green)" }}
+              >
                 EUR {organization.licenseCost.toLocaleString()}
               </span>
               <p className="text-xs text-neutral-500">Total license cost</p>
@@ -166,14 +207,20 @@ export function OrganizationDetail({
 
           <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
             <table className="w-full caption-bottom text-sm">
-              <thead className="border-b border-[#EAF1F9]" style={{ backgroundColor: 'var(--color-equans-turquoise)' }}>
+              <thead
+                className="border-b border-[#EAF1F9]"
+                style={{ backgroundColor: "var(--color-equans-turquoise)" }}
+              >
                 <tr>
                   {productColumns.map((column) => (
                     <th
                       key={column.key}
                       className={`h-12 px-4 align-middle font-semibold text-white whitespace-nowrap ${
-                        column.align === 'center' ? 'text-center' : 
-                        column.align === 'right' ? 'text-right' : 'text-left'
+                        column.align === "center"
+                          ? "text-center"
+                          : column.align === "right"
+                            ? "text-right"
+                            : "text-left"
                       }`}
                     >
                       {column.label}
@@ -183,37 +230,54 @@ export function OrganizationDetail({
               </thead>
               <tbody>
                 {organization.products.map((product, index) => {
-                  const productUtilization = Math.round((product.activeUsers / product.licenses) * 100);
+                  const productUtilization = Math.round(
+                    (product.activeUsers / product.licenses) * 100,
+                  );
                   const bgColor = productColors[index % productColors.length];
-                  
+
                   return (
                     <tr
                       key={product.name}
-                      onClick={() => onNavigateToProduct(organizationId, product.name)}
+                      onClick={() =>
+                        onNavigateToProduct(organizationId, product.name)
+                      }
                       className="border-b border-[#EAF1F9] last:border-0 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.01]"
                       style={{ backgroundColor: bgColor }}
                     >
                       <td className="p-4 align-middle whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <Package className="w-4 h-4 text-[#276FD1]" strokeWidth={2} />
-                          <span className="font-semibold text-neutral-900">{product.name}</span>
+                          <Package
+                            className="w-4 h-4 text-[#276FD1]"
+                            strokeWidth={2}
+                          />
+                          <span className="font-semibold text-neutral-900">
+                            {product.name}
+                          </span>
                         </div>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-center">
-                        <span className="font-semibold text-neutral-900">{product.licenses}</span>
+                        <span className="font-semibold text-neutral-900">
+                          {product.licenses}
+                        </span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-center">
-                        <span className="font-semibold text-neutral-900">{product.activeUsers}</span>
+                        <span className="font-semibold text-neutral-900">
+                          {product.activeUsers}
+                        </span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-right">
-                        <span className="font-bold text-neutral-900">EUR {product.cost.toLocaleString()}</span>
+                        <span className="font-bold text-neutral-900">
+                          EUR {product.cost.toLocaleString()}
+                        </span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-center">
-                        <span className={`inline-flex px-3 py-1.5 rounded-full text-xs font-bold ${
-                          productUtilization >= 75
-                            ? 'bg-[#E9FDF2] text-[#059669]'
-                            : 'bg-[#FEFBEA] text-[#b45309]'
-                        }`}>
+                        <span
+                          className={`inline-flex px-3 py-1.5 rounded-full text-xs font-bold ${
+                            productUtilization >= 75
+                              ? "bg-[#E9FDF2] text-[#059669]"
+                              : "bg-[#FEFBEA] text-[#b45309]"
+                          }`}
+                        >
                           {productUtilization}%
                         </span>
                       </td>
@@ -227,17 +291,22 @@ export function OrganizationDetail({
       </Card>
 
       {/* Consultancy Services Table */}
-      <Card className="bg-white shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
+      <Card
+        className="bg-white shadow-sm border-[#EAF1F9]"
+        style={{ borderRadius: "16px" }}
+      >
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="text-lg font-bold text-neutral-900 mb-1">Consultancy Services</h3>
+              <h3 className="text-lg font-bold text-neutral-900 mb-1">
+                Consultancy Services
+              </h3>
               <p className="text-sm text-neutral-500">
                 External consultancy costs breakdown
               </p>
             </div>
             <div className="text-right">
-              <span className="text-2xl font-bold" style={{ color: '#C865FF' }}>
+              <span className="text-2xl font-bold" style={{ color: "#C865FF" }}>
                 EUR {organization.consultancyCost.toLocaleString()}
               </span>
               <p className="text-xs text-neutral-500">Total this month</p>
@@ -246,12 +315,23 @@ export function OrganizationDetail({
 
           <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
             <table className="w-full caption-bottom text-sm">
-              <thead className="border-b border-[#EAF1F9]" style={{ backgroundColor: '#C865FF' }}>
+              <thead
+                className="border-b border-[#EAF1F9]"
+                style={{ backgroundColor: "#C865FF" }}
+              >
                 <tr>
-                  <th className="h-12 px-4 align-middle font-semibold text-white text-left">Service Type</th>
-                  <th className="h-12 px-4 align-middle font-semibold text-white text-center">Hours</th>
-                  <th className="h-12 px-4 align-middle font-semibold text-white text-right">Hourly Rate</th>
-                  <th className="h-12 px-4 align-middle font-semibold text-white text-right">Cost</th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-left">
+                    Service Type
+                  </th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-center">
+                    Hours
+                  </th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-right">
+                    Hourly Rate
+                  </th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-right">
+                    Cost
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -259,25 +339,38 @@ export function OrganizationDetail({
                   <tr
                     key={service.type}
                     className="border-b border-[#EAF1F9] last:border-0"
-                    style={{ backgroundColor: index % 2 === 0 ? '#F3E8FF' : '#EDE9FE' }}
+                    style={{
+                      backgroundColor: index % 2 === 0 ? "#F3E8FF" : "#EDE9FE",
+                    }}
                   >
                     <td className="p-4 align-middle whitespace-nowrap">
                       <div className="flex items-center gap-2">
-                        <Briefcase className="w-4 h-4 text-purple-600" strokeWidth={2} />
-                        <span className="font-semibold text-neutral-900">{service.type}</span>
+                        <Briefcase
+                          className="w-4 h-4 text-purple-600"
+                          strokeWidth={2}
+                        />
+                        <span className="font-semibold text-neutral-900">
+                          {service.type}
+                        </span>
                       </div>
                     </td>
                     <td className="p-4 align-middle whitespace-nowrap text-center">
                       <div className="flex items-center justify-center gap-1">
                         <Clock className="w-3 h-3 text-neutral-500" />
-                        <span className="font-semibold text-neutral-900">{service.hours}h</span>
+                        <span className="font-semibold text-neutral-900">
+                          {service.hours}h
+                        </span>
                       </div>
                     </td>
                     <td className="p-4 align-middle whitespace-nowrap text-right">
-                      <span className="text-neutral-600">EUR {service.hourlyRate}/hr</span>
+                      <span className="text-neutral-600">
+                        EUR {service.hourlyRate}/hr
+                      </span>
                     </td>
                     <td className="p-4 align-middle whitespace-nowrap text-right">
-                      <span className="font-bold" style={{ color: '#C865FF' }}>EUR {service.cost.toLocaleString()}</span>
+                      <span className="font-bold" style={{ color: "#C865FF" }}>
+                        EUR {service.cost.toLocaleString()}
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -288,27 +381,41 @@ export function OrganizationDetail({
       </Card>
 
       {/* Users in Organization */}
-      <Card className="bg-white shadow-sm border-[#EAF1F9]" style={{ borderRadius: '16px' }}>
+      <Card
+        className="bg-white shadow-sm border-[#EAF1F9]"
+        style={{ borderRadius: "16px" }}
+      >
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="text-lg font-bold text-neutral-900 mb-1">Users in Organization</h3>
+              <h3 className="text-lg font-bold text-neutral-900 mb-1">
+                Users in Organization
+              </h3>
               <p className="text-sm text-neutral-500">
-                <span className="font-semibold text-[#276FD1]">{orgUsers.length} users</span> - Click to view individual details
+                <span className="font-semibold text-[#276FD1]">
+                  {orgUsers.length} users
+                </span>{" "}
+                - Click to view individual details
               </p>
             </div>
           </div>
 
           <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
             <table className="w-full caption-bottom text-sm">
-              <thead className="border-b border-[#EAF1F9]" style={{ backgroundColor: 'var(--color-equans-turquoise)' }}>
+              <thead
+                className="border-b border-[#EAF1F9]"
+                style={{ backgroundColor: "var(--color-equans-turquoise)" }}
+              >
                 <tr>
                   {userColumns.map((column) => (
                     <th
                       key={column.key}
                       className={`h-12 px-4 align-middle font-semibold text-white whitespace-nowrap ${
-                        column.align === 'center' ? 'text-center' : 
-                        column.align === 'right' ? 'text-right' : 'text-left'
+                        column.align === "center"
+                          ? "text-center"
+                          : column.align === "right"
+                            ? "text-right"
+                            : "text-left"
                       }`}
                     >
                       {column.label}
@@ -319,7 +426,7 @@ export function OrganizationDetail({
               <tbody>
                 {orgUsers.map((user, index) => {
                   const bgColor = userColors[index % userColors.length];
-                  
+
                   return (
                     <tr
                       key={user.id}
@@ -329,15 +436,22 @@ export function OrganizationDetail({
                     >
                       <td className="p-4 align-middle whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <User className="w-4 h-4 text-[#10B981]" strokeWidth={2} />
-                          <span className="font-semibold text-neutral-900">{user.name}</span>
+                          <User
+                            className="w-4 h-4 text-[#10B981]"
+                            strokeWidth={2}
+                          />
+                          <span className="font-semibold text-neutral-900">
+                            {user.name}
+                          </span>
                         </div>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap">
                         <span className="text-neutral-600">{user.email}</span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap">
-                        <span className="font-medium text-neutral-700">{user.department}</span>
+                        <span className="font-medium text-neutral-700">
+                          {user.department}
+                        </span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-center">
                         <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#276FD1] text-white font-bold text-xs">
@@ -345,11 +459,13 @@ export function OrganizationDetail({
                         </span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-center">
-                        <span className={`inline-flex px-3 py-1.5 rounded-full text-xs font-bold ${
-                          user.status === 'active' 
-                            ? 'bg-[#E9FDF2] text-[#059669]' 
-                            : 'bg-neutral-100 text-neutral-600'
-                        }`}>
+                        <span
+                          className={`inline-flex px-3 py-1.5 rounded-full text-xs font-bold ${
+                            user.status === "active"
+                              ? "bg-[#E9FDF2] text-[#059669]"
+                              : "bg-neutral-100 text-neutral-600"
+                          }`}
+                        >
                           {user.status}
                         </span>
                       </td>
