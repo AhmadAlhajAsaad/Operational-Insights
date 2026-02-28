@@ -1,5 +1,12 @@
 ﻿import React from "react";
-import { Building2, Users, Package, PackageSearch, LogOut, Upload } from "lucide-react";
+import {
+  Building2,
+  Users,
+  Package,
+  PackageSearch,
+  LogOut,
+  Upload,
+} from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo.png";
 
@@ -55,7 +62,10 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
               <li key={item.id}>
                 <button
                   onClick={() => onNavigate(item.id)}
-                  className={"sidebar-nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 " + (isActive ? "active" : "")}
+                  className={
+                    "sidebar-nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 " +
+                    (isActive ? "active" : "")
+                  }
                   style={{
                     backgroundColor: isActive
                       ? "var(--color-equans-turquoise)"
