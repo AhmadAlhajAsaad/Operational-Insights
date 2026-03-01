@@ -19,11 +19,11 @@ interface CylindricalMonthlyChartProps {
 }
 
 const BUSINESS_UNIT_COLORS: { [key: string]: string } = {
-  "Digital Services": "var(--color-equans-apple-green)",
-  "IT Operations": "var(--color-equans-dark-green)",
-  "Smart Energy": "var(--color-equans-turquoise)",
-  "Building Solutions": "var(--color-equans-azure-blue)",
-  "Field Operations": "var(--color-equans-dark-blue)",
+  "Digital Services": "var(--equans-blue-60)", // #669be1 - medium blue
+  "IT Operations": "var(--color-equans-dark-green)", // #008163 - corporate green
+  "Smart Energy": "var(--color-equans-orange)", // #ff9600 - vibrant orange
+  "Building Solutions": "var(--color-equans-turquoise)", // #70bd95 - turquoise
+  "Field Operations": "var(--equans-violet-60)", // #dfa3ff - medium violet
 };
 
 interface HoveredSegment {
@@ -173,15 +173,17 @@ export function CylindricalMonthlyChart({
                 className="relative"
                 style={{ width: "88px", height: `${cylinderHeight}px` }}
               >
-                {/* Top ellipse */}
+                {/* Top ellipse - matches first segment */}
                 <div
                   className="absolute top-0 left-0 right-0"
                   style={{
                     height: "18px",
                     borderRadius: "999px",
                     background:
-                      "linear-gradient(180deg, var(--color-equans-white) 0%, var(--color-primary-20) 100%)",
-                    border: "1px solid var(--color-primary-20)",
+                      monthData.businessUnits.length > 0
+                        ? `linear-gradient(180deg, var(--color-equans-white) 0%, ${monthData.businessUnits[0].color} 100%)`
+                        : "linear-gradient(180deg, var(--color-equans-white) 0%, var(--color-primary-20) 100%)",
+                    border: `1px solid ${monthData.businessUnits[0]?.color || "var(--color-primary-20)"}`,
                     zIndex: 10,
                   }}
                 />
