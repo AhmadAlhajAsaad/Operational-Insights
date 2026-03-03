@@ -359,3 +359,18 @@ a:hover {
   --chart-color-3: var(--color-equans-turquoise);
   --chart-color-4: var(--color-equans-azure-blue);
 }
+
+/* Recovery page helpers */
+.recovery-input {
+  border: 1px solid var(--color-neutral-200);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.95rem;
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+  outline: none;
+  background: var(--color-equans-white);
+  box-shadow: none;
+}
