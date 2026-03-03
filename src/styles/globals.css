@@ -374,3 +374,20 @@ a:hover {
   background: var(--color-equans-white);
   box-shadow: none;
 }
+.recovery-input:focus {
+  border-color: var(--color-equans-azure-blue);
+  box-shadow: 0 6px 18px rgba(0, 89, 206, 0.06);
+}
+
+/* Slightly larger click targets for recovery buttons */
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Make the card responsive with some breathing room */
+@media (max-width: 720px) {
+  .card {
+    margin: 12px;
+  }
+}
