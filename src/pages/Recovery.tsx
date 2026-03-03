@@ -26,19 +26,19 @@ export default function Recovery() {
       return;
     }
     setLoading(true);
-    // Simulated request
+    // Simulate API request
     await new Promise((r) => setTimeout(r, 900));
     setLoading(false);
     setSent(true);
   };
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <Card
         style={{
-          width: "min(920px, 96%)",
-          borderRadius: 12,
-          boxShadow: "0 8px 30px rgba(15, 23, 42, 0.08)",
+          width: "min(980px, 96%)",
+          borderRadius: 14,
+          boxShadow: "0 12px 30px rgba(2,6,23,0.08)",
           overflow: "hidden",
         }}
       >
@@ -46,62 +46,108 @@ export default function Recovery() {
           {/* Left brand / illustration */}
           <div
             style={{
-              flex: "1 1 320px",
-              minHeight: 240,
-              padding: "28px",
+              flex: "1 1 360px",
+              minHeight: 300,
+              padding: 30,
               background:
-                "linear-gradient(180deg, var(--color-equans-azure-blue) 0%, var(--color-equans-turquoise-20) 100%)",
+                "linear-gradient(180deg, var(--color-equans-azure-blue) 0%, var(--color-equans-turquoise) 100%)",
               color: "var(--color-equans-white)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              gap: 8,
+              gap: 12,
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <div
                 style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 10,
+                  width: 56,
+                  height: 56,
+                  borderRadius: 12,
                   background: "rgba(255,255,255,0.12)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <Mail size={22} />
+                <Mail size={26} />
               </div>
-              <h2
-                style={{
-                  margin: 0,
-                  fontSize: 20,
-                  fontWeight: 700,
-                  fontFamily: "Roboto, sans-serif",
-                }}
-              >
-                Password recovery
-              </h2>
+              <div>
+                <h2
+                  style={{
+                    margin: 0,
+                    fontSize: 20,
+                    fontWeight: 700,
+                    fontFamily: "Roboto, sans-serif",
+                  }}
+                >
+                  Password recovery
+                </h2>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: 13,
+                    color: "rgba(255,255,255,0.92)",
+                    fontFamily: "Roboto, sans-serif",
+                    opacity: 0.95,
+                  }}
+                >
+                  Securely reset your account password.
+                </p>
+              </div>
             </div>
+
             <p
               style={{
-                marginTop: 6,
-                color: "rgba(255,255,255,0.92)",
+                marginTop: 8,
+                color: "rgba(255,255,255,0.9)",
                 fontFamily: "Roboto, sans-serif",
                 lineHeight: 1.45,
-                maxWidth: 420,
+                maxWidth: 440,
               }}
             >
-              Enter your account email and we’ll send a secure link to reset
-              your password. The link will expire for safety.
+              Enter the email address associated with your Equans account and
+              we’ll send a secure reset link. The link expires for security
+              reasons.
             </p>
+
+            <div
+              style={{
+                marginTop: 10,
+                opacity: 0.95,
+                display: "flex",
+                gap: 10,
+                flexWrap: "wrap",
+              }}
+            >
+              <div
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  padding: "8px 12px",
+                  borderRadius: 8,
+                  fontSize: 13,
+                }}
+              >
+                Secure • Expiring link
+              </div>
+              <div
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  padding: "8px 12px",
+                  borderRadius: 8,
+                  fontSize: 13,
+                }}
+              >
+                Enterprise support
+              </div>
+            </div>
           </div>
 
           {/* Right form */}
           <div
             style={{
-              flex: "1 1 360px",
-              padding: 28,
+              flex: "1 1 420px",
+              padding: 30,
               background: "var(--color-equans-white)",
             }}
           >
@@ -118,146 +164,155 @@ export default function Recovery() {
               </CardTitle>
               <CardDescription
                 style={{
-                  color: "var(--color-equans-dark-blue-60)",
+                  color: "var(--equans-blue-60)",
                   fontFamily: "Roboto, sans-serif",
                   marginBottom: 10,
                 }}
               >
-                Provide the email associated with your account.
+                Provide the email associated with your account and we’ll send a
+                reset link.
               </CardDescription>
             </CardHeader>
 
-            {sent ? (
-              <Alert
-                style={{
-                  borderRadius: 8,
-                  background: "var(--color-equans-turquoise-20)",
-                  borderColor: "var(--color-equans-dark-green)",
-                }}
-              >
-                <div
-                  style={{ display: "flex", gap: 10, alignItems: "flex-start" }}
+            <CardContent style={{ padding: 0 }}>
+              {sent ? (
+                <Alert
+                  style={{
+                    borderRadius: 10,
+                    background: "var(--equans-green-20, rgba(226,245,220,0.2))",
+                    borderColor: "var(--color-equans-dark-green)",
+                    padding: 14,
+                  }}
                 >
-                  <CheckCircle2
-                    size={18}
-                    style={{ color: "var(--color-equans-dark-green)" }}
-                  />
-                  <div>
-                    <AlertTitle
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 12,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <CheckCircle2
+                      size={18}
+                      style={{ color: "var(--color-equans-dark-green)" }}
+                    />
+                    <div>
+                      <AlertTitle
+                        style={{
+                          color: "var(--color-equans-dark-blue)",
+                          fontFamily: "Roboto, sans-serif",
+                        }}
+                      >
+                        Email sent
+                      </AlertTitle>
+                      <AlertDescription
+                        style={{
+                          color: "var(--equans-blue-60)",
+                          fontFamily: "Roboto, sans-serif",
+                        }}
+                      >
+                        If an account exists for <strong>{email}</strong>,
+                        you’ll receive a recovery link shortly.
+                      </AlertDescription>
+                    </div>
+                  </div>
+                </Alert>
+              ) : (
+                <form onSubmit={handleSubmit} style={{ marginTop: 6 }}>
+                  <label style={{ display: "block", marginBottom: 8 }}>
+                    <span
                       style={{
+                        display: "block",
+                        marginBottom: 8,
+                        color: "var(--color-equans-dark-blue)",
+                        fontFamily: "Roboto, sans-serif",
+                        fontWeight: 600,
+                        fontSize: 13,
+                      }}
+                    >
+                      Email address
+                    </span>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="name@company.com"
+                      className="recovery-input"
+                      style={{
+                        width: "100%",
+                      }}
+                      aria-label="Email address"
+                    />
+                  </label>
+
+                  {error && (
+                    <p
+                      style={{
+                        color: "var(--color-equans-orange)",
+                        marginTop: 6,
+                        fontSize: 13,
+                      }}
+                    >
+                      {error}
+                    </p>
+                  )}
+
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 10,
+                      justifyContent: "flex-end",
+                      marginTop: 18,
+                    }}
+                  >
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setEmail("");
+                        setError(null);
+                      }}
+                      style={{
+                        borderColor: "var(--equans-blue-60)",
                         color: "var(--color-equans-dark-blue)",
                         fontFamily: "Roboto, sans-serif",
                       }}
                     >
-                      Email sent
-                    </AlertTitle>
-                    <AlertDescription
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => handleSubmit()}
+                      disabled={loading}
                       style={{
-                        color: "var(--color-equans-dark-blue-60)",
+                        backgroundColor: "var(--color-equans-dark-green)",
+                        color: "var(--color-equans-white)",
+                        fontWeight: 700,
                         fontFamily: "Roboto, sans-serif",
+                        paddingLeft: 20,
+                        paddingRight: 20,
                       }}
                     >
-                      If an account exists for <strong>{email}</strong>, you’ll
-                      receive a recovery link shortly.
-                    </AlertDescription>
+                      {loading ? "Sending..." : "Send recovery link"}
+                    </Button>
                   </div>
-                </div>
-              </Alert>
-            ) : (
-              <form onSubmit={handleSubmit} style={{ marginTop: 6 }}>
-                <label style={{ display: "block", marginBottom: 8 }}>
-                  <span
-                    style={{
-                      display: "block",
-                      marginBottom: 6,
-                      color: "var(--color-equans-dark-blue)",
-                      fontFamily: "Roboto, sans-serif",
-                      fontWeight: 500,
-                    }}
-                  >
-                    Email address
-                  </span>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@company.com"
-                    className="w-full rounded-md px-3 py-2 border"
-                    style={{
-                      borderColor: "var(--color-equans-dark-blue-20)",
-                      fontFamily: "Roboto, sans-serif",
-                      outline: "none",
-                    }}
-                    aria-label="Email address"
-                  />
-                </label>
+                </form>
+              )}
 
-                {error && (
-                  <p
-                    style={{
-                      color: "var(--color-equans-orange)",
-                      marginTop: 6,
-                    }}
-                  >
-                    {error}
-                  </p>
-                )}
-
-                <div
+              <div style={{ marginTop: 18, textAlign: "center" }}>
+                <small
                   style={{
-                    display: "flex",
-                    gap: 10,
-                    justifyContent: "flex-end",
-                    marginTop: 16,
+                    color: "var(--equans-blue-60)",
+                    fontFamily: "Roboto, sans-serif",
                   }}
                 >
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setEmail("");
-                      setError(null);
-                    }}
-                    style={{
-                      borderColor: "var(--color-equans-dark-blue-60)",
-                      color: "var(--color-equans-dark-blue)",
-                      fontFamily: "Roboto, sans-serif",
-                    }}
+                  Need help? Contact support at{" "}
+                  <a
+                    href="mailto:support@equans.com"
+                    style={{ color: "var(--color-equans-azure-blue)" }}
                   >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={() => handleSubmit()}
-                    disabled={loading}
-                    style={{
-                      backgroundColor: "var(--color-equans-dark-green)",
-                      color: "var(--color-equans-white)",
-                      fontWeight: 600,
-                      fontFamily: "Roboto, sans-serif",
-                      paddingLeft: 18,
-                      paddingRight: 18,
-                    }}
-                  >
-                    {loading ? "Sending..." : "Send recovery link"}
-                  </Button>
-                </div>
-              </form>
-            )}
-            <div style={{ marginTop: 18, textAlign: "center" }}>
-              <small
-                style={{
-                  color: "var(--color-equans-dark-blue-60)",
-                  fontFamily: "Roboto, sans-serif",
-                }}
-              >
-                Need help? Contact support at{" "}
-                <a
-                  href="mailto:support@equans.com"
-                  style={{ color: "var(--color-equans-azure-blue)" }}
-                >
-                  support@equans.com
-                </a>
-              </small>
-            </div>
+                    support@equans.com
+                  </a>
+                </small>
+              </div>
+            </CardContent>
           </div>
         </div>
       </Card>
