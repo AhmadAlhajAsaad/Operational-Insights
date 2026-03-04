@@ -14,7 +14,7 @@
   --color-equans-azure-blue: #0059ce;
   --color-equans-orange: #ff9600;
   --color-equans-yellow: #ffca00;
-  --color-equans-apple-green: #76c512;
+  --color-equans-apple-green: #e3f2ce;
   --color-equans-violet: #c865ff;
   --color-equans-pink: #ff0080;
   --color-equans-lime-green: #b7f100;
@@ -358,4 +358,36 @@ a:hover {
   --chart-color-2: var(--color-equans-dark-green);
   --chart-color-3: var(--color-equans-turquoise);
   --chart-color-4: var(--color-equans-azure-blue);
+}
+
+/* Recovery page helpers */
+.recovery-input {
+  border: 1px solid var(--color-neutral-200);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.95rem;
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+  outline: none;
+  background: var(--color-equans-white);
+  box-shadow: none;
+}
+.recovery-input:focus {
+  border-color: var(--color-equans-azure-blue);
+  box-shadow: 0 6px 18px rgba(0, 89, 206, 0.06);
+}
+
+/* Slightly larger click targets for recovery buttons */
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Make the card responsive with some breathing room */
+@media (max-width: 720px) {
+  .card {
+    margin: 12px;
+  }
 }

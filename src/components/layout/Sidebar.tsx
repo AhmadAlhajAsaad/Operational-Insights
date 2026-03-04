@@ -1,5 +1,12 @@
 ﻿import React from "react";
-import { Building2, Users, Package, PackageSearch, LogOut, UploadCloud } from "lucide-react";
+import {
+  Building2,
+  Users,
+  Package,
+  PackageSearch,
+  LogOut,
+  Upload,
+} from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo.png";
 
@@ -15,17 +22,14 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
     { id: "organizations", label: "Organizations", icon: Building2 },
     { id: "products", label: "Product Details", icon: PackageSearch },
     { id: "users", label: "Users", icon: Users },
-    { id: "import", label: "Import", icon: UploadCloud },
-    // { id: 'products', label: 'Product Breakdown', icon: Package },
+    { id: "import", label: "Data Import", icon: Upload },
   ];
 
   return (
     <div className="sidebar w-64 flex flex-col h-full">
-      {/* Logo Header - Equans Corporate Style */}
       <div
         className="p-6 border-b"
         style={{
-          // backgroundColor: 'var(--color-surface)',
           borderColor: "var(--color-neutral-100)",
         }}
       >
@@ -49,8 +53,6 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           </div>
         </div>
       </div>
-
-      {/* Navigation */}
       <nav className="flex-1 p-4">
         <ul className="space-y-1">
           {menuItems.map((item) => {
@@ -60,10 +62,10 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
               <li key={item.id}>
                 <button
                   onClick={() => onNavigate(item.id)}
-                  className={`
-                    sidebar-nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
-                    ${isActive ? "active" : ""}
-                  `}
+                  className={
+                    "sidebar-nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 " +
+                    (isActive ? "active" : "")
+                  }
                   style={{
                     backgroundColor: isActive
                       ? "var(--color-equans-turquoise)"
@@ -84,8 +86,6 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           })}
         </ul>
       </nav>
-
-      {/* Logout Button */}
       <div
         className="p-4 border-t"
         style={{ borderColor: "var(--color-neutral-100)" }}

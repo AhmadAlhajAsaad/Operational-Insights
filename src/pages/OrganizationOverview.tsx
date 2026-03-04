@@ -2,7 +2,15 @@
 import { StatCard } from "../components/ui/StatCard";
 import { Card } from "../components/ui/card";
 import { CylindricalMonthlyChart } from "../components/charts/CylindricalMonthlyChart";
-import { Building2, DollarSign, Users, Search, EuroIcon, Briefcase, TrendingUp } from "lucide-react";
+import {
+  Building2,
+  DollarSign,
+  Users,
+  Search,
+  EuroIcon,
+  Briefcase,
+  TrendingUp,
+} from "lucide-react";
 import { organizations } from "../data/organizationData";
 
 interface OrganizationOverviewProps {
@@ -17,31 +25,31 @@ export function OrganizationOverview({
   // Calculate aggregate metrics with consultancy
   const totalLicenseCost = organizations.reduce(
     (sum, org) => sum + org.licenseCost,
-    0
+    0,
   );
   const totalConsultancyCost = organizations.reduce(
     (sum, org) => sum + org.consultancyCost,
-    0
+    0,
   );
   const totalCost = organizations.reduce(
     (sum, org) => sum + org.monthlyCost,
-    0
+    0,
   );
   const totalChargeback = organizations.reduce(
     (sum, org) => sum + org.chargebackAmount,
-    0
+    0,
   );
   const totalForecast = organizations.reduce(
     (sum, org) => sum + org.forecast.nextMonth,
-    0
+    0,
   );
   const totalLicenses = organizations.reduce(
     (sum, org) => sum + org.totalLicenses,
-    0
+    0,
   );
   const totalActiveUsers = organizations.reduce(
     (sum, org) => sum + org.activeUsers,
-    0
+    0,
   );
 
   // Prepare data for cylindrical chart - Last 6 months by business unit
@@ -233,7 +241,7 @@ export function OrganizationOverview({
               />
               <input
                 type="text"
-                placeholder="Search by Organization ID (e.g., 21959ca7-236b-11j7-k470)..."
+                placeholder="Search by Organization ID (e.g., ORG03xx)..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-[#F1F8FE] border border-[#EAF1F9] rounded-full focus:outline-none focus:ring-2 focus:ring-[#276FD1] focus:bg-white transition-all"
@@ -315,7 +323,10 @@ export function OrganizationOverview({
                         </span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-right">
-                        <span className="font-medium" style={{ color: '#C865FF' }}>
+                        <span
+                          className="font-medium"
+                          style={{ color: "#C865FF" }}
+                        >
                           EUR {org.consultancyCost.toLocaleString()}
                         </span>
                       </td>
@@ -325,7 +336,10 @@ export function OrganizationOverview({
                         </span>
                       </td>
                       <td className="p-4 align-middle whitespace-nowrap text-right">
-                        <span className="font-bold" style={{ color: 'var(--color-equans-dark-green)' }}>
+                        <span
+                          className="font-bold"
+                          style={{ color: "var(--color-equans-dark-green)" }}
+                        >
                           EUR {org.chargebackAmount.toLocaleString()}
                         </span>
                       </td>
@@ -400,8 +414,10 @@ export function OrganizationOverview({
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-xs text-neutral-500">Consultancy</div>
-                      <div className="font-medium" style={{ color: '#C865FF' }}>
+                      <div className="text-xs text-neutral-500">
+                        Consultancy
+                      </div>
+                      <div className="font-medium" style={{ color: "#C865FF" }}>
                         EUR {org.consultancyCost.toLocaleString()}
                       </div>
                     </div>
@@ -416,7 +432,8 @@ export function OrganizationOverview({
                         className="text-xs"
                         style={{ color: "var(--color-text-secondary)" }}
                       >
-                        {Math.round((org.monthlyCost / totalCost) * 100)}% of total
+                        {Math.round((org.monthlyCost / totalCost) * 100)}% of
+                        total
                       </div>
                     </div>
                   </div>

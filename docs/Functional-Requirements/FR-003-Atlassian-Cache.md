@@ -2,7 +2,7 @@
 
 **Status:** Draft
 **Date:** 2026-02-16
-**Author(s):** Backend Engineer Agent
+**Author(s):** Ahmad Alhaj Asaad
 **Related BR:** [BR-001-Multi-Vendor-License-Insights](../Business-Requirements/BR-001-Multi-Vendor-License-Insights.md)
 
 ---
