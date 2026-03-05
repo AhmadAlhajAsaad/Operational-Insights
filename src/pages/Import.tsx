@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Building2, Users, Upload } from 'lucide-react';
+import { Building2, Users, Upload, FileText } from 'lucide-react';
 import ImportData from '../components/Import/ImportData';
 
 export function ImportPage() {
@@ -17,8 +17,36 @@ export function ImportPage() {
           <p className="text-slate-600 text-lg">Import your organizations or users data from Excel or CSV files</p>
         </div>
 
-        {/* Type Selector Cards */}
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        {/* Instructions */}
+        <div className="mb-8 bg-white rounded-xl shadow-lg p-6 border border-slate-200">
+          <h2 className="text-xl font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <FileText className="w-5 h-5 text-ui-blue-primary" />
+            How to Import Data
+          </h2>
+          <div className="grid md:grid-cols-3 gap-4 text-sm">
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 bg-ui-blue-primary text-white rounded-full flex items-center justify-center text-xs font-bold">1</div>
+              <div>
+                <p className="font-medium text-slate-900">Choose Data Type</p>
+                <p className="text-slate-600">Select organizations or users above</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 bg-ui-blue-primary text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
+              <div>
+                <p className="font-medium text-slate-900">Upload File</p>
+                <p className="text-slate-600">Drag & drop or click to select CSV/Excel</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 bg-ui-blue-primary text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
+              <div>
+                <p className="font-medium text-slate-900">Review & Import</p>
+                <p className="text-slate-600">Check preview and click import</p>
+              </div>
+            </div>
+          </div>
+        </div>
           <button
             onClick={() => setType('organizations')}
             className={`p-6 rounded-lg transition-all duration-200 ${
