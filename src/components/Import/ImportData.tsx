@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import * as XLSX from 'xlsx';
-import { AlertCircle, CheckCircle, Upload, Eye, RotateCcw } from 'lucide-react';
+import { AlertCircle, CheckCircle, Upload, Eye, RotateCcw, FileText, Download, Loader2 } from 'lucide-react';
 
 interface ImportDataProps {
   type: 'organizations' | 'users';
@@ -12,6 +12,10 @@ export function ImportData({ type }: ImportDataProps) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [parsing, setParsing] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const requiredColumns = type === 'organizations'
     ? ['id', 'name', 'domain']
@@ -20,7 +24,11 @@ export function ImportData({ type }: ImportDataProps) {
   const handleFile = async (file?: File) => {
     setError(null);
     setSuccess(false);
-    if (!file) return;
+    setParsing(true);
+    if (!file) {
+      setParsing(false);
+      return;
+    }
 
     try {
       setFileName(file.name);
@@ -33,6 +41,7 @@ export function ImportData({ type }: ImportDataProps) {
       if (!Array.isArray(json) || json.length === 0) {
         setError('Geen rijen gevonden in het bestand.');
         setPreviewRows([]);
+        setParsing(false);
         return;
       }
 
@@ -52,6 +61,7 @@ export function ImportData({ type }: ImportDataProps) {
       if (missing.length) {
         setError(`Ontbrekende kolommen: ${missing.join(', ')}`);
         setPreviewRows(normalized.slice(0, 10));
+        setParsing(false);
         return;
       }
 
@@ -59,6 +69,8 @@ export function ImportData({ type }: ImportDataProps) {
     } catch (e: any) {
       setError(e?.message || String(e));
       setPreviewRows([]);
+    } finally {
+      setParsing(false);
     }
   };
 
@@ -67,9 +79,30 @@ export function ImportData({ type }: ImportDataProps) {
     handleFile(f);
   };
 
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      handleFile(files[0]);
+    }
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
     setError(null);
+    setUploadProgress(0);
+
     try {
       const payload = { type, rows: previewRows };
       const res = await fetch('/api/import', {
@@ -77,25 +110,54 @@ export function ImportData({ type }: ImportDataProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
+
+      // Simulate progress
+      const progressInterval = setInterval(() => {
+        setUploadProgress(prev => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return 90;
+          }
+          return prev + 10;
+        });
+      }, 200);
+
       if (!res.ok) {
         const txt = await res.text();
         throw new Error(txt || `Request failed: ${res.status}`);
       }
-      setSuccess(true);
-      setPreviewRows([]);
-      setFileName(null);
+
+      setUploadProgress(100);
+      setTimeout(() => {
+        setSuccess(true);
+        setPreviewRows([]);
+        setFileName(null);
+        setUploadProgress(0);
+      }, 500);
     } catch (e: any) {
       setError(e?.message || String(e));
+      setUploadProgress(0);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleReset = () => {
-    setPreviewRows([]);
-    setError(null);
-    setSuccess(false);
-    setFileName(null);
+  const downloadTemplate = () => {
+    const headers = requiredColumns;
+    const exampleData = type === 'organizations'
+      ? [
+          { id: '1', name: 'Example Corp', domain: 'example.com' },
+          { id: '2', name: 'Another Company', domain: 'another.com' }
+        ]
+      : [
+          { id: '1', firstName: 'John', lastName: 'Doe', email: 'john@example.com', organizationId: '1' },
+          { id: '2', firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com', organizationId: '2' }
+        ];
+
+    const ws = XLSX.utils.json_to_sheet(exampleData, { header: headers });
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, type);
+    XLSX.writeFile(wb, `${type}_template.xlsx`);
   };
 
   return (
@@ -110,28 +172,66 @@ export function ImportData({ type }: ImportDataProps) {
         <label className="block">
           <div className="relative group">
             <input
+              ref={fileInputRef}
               type="file"
               accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
               onChange={handleInputChange}
               className="sr-only"
             />
-            <div className="border-2 border-dashed border-ui-blue-primary rounded-lg p-8 text-center hover:bg-ui-blue-light transition-colors cursor-pointer">
-              <Upload className="w-10 h-10 text-ui-blue-primary mx-auto mb-3" />
-              <p className="text-sm font-medium text-slate-900">Select a file or drag and drop</p>
-              <p className="text-xs text-slate-500 mt-1">CSV or Excel (XLSX) files are supported</p>
-              {fileName && <p className="text-sm text-ui-blue-primary font-semibold mt-3">{fileName}</p>}
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 cursor-pointer ${
+                isDragOver
+                  ? 'border-ui-blue-primary bg-ui-blue-light scale-105'
+                  : 'border-ui-blue-primary hover:bg-ui-blue-light'
+              }`}
+            >
+              {parsing ? (
+                <div className="flex flex-col items-center">
+                  <Loader2 className="w-10 h-10 text-ui-blue-primary animate-spin mb-3" />
+                  <p className="text-sm font-medium text-slate-900">Processing file...</p>
+                  <p className="text-xs text-slate-500 mt-1">Please wait</p>
+                </div>
+              ) : (
+                <>
+                  <Upload className="w-10 h-10 text-ui-blue-primary mx-auto mb-3" />
+                  <p className="text-sm font-medium text-slate-900">
+                    {isDragOver ? 'Drop your file here' : 'Select a file or drag and drop'}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-1">CSV or Excel (XLSX) files are supported</p>
+                  {fileName && (
+                    <div className="flex items-center justify-center gap-2 mt-3 p-2 bg-ui-blue-lighter rounded">
+                      <FileText className="w-4 h-4 text-ui-blue-primary" />
+                      <p className="text-sm text-ui-blue-primary font-semibold">{fileName}</p>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </label>
 
         <div className="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
-          <p className="text-sm font-medium text-slate-700 mb-2">Required columns:</p>
-          <div className="flex flex-wrap gap-2">
-            {requiredColumns.map((col) => (
-              <span key={col} className="px-3 py-1 bg-ui-blue-primary text-white text-xs font-medium rounded-full">
-                {col}
-              </span>
-            ))}
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-slate-700 mb-2">Required columns:</p>
+              <div className="flex flex-wrap gap-2">
+                {requiredColumns.map((col) => (
+                  <span key={col} className="px-3 py-1 bg-ui-blue-primary text-white text-xs font-medium rounded-full">
+                    {col}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <button
+              onClick={downloadTemplate}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              Template
+            </button>
           </div>
         </div>
       </div>
@@ -151,11 +251,26 @@ export function ImportData({ type }: ImportDataProps) {
 
       {/* Success Alert */}
       {success && (
-        <div className="p-6 bg-ui-green-light border-l-4 border-ui-green-DEFAULT">
-          <div className="flex items-start gap-4">
-            <CheckCircle className="w-6 h-6 text-ui-green-DEFAULT flex-shrink-0 mt-0.5" />
+        <div className="p-6 bg-ui-green-light border-l-4 border-ui-green-DEFAULT relative overflow-hidden animate-in zoom-in-95 duration-300">
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(15)].map((_, i) => (
+              <div
+                key={i}
+                className={`absolute w-1 h-1 rounded-full animate-bounce`}
+                style={{
+                  left: `${10 + Math.random() * 80}%`,
+                  top: `${10 + Math.random() * 80}%`,
+                  backgroundColor: ['#fbbf24', '#f59e0b', '#10b981', '#06b6d4', '#8b5cf6'][i % 5],
+                  animationDelay: `${Math.random() * 1}s`,
+                  animationDuration: `${0.5 + Math.random() * 0.5}s`
+                }}
+              />
+            ))}
+          </div>
+          <div className="flex items-start gap-4 relative z-10">
+            <CheckCircle className="w-6 h-6 text-ui-green-DEFAULT flex-shrink-0 mt-0.5 animate-pulse" />
             <div>
-              <h3 className="font-semibold text-slate-900">Success!</h3>
+              <h3 className="font-semibold text-slate-900">🎉 Success!</h3>
               <p className="text-sm text-slate-700 mt-1">Your data has been imported successfully.</p>
             </div>
           </div>
@@ -164,14 +279,14 @@ export function ImportData({ type }: ImportDataProps) {
 
       {/* Preview Section */}
       {previewRows.length > 0 && (
-        <div className="p-8 border-t border-slate-200">
+        <div className="p-8 border-t border-slate-200 animate-in fade-in-0 slide-in-from-bottom-4 duration-500">
           <div className="flex items-center gap-2 mb-4">
             <Eye className="w-5 h-5 text-slate-700" />
             <h3 className="text-lg font-semibold text-slate-900">Preview</h3>
             <span className="text-sm text-slate-600">(showing up to 100 rows)</span>
           </div>
 
-          <div className="overflow-x-auto rounded-lg border border-slate-200">
+          <div className="overflow-x-auto rounded-lg border border-slate-200 shadow-sm">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-slate-100 border-b border-slate-200">
@@ -184,7 +299,11 @@ export function ImportData({ type }: ImportDataProps) {
               </thead>
               <tbody>
                 {previewRows.map((r, i) => (
-                  <tr key={i} className={`${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'} border-b border-slate-200 hover:bg-ui-blue-lighter transition-colors`}>
+                  <tr
+                    key={i}
+                    className={`${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'} border-b border-slate-200 hover:bg-ui-blue-lighter transition-colors animate-in fade-in-0 duration-300`}
+                    style={{ animationDelay: `${i * 50}ms` }}
+                  >
                     {Object.keys(previewRows[0]).map((k) => (
                       <td key={k} className="px-4 py-3 text-slate-700">
                         {String(r[k] ?? '')}
@@ -196,34 +315,63 @@ export function ImportData({ type }: ImportDataProps) {
             </table>
           </div>
 
-          <p className="text-xs text-slate-500 mt-3">
-            Total rows to import: <span className="font-semibold text-slate-700">{previewRows.length}</span>
-          </p>
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center gap-4">
+              <div className="text-xs text-slate-500">
+                Total rows to import: <span className="font-semibold text-slate-700">{previewRows.length}</span>
+              </div>
+              <div className="text-xs text-slate-500">
+                Columns: <span className="font-semibold text-slate-700">{Object.keys(previewRows[0]).length}</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-slate-500">
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              Data validated successfully
+            </div>
+          </div>
         </div>
       )}
 
       {/* Action Buttons */}
-      <div className="p-8 bg-slate-50 border-t border-slate-200 flex gap-3">
-        <button
-          onClick={handleSubmit}
-          disabled={previewRows.length === 0 || loading}
-          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
-            previewRows.length === 0 || loading
-              ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
-              : 'bg-ui-blue-primary text-white hover:shadow-lg hover:scale-105'
-          }`}
-        >
-          <Upload className="w-5 h-5" />
-          {loading ? 'Uploading...' : previewRows.length > 0 ? 'Import Data' : 'Select a file first'}
-        </button>
+      <div className="p-8 bg-slate-50 border-t border-slate-200">
+        {loading && (
+          <div className="mb-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-slate-700">Uploading data...</span>
+              <span className="text-sm text-slate-600">{uploadProgress}%</span>
+            </div>
+            <div className="w-full bg-slate-200 rounded-full h-2">
+              <div
+                className="bg-ui-blue-primary h-2 rounded-full transition-all duration-300"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+          </div>
+        )}
 
-        <button
-          onClick={handleReset}
-          className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-slate-700 bg-white border-2 border-slate-300 hover:border-slate-400 hover:shadow-md transition-all duration-200"
-        >
-          <RotateCcw className="w-5 h-5" />
-          Reset
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={handleSubmit}
+            disabled={previewRows.length === 0 || loading || parsing}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
+              previewRows.length === 0 || loading || parsing
+                ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
+                : 'bg-ui-blue-primary text-white hover:shadow-lg hover:scale-105'
+            }`}
+          >
+            <Upload className="w-5 h-5" />
+            {loading ? 'Uploading...' : previewRows.length > 0 ? 'Import Data' : 'Select a file first'}
+          </button>
+
+          <button
+            onClick={handleReset}
+            disabled={loading || parsing}
+            className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-slate-700 bg-white border-2 border-slate-300 hover:border-slate-400 hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <RotateCcw className="w-5 h-5" />
+            Reset
+          </button>
+        </div>
       </div>
     </div>
   );
