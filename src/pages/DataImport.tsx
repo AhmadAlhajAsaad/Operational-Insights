@@ -318,13 +318,13 @@ export function DataImport() {
           </div>
           <div className="mt-4">
             <Button
-              variant="outline"
               onClick={() => downloadTemplate(importType)}
-              className="gap-2"
+              className="gap-2 bg-blue-800 hover:bg-blue-900 text-white border-blue-800"
               style={{
-                borderColor: "var(--color-equans-azure-blue)",
-                color: "var(--color-equans-azure-blue)",
                 fontFamily: "Roboto, sans-serif",
+                backgroundColor: "#1e40af", // Dark blue background
+                borderColor: "#1e40af",
+                color: "white",
               }}
             >
               <Download size={16} />
