@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { Card } from "../components/ui/card";
-import { Button } from "../components/ui/Button";
+import { Button } from "../components/ui/button";
 import { User, Mail, Building2, Calendar, ArrowLeft } from "lucide-react";
 import {
   LineChart,
