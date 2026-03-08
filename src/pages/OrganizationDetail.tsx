@@ -70,16 +70,15 @@ export function OrganizationDetail({
     "#FDE68A",
   ];
 
-  const userColors = [
-    "#EFF6FF",
-    "#ECFDF5",
-    "#FEF3C7",
-    "#F3E8FF",
-    "#FCE7F3",
-    "#DBEAFE",
-    "#D1FAE5",
-    "#FDE68A",
-  ];
+  const userRowColors = ["#FFFFFF", "#F4F9FF"] as const;
+
+  const userAvatarPalette = [
+    { bg: "#276FD1", text: "#fff" },
+    { bg: "#10B981", text: "#fff" },
+    { bg: "#7C3AED", text: "#fff" },
+    { bg: "#F59E0B", text: "#fff" },
+    { bg: "#EF4444", text: "#fff" },
+  ] as const;
 
   return (
     <div className="space-y-6">
@@ -425,47 +424,78 @@ export function OrganizationDetail({
               </thead>
               <tbody>
                 {orgUsers.map((user, index) => {
-                  const bgColor = userColors[index % userColors.length];
+                  const bgColor = userRowColors[index % 2];
+                  const avatar =
+                    userAvatarPalette[index % userAvatarPalette.length];
+                  const initials = user.name
+                    .split(" ")
+                    .slice(0, 2)
+                    .map((n: string) => n[0])
+                    .join("")
+                    .toUpperCase();
 
                   return (
                     <tr
                       key={user.id}
                       onClick={() => onNavigateToUser(user.id)}
-                      className="border-b border-[#EAF1F9] last:border-0 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.01]"
+                      className="border-b border-[#EAF1F9] last:border-0 transition-colors duration-150 cursor-pointer hover:bg-[#E8F3FD]"
                       style={{ backgroundColor: bgColor }}
                     >
+                      {/* User Name + Initials avatar */}
                       <td className="p-4 align-middle whitespace-nowrap">
-                        <div className="flex items-center gap-2">
-                          <User
-                            className="w-4 h-4 text-[#10B981]"
-                            strokeWidth={2}
-                          />
+                        <div className="flex items-center gap-3">
+                          <span
+                            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold shrink-0 select-none"
+                            style={{
+                              backgroundColor: avatar.bg,
+                              color: avatar.text,
+                            }}
+                          >
+                            {initials}
+                          </span>
                           <span className="font-semibold text-neutral-900">
                             {user.name}
                           </span>
                         </div>
                       </td>
+
+                      {/* Email */}
                       <td className="p-4 align-middle whitespace-nowrap">
-                        <span className="text-neutral-600">{user.email}</span>
+                        <span className="text-[#276FD1] text-sm hover:underline">
+                          {user.email}
+                        </span>
                       </td>
+
+                      {/* Department pill */}
                       <td className="p-4 align-middle whitespace-nowrap">
-                        <span className="font-medium text-neutral-700">
+                        <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EEF2FF] text-[#4338CA]">
                           {user.department}
                         </span>
                       </td>
+
+                      {/* License count badge */}
                       <td className="p-4 align-middle whitespace-nowrap text-center">
-                        <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#276FD1] text-white font-bold text-xs">
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#276FD1] text-white font-bold text-xs">
                           {user.licenses.length}
                         </span>
                       </td>
+
+                      {/* Status badge met dot-indicator */}
                       <td className="p-4 align-middle whitespace-nowrap text-center">
                         <span
-                          className={`inline-flex px-3 py-1.5 rounded-full text-xs font-bold ${
+                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold ${
                             user.status === "active"
-                              ? "bg-[#E9FDF2] text-[#059669]"
-                              : "bg-neutral-100 text-neutral-600"
+                              ? "bg-[#DCFCE7] text-[#15803D]"
+                              : "bg-[#F1F5F9] text-[#64748B]"
                           }`}
                         >
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              user.status === "active"
+                                ? "bg-[#16A34A]"
+                                : "bg-[#94A3B8]"
+                            }`}
+                          />
                           {user.status}
                         </span>
                       </td>
