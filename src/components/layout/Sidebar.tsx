@@ -6,6 +6,7 @@ import {
   PackageSearch,
   LogOut,
   Upload,
+  Github,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo.png";
@@ -90,6 +91,19 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
         className="p-4 border-t"
         style={{ borderColor: "var(--color-neutral-100)" }}
       >
+        <button
+          onClick={() => window.open('https://github.com/AhmadAlhajAsaad/Operational-Insights', '_blank')}
+          className="sidebar-nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors mb-2"
+          style={{
+            color: "var(--color-text-secondary)",
+            fontFamily: "Roboto, sans-serif",
+            border: "3px solid var(--color-equans-azure-blue)",
+            fontWeight: 400,
+          }}
+        >
+          <Github size={20} />
+          <span className="text-sm">GitHub</span>
+        </button>
         <button
           onClick={logout}
           className="sidebar-nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors"
