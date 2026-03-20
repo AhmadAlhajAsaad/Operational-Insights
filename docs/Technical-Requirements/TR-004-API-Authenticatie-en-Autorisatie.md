@@ -2,7 +2,7 @@
 
 **Status:** Draft
 **Date:** 2026-02-16
-**Author(s):** Backend Engineer Agent
+**Author(s):** Ahmad
 **Applies To:** Backend Rust applicatie (Axum), Frontend React applicatie
 **Related ADR:** [ADR-004-API-Authentication](../ADRs/ADR-004-api-authentication.md)
 
