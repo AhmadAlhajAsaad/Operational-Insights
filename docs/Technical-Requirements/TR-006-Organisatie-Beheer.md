@@ -2,7 +2,7 @@
 
 **Status:** In Review
 **Datum:** 2026-02-18
-**Auteur(s):** Backend Engineer
+**Auteur(s):** Ahmad Alhaj Asaad
 **Implementeert:** [FR-006](../Functional-Requirements/FR-006-Organization-Management.md)
 **Applies To:** Backend Rust applicatie, PostgreSQL database, React frontend
 
