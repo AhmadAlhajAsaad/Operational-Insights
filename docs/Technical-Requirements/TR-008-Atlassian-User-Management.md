@@ -2,7 +2,7 @@
 
 **Status:** Draft
 **Datum:** 2026-02-23
-**Auteur(s):** Backend Engineer
+**Auteur(s):** Ahmad Alhaj Asaad
 **Implementeert:** [FR-008-Atlassian-User-Management](../Functional-Requirements/FR-008-Atlassian-User-Management.md)
 **Applies To:** Backend Rust applicatie, React frontend, Atlassian Admin API v2
 
