@@ -2,7 +2,7 @@
 
 **Status:** Draft
 **Datum:** 2026-02-24
-**Auteur(s):** Backend Engineer Agent
+**Auteur(s):** Ahmad Alhaj Asaad
 **Van toepassing op:** Backend Rust applicatie, PostgreSQL database
 **Gerelateerde FR:** [FR-009-Atlassian-DB-Sync](../Functional-Requirements/FR-009-Atlassian-DB-Sync.md)
 **Gerelateerde TR:** [TR-003-Atlassian-Cache](TR-003-Atlassian-Cache.md) · [TR-005-Person-Management](TR-005-Person-Management.md) · [TR-006-Organization-Management](TR-006-Organization-Management.md)
