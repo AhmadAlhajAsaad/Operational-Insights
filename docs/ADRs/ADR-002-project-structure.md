@@ -33,35 +33,36 @@ The backend is organized by responsibility:
 
 ### System Diagram
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     User Browsers                           │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                    HTTP/HTTPS (Vite Dev Proxy)
-                           │
-      ┌────────────────────┴────────────────────┐
-      │                                         │
-┌─────▼─────────────────┐            ┌──────────▼──────────┐
-│   React Frontend      │            │  Rust Backend API   │
-│  (TypeScript, Vite)   │            │   (Axum v0.7)       │
-│                       │            │                     │
-│  - Dashboards         │◄──────────►│  - REST Endpoints   │
-│  - Charts/Tables      │   /api/*   │  - Data Processing  │
-│  - Visualizations     │            │  - Scheduling       │
-└───────────────────────┘            └──────────┬──────────┘
-                                                │
-                    ┌───────────────────────────┼───────────────────────────┐
-                    │                           │                           │
-         ┌──────────▼──────────┐    ┌───────────▼────────┐    ┌─────────────▼────┐
-         │    PostgreSQL       │    │  External APIs     │    │   Scheduler      │
-         │     Database        │    │                    │    │  (Background)    │
-         │                     │    │  - Atlassian       │    │                  │
-         │  - Users            │    │  - GitHub          │    │  - Cron Jobs     │
-         │  - License Usage    │    │  - JFrog           │    │  - Task Queue    │
-         │  - Activity Logs    │    │  - Trello          │    └──────────────────┘
-         │  - Teams            │    └────────────────────┘
-         └─────────────────────┘
+```mermaid
+flowchart TD
+    User[Gebruikers Browsers] -->|HTTP/HTTPS| Frontend[React Frontend<br/>TypeScript, Vite]
+
+    Frontend <-->|/api/*| Backend[Rust Backend API<br/>Axum v0.7]
+
+    %% Data bronnen
+    Palantir[Palantir CSV Export<br/>Bedrijfseenheid info] -->|CSV Import| Backend
+    AtlassianAPI[Atlassian API<br/>Licentie & Gebruikers] -->|REST| Backend
+    GitHubAPI[GitHub API<br/>Repositories & Teams] -->|REST| Backend
+    JFrogAPI[JFrog API<br/>Artifacts] -->|REST| Backend
+    TrelloAPI[Trello API<br/>Boards & Cards] -->|REST| Backend
+
+    %% Data processing
+    Backend -->|Data samenvoeging| DataProcessor[Data Processor<br/>Koppelen Palantir + APIs]
+
+    %% Database
+    DataProcessor -->|Opslaan| DB[(PostgreSQL Database<br/>- Users<br/>- License Usage<br/>- Activity Logs<br/>- Teams<br/>- Business Units<br/>- Palantir Mappings)]
+
+    DB -->|Lezen| Backend
+
+    %% Scheduler
+    Scheduler[Scheduler<br/>Achtergrond taken<br/>- Cron Jobs<br/>- Task Queue] -->|Trigger| Backend
+
+    %% Frontend componenten
+    Frontend -->|Tonen| Dashboard[Dashboards<br/>Charts/Tables<br/>Visualisaties]
+
+    style Palantir fill:#ffeb99
+    style DataProcessor fill:#99ccff
+    style DB fill:#99ff99
 ```
 
 
@@ -77,8 +78,8 @@ Equans-operational-insights/
 │   │        ├── atlassian.rs  (combines routes, services, models)
 │   │        ├── github.rs     (combines routes, services, models)
 │   │        └──  health.rs     (health check handlers)
-│   │ 
-│   ├── tests/                          
+│   │
+│   ├── tests/
 │   │    ├── test_atlassian_endpoints.ps1 # Atlassian endpoint automated tests (PowerShell 5.1)
 │   │    ├── test_github_endpoints.ps1    # GitHub endpoint automated tests (PowerShell 5.1)
 │   │    ├── run_all_tests.ps1            # Orchestrates all tests with health check
@@ -98,7 +99,7 @@ Equans-operational-insights/
 │   ├── tsconfig*.json               # TypeScript configuration
 │   └── vite.config.ts               # Frontend build configuration + dev proxy
 │
-├── tests/                          
+├── tests/
 │  └── README.md                    # Unit tests documentation
 ├── docs/                            # Documentation
 │   ├── ADRs/                        # Architecture Decision Records
@@ -119,7 +120,7 @@ Equans-operational-insights/
 │   ├── testing/                    # Testing strategies and plans
 │   │    └── testing-strategy.md
 │   └── references.md                 # Reference materials
-│              
+│
 │
 ├── infra/                           # Infrastructure and deployment
 │   └── docker-compose.yml           # Optional local services (e.g., DB)
