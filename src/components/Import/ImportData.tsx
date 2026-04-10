@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 import { AlertCircle, CheckCircle, Upload, Eye, RotateCcw, FileText, Download, Loader2 } from 'lucide-react';
 
 interface ImportDataProps {
@@ -32,11 +32,39 @@ export function ImportData({ type }: ImportDataProps) {
 
     try {
       setFileName(file.name);
-      const data = await file.arrayBuffer();
-      const workbook = XLSX.read(data, { type: 'array' });
-      const firstSheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[firstSheetName];
-      const json = XLSX.utils.sheet_to_json<Record<string, any>>(worksheet, { defval: '' });
+      const isCsv = file.name.toLowerCase().endsWith('.csv');
+      let json: Record<string, any>[];
+
+      if (isCsv) {
+        const text = await file.text();
+        const lines = text.split(/\r?\n/).filter((l) => l.trim());
+        const headers = lines[0].split(',').map((h) => h.trim().replace(/^"|"$/g, ''));
+        json = lines.slice(1).map((line) => {
+          const values = line.split(',').map((v) => v.trim().replace(/^"|"$/g, ''));
+          const row: Record<string, any> = {};
+          headers.forEach((h, i) => { row[h] = values[i] ?? ''; });
+          return row;
+        });
+      } else {
+        const buffer = await file.arrayBuffer();
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.load(buffer);
+        const worksheet = workbook.worksheets[0];
+        const headers: string[] = [];
+        worksheet.getRow(1).eachCell({ includeEmpty: false }, (cell) => {
+          headers.push(String(cell.value ?? '').trim());
+        });
+        json = [];
+        worksheet.eachRow((row, rowNumber) => {
+          if (rowNumber === 1) return;
+          const rowData: Record<string, any> = {};
+          row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+            const header = headers[colNumber - 1];
+            if (header) rowData[header] = cell.value ?? '';
+          });
+          if (Object.keys(rowData).length > 0) json.push(rowData);
+        });
+      }
 
       if (!Array.isArray(json) || json.length === 0) {
         setError('Geen rijen gevonden in het bestand.');
@@ -45,27 +73,16 @@ export function ImportData({ type }: ImportDataProps) {
         return;
       }
 
-      // normalize keys: trim + camelCase-ish (simple)
-      const normalized = json.map((row) => {
-        const out: Record<string, any> = {};
-        Object.keys(row).forEach((k) => {
-          const key = String(k).trim();
-          out[key] = (row as any)[k];
-        });
-        return out;
-      });
-
-      // check required columns
-      const headerKeys = Object.keys(normalized[0]).map((k) => k.trim());
+      const headerKeys = Object.keys(json[0]).map((k) => k.trim());
       const missing = requiredColumns.filter((c) => !headerKeys.includes(c));
       if (missing.length) {
         setError(`Ontbrekende kolommen: ${missing.join(', ')}`);
-        setPreviewRows(normalized.slice(0, 10));
+        setPreviewRows(json.slice(0, 10));
         setParsing(false);
         return;
       }
 
-      setPreviewRows(normalized.slice(0, 100));
+      setPreviewRows(json.slice(0, 100));
     } catch (e: any) {
       setError(e?.message || String(e));
       setPreviewRows([]);
@@ -142,8 +159,7 @@ export function ImportData({ type }: ImportDataProps) {
     }
   };
 
-  const downloadTemplate = () => {
-    const headers = requiredColumns;
+  const downloadTemplate = async () => {
     const exampleData = type === 'organizations'
       ? [
           { id: '1', name: 'Example Corp', domain: 'example.com' },
@@ -154,10 +170,18 @@ export function ImportData({ type }: ImportDataProps) {
           { id: '2', firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com', organizationId: '2' }
         ];
 
-    const ws = XLSX.utils.json_to_sheet(exampleData, { header: headers });
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, type);
-    XLSX.writeFile(wb, `${type}_template.xlsx`);
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet(type);
+    sheet.columns = requiredColumns.map((h) => ({ header: h, key: h, width: 20 }));
+    sheet.addRows(exampleData);
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${type}_template.xlsx`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
