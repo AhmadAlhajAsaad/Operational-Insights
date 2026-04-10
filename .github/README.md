@@ -2,18 +2,6 @@
 
 Dit document beschrijft de GitHub-specifieke configuratie voor het Equans Operational Insights project.
 
-## AI Agents
-
-De volgende GitHub Copilot agents zijn beschikbaar voor dit project. Gebruik ze door `@agent-naam` te typen in Copilot Chat.
-
-| Agent                     | Beschrijving                 | Gebruik voor                                                 |
-| ------------------------- | ---------------------------- | ------------------------------------------------------------ |
-| **@backend-engineer**     | Rust backend specialist      | Backend code schrijven, Axum endpoints, async patterns       |
-| **@business-requirement** | Business requirements expert | BR documentatie, stakeholder requirements                    |
-| **@security-reviewer**    | Security specialist          | Security reviews, OWASP/CWE compliance, vulnerability checks |
-| **@code-reviewer**        | Code quality expert          | Code reviews, Rust/TypeScript best practices                 |
-| **@solutions-architect**  | Architectuur specialist      | Architectuur beslissingen, ADR generatie, tech stack keuzes  |
-
 ### Locaties
 
 ```
