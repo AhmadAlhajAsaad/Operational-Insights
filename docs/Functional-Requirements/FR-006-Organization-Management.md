@@ -1,6 +1,5 @@
 # FR-006: Organisatie Beheer
 
-**Status:** Draft
 **Datum:** 2026-02-17
 **Auteur(s):** Functional Requirements Agent
 **Gerelateerde BR:** [BR-002-Person-Organization-Management](../Business-Requirements/BR-002-Person-Organization-Management.md)
@@ -115,18 +114,18 @@ flowchart TD
 
 ## Business Rules
 
-| Regel | Beschrijving |
-| ----- | ------------ |
-| BR-1 | org_id is uniek en volgt het formaat ORGXXXX (bijv. ORG0042) |
-| BR-2 | Een persoon is altijd gekoppeld aan exact één organisatie via org_id |
-| BR-3 | Organisaties kunnen hiërarchisch gestructureerd zijn (parent-child relatie) |
-| BR-4 | Een organisatie kan meerdere landen bevatten (personen uit verschillende landen) |
-| BR-5 | Billing location wordt bepaald per persoon, niet per organisatie |
-| BR-6 | Bij verwijdering van een organisatie moeten alle personen eerst worden verplaatst |
-| BR-7 | Organisatie statistieken worden dagelijks bijgewerkt om 06:00 UTC |
-| BR-8 | Een organisatie heeft minimaal één persoon om als actief te worden beschouwd |
-| BR-9 | Root organisaties hebben geen parent_org_id |
-| BR-10 | Organisatienaam moet uniek zijn binnen het systeem |
+| Regel | Beschrijving                                                                      |
+| ----- | --------------------------------------------------------------------------------- |
+| BR-1  | org_id is uniek en volgt het formaat ORGXXXX (bijv. ORG0042)                      |
+| BR-2  | Een persoon is altijd gekoppeld aan exact één organisatie via org_id              |
+| BR-3  | Organisaties kunnen hiërarchisch gestructureerd zijn (parent-child relatie)       |
+| BR-4  | Een organisatie kan meerdere landen bevatten (personen uit verschillende landen)  |
+| BR-5  | Billing location wordt bepaald per persoon, niet per organisatie                  |
+| BR-6  | Bij verwijdering van een organisatie moeten alle personen eerst worden verplaatst |
+| BR-7  | Organisatie statistieken worden dagelijks bijgewerkt om 06:00 UTC                 |
+| BR-8  | Een organisatie heeft minimaal één persoon om als actief te worden beschouwd      |
+| BR-9  | Root organisaties hebben geen parent_org_id                                       |
+| BR-10 | Organisatienaam moet uniek zijn binnen het systeem                                |
 
 ---
 
@@ -134,46 +133,46 @@ flowchart TD
 
 ### Organisaties Overzicht Weergave
 
-| Veld | Type | Beschrijving |
-| ---- | ---- | ------------ |
-| org_id | Tekst | Unieke organisatie identifier (bijv. ORG0042) |
-| Naam | Tekst | Volledige organisatienaam |
-| Primair Land | Tekst | Land met meeste personen |
-| Aantal Personen | Nummer | Totaal aantal gekoppelde personen |
-| Aantal Landen | Nummer | Aantal unieke landen in organisatie |
-| Status | Badge | Actief (groen) / Inactief (grijs) |
+| Veld            | Type   | Beschrijving                                  |
+| --------------- | ------ | --------------------------------------------- |
+| org_id          | Tekst  | Unieke organisatie identifier (bijv. ORG0042) |
+| Naam            | Tekst  | Volledige organisatienaam                     |
+| Primair Land    | Tekst  | Land met meeste personen                      |
+| Aantal Personen | Nummer | Totaal aantal gekoppelde personen             |
+| Aantal Landen   | Nummer | Aantal unieke landen in organisatie           |
+| Status          | Badge  | Actief (groen) / Inactief (grijs)             |
 
 ### Organisatie Detail Weergave
 
-| Veld | Type | Beschrijving |
-| ---- | ---- | ------------ |
-| org_id | Tekst | Unieke identifier |
-| Naam | Tekst | Volledige organisatienaam |
-| Beschrijving | Tekst | Optionele omschrijving van de organisatie |
-| Parent Organisatie | Link | org_id van parent, indien van toepassing |
-| Child Organisaties | Lijst | Lijst van sub-organisaties met links |
-| Aangemaakt op | Datum | Wanneer organisatie is aangemaakt |
-| Laatst bijgewerkt | Datum/tijd | updated_at timestamp |
+| Veld               | Type       | Beschrijving                              |
+| ------------------ | ---------- | ----------------------------------------- |
+| org_id             | Tekst      | Unieke identifier                         |
+| Naam               | Tekst      | Volledige organisatienaam                 |
+| Beschrijving       | Tekst      | Optionele omschrijving van de organisatie |
+| Parent Organisatie | Link       | org_id van parent, indien van toepassing  |
+| Child Organisaties | Lijst      | Lijst van sub-organisaties met links      |
+| Aangemaakt op      | Datum      | Wanneer organisatie is aangemaakt         |
+| Laatst bijgewerkt  | Datum/tijd | updated_at timestamp                      |
 
 ### Organisatie Personen Verdeling
 
-| Veld | Type | Beschrijving |
-| ---- | ---- | ------------ |
-| Land | Tekst | country waarde (bijv. Austria, Switzerland) |
-| Aantal | Nummer | Aantal personen in dit land |
-| Percentage | Percentage | Aandeel van totaal |
-| Billing Locations | Lijst | Unieke billing locations in dit land |
+| Veld              | Type       | Beschrijving                                |
+| ----------------- | ---------- | ------------------------------------------- |
+| Land              | Tekst      | country waarde (bijv. Austria, Switzerland) |
+| Aantal            | Nummer     | Aantal personen in dit land                 |
+| Percentage        | Percentage | Aandeel van totaal                          |
+| Billing Locations | Lijst      | Unieke billing locations in dit land        |
 
 ### Organisatie Statistieken
 
-| Veld | Type | Beschrijving |
-| ---- | ---- | ------------ |
-| Totaal Personen | Nummer | Totaal aantal gekoppelde personen |
-| Actieve Personen | Nummer | Personen met recente activiteit (laatste 90 dagen) |
-| Inactieve Personen | Nummer | Personen zonder recente activiteit |
-| Verdeling per Land | Grafiek | Pie/bar chart van landen |
-| Verdeling per Billing Location | Grafiek | Pie/bar chart van billing locations |
-| Groei/Krimp | Trend | Verandering t.o.v. vorige maand (%) |
+| Veld                           | Type    | Beschrijving                                       |
+| ------------------------------ | ------- | -------------------------------------------------- |
+| Totaal Personen                | Nummer  | Totaal aantal gekoppelde personen                  |
+| Actieve Personen               | Nummer  | Personen met recente activiteit (laatste 90 dagen) |
+| Inactieve Personen             | Nummer  | Personen zonder recente activiteit                 |
+| Verdeling per Land             | Grafiek | Pie/bar chart van landen                           |
+| Verdeling per Billing Location | Grafiek | Pie/bar chart van billing locations                |
+| Groei/Krimp                    | Trend   | Verandering t.o.v. vorige maand (%)                |
 
 ---
 
@@ -274,27 +273,27 @@ flowchart TD
 
 ## Error Handling
 
-| Scenario | Foutmelding | Actie |
-| -------- | ----------- | ----- |
-| Organisatie niet gevonden | "Organisatie '[org_id]' niet gevonden" | Toon link terug naar overzicht |
-| Geen personen in organisatie | "Geen personen gekoppeld aan deze organisatie" | Informatieve melding, geen actie vereist |
-| Structuur view niet beschikbaar | "Organisatie structuur kon niet worden geladen. Probeer opnieuw." | Retry knop tonen |
-| Export mislukt | "Export kon niet worden voltooid. Controleer uw verbinding en probeer opnieuw." | Retry knop tonen |
-| Zoekresultaten leeg | "Geen organisaties gevonden voor '[zoekterm]'" | Suggestie om zoekterm aan te passen |
-| Data verouderd | "Data is mogelijk verouderd. Laatste update: [timestamp]" | Informatieve banner bovenaan pagina |
-| Timeout bij laden personen | "Personen konden niet worden geladen. Te veel resultaten." | Suggereer filter toe te passen |
-| Ongeldige org_id format | "Ongeldige organisatie identifier" | Toon verwacht format (ORGXXXX) |
+| Scenario                        | Foutmelding                                                                     | Actie                                    |
+| ------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------- |
+| Organisatie niet gevonden       | "Organisatie '[org_id]' niet gevonden"                                          | Toon link terug naar overzicht           |
+| Geen personen in organisatie    | "Geen personen gekoppeld aan deze organisatie"                                  | Informatieve melding, geen actie vereist |
+| Structuur view niet beschikbaar | "Organisatie structuur kon niet worden geladen. Probeer opnieuw."               | Retry knop tonen                         |
+| Export mislukt                  | "Export kon niet worden voltooid. Controleer uw verbinding en probeer opnieuw." | Retry knop tonen                         |
+| Zoekresultaten leeg             | "Geen organisaties gevonden voor '[zoekterm]'"                                  | Suggestie om zoekterm aan te passen      |
+| Data verouderd                  | "Data is mogelijk verouderd. Laatste update: [timestamp]"                       | Informatieve banner bovenaan pagina      |
+| Timeout bij laden personen      | "Personen konden niet worden geladen. Te veel resultaten."                      | Suggereer filter toe te passen           |
+| Ongeldige org_id format         | "Ongeldige organisatie identifier"                                              | Toon verwacht format (ORGXXXX)           |
 
 ---
 
 ## Toegangsrechten
 
-| Rol | Overzicht Bekijken | Details Bekijken | Structuur Beheren | Export |
-| --- | ------------------ | ---------------- | ----------------- | ------ |
-| License Administrator | ✅ Alle | ✅ Alle | ❌ | ✅ |
-| Teammanager | ✅ Eigen org | ✅ Eigen org | ❌ | ✅ Eigen org |
-| Finance Medewerker | ✅ Alle | ✅ Alle | ❌ | ✅ |
-| IT Administrator | ✅ Alle | ✅ Alle | ✅ | ✅ |
+| Rol                   | Overzicht Bekijken | Details Bekijken | Structuur Beheren | Export       |
+| --------------------- | ------------------ | ---------------- | ----------------- | ------------ |
+| License Administrator | ✅ Alle            | ✅ Alle          | ❌                | ✅           |
+| Teammanager           | ✅ Eigen org       | ✅ Eigen org     | ❌                | ✅ Eigen org |
+| Finance Medewerker    | ✅ Alle            | ✅ Alle          | ❌                | ✅           |
+| IT Administrator      | ✅ Alle            | ✅ Alle          | ✅                | ✅           |
 
 ---
 
