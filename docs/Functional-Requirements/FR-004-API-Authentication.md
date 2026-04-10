@@ -2,7 +2,7 @@
 
 **Status:** Draft
 **Date:** 2026-02-16
-**Author(s):** Backend Engineer Agent
+**Author(s):** Ahmad Alhaj Asaad  
 **Related ADR:** [ADR-004-API-Authentication](../ADRs/ADR-004-api-authentication.md)
 **Related TR:** [TR-001-Performance-Security-Standards](../Technical-Requirements/TR-001-Performance-Security-Standards.md)
 
@@ -80,12 +80,12 @@ Het systeem moet de eigen API endpoints beveiligen zodat alleen geauthenticeerde
 
 **Beschrijving:** Alle API endpoints met gevoelige data zijn beveiligd.
 
-| Endpoint Pattern       | Beveiliging   | Beschrijving                        |
-| ---------------------- | ------------- | ----------------------------------- |
-| `GET /health`          | Publiek       | Health check (geen auth vereist)    |
-| `GET /api/atlassian/*` | Authenticated | Atlassian data endpoints            |
-| `GET /api/github/*`    | Authenticated | GitHub data endpoints               |
-| `GET /api/admin/*`     | Admin Role    | Administratie endpoints             |
+| Endpoint Pattern       | Beveiliging   | Beschrijving                     |
+| ---------------------- | ------------- | -------------------------------- |
+| `GET /health`          | Publiek       | Health check (geen auth vereist) |
+| `GET /api/atlassian/*` | Authenticated | Atlassian data endpoints         |
+| `GET /api/github/*`    | Authenticated | GitHub data endpoints            |
+| `GET /api/admin/*`     | Admin Role    | Administratie endpoints          |
 
 **Acceptatiecriteria:**
 

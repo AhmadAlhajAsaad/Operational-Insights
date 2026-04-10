@@ -2,7 +2,7 @@
 
 **Status:** Draft
 **Date:** 2026-02-16
-**Author(s):** Backend Engineer Agent
+**Author(s):** Ahmad Alhaj Asaad  
 **Related BR:** [BR-001-Multi-Vendor-License-Insights](../Business-Requirements/BR-001-Multi-Vendor-License-Insights.md)
 
 ---
@@ -48,6 +48,7 @@ Het systeem moet data van de Atlassian Cloud API ophalen en beschikbaar stellen 
 **Beschrijving:** Het systeem haalt standaard data op uit de lokale PostgreSQL cache.
 
 **Acceptatiecriteria:**
+
 - [ ] Wanneer een gebruiker data opvraagt via de API, wordt eerst de cache geraadpleegd
 - [ ] Indien geldige cache aanwezig is, wordt deze data geretourneerd
 - [ ] De response bevat metadata over de cache status (wanneer gecached, wanneer verloopt)
@@ -60,6 +61,7 @@ Het systeem moet data van de Atlassian Cloud API ophalen en beschikbaar stellen 
 **Beschrijving:** Het systeem synchroniseert automatisch 1x per dag alle Atlassian data.
 
 **Acceptatiecriteria:**
+
 - [ ] Elke 24 uur wordt automatisch verse data opgehaald van Atlassian
 - [ ] De synchronisatie draait op de achtergrond zonder impact op gebruikers
 - [ ] Bij fouten tijdens synchronisatie blijft de bestaande cache beschikbaar
@@ -73,6 +75,7 @@ Het systeem moet data van de Atlassian Cloud API ophalen en beschikbaar stellen 
 **Beschrijving:** Elke API endpoint ondersteunt een optie om de cache te omzeilen.
 
 **Acceptatiecriteria:**
+
 - [ ] Door `?force_refresh=true` toe te voegen aan een request wordt verse data opgehaald
 - [ ] Na een geforceerde refresh wordt de cache bijgewerkt met de nieuwe data
 - [ ] De response geeft aan dat de data vers is opgehaald (`cached: false`)
@@ -84,13 +87,14 @@ Het systeem moet data van de Atlassian Cloud API ophalen en beschikbaar stellen 
 
 **Beschrijving:** De volgende Atlassian data wordt beschikbaar gesteld via de API.
 
-| Endpoint | Data | Beschrijving |
-|----------|------|--------------|
-| `GET /api/atlassian/users` | Gebruikers | Alle Atlassian gebruikers met account info |
-| `GET /api/atlassian/groups` | Groepen | Alle Atlassian groepen |
-| `GET /api/atlassian/organizations` | Organisaties | Organisatie informatie |
+| Endpoint                           | Data         | Beschrijving                               |
+| ---------------------------------- | ------------ | ------------------------------------------ |
+| `GET /api/atlassian/users`         | Gebruikers   | Alle Atlassian gebruikers met account info |
+| `GET /api/atlassian/groups`        | Groepen      | Alle Atlassian groepen                     |
+| `GET /api/atlassian/organizations` | Organisaties | Organisatie informatie                     |
 
 **Acceptatiecriteria:**
+
 - [ ] Elk endpoint retourneert data in JSON formaat
 - [ ] Elk endpoint ondersteunt de `?force_refresh=true` query parameter
 - [ ] Elk endpoint bevat cache metadata in de response
@@ -102,6 +106,7 @@ Het systeem moet data van de Atlassian Cloud API ophalen en beschikbaar stellen 
 **Beschrijving:** Elke API response bevat informatie over de cache status.
 
 **Response structuur:**
+
 ```json
 {
   "data": [...],
@@ -114,6 +119,7 @@ Het systeem moet data van de Atlassian Cloud API ophalen en beschikbaar stellen 
 ```
 
 **Acceptatiecriteria:**
+
 - [ ] Response bevat veld `cached` (boolean): of data uit cache komt
 - [ ] Response bevat veld `cached_at` (ISO 8601 timestamp): wanneer data gecached is
 - [ ] Response bevat veld `expires_at` (ISO 8601 timestamp): wanneer cache verloopt
@@ -125,6 +131,7 @@ Het systeem moet data van de Atlassian Cloud API ophalen en beschikbaar stellen 
 **Beschrijving:** Bij Atlassian API fouten wordt verlopen cache data als fallback gebruikt.
 
 **Acceptatiecriteria:**
+
 - [ ] Het systeem blijft beschikbaar ook als de Atlassian API niet bereikbaar is
 - [ ] Verlopen cache data wordt geretourneerd met een waarschuwing
 - [ ] API fouten worden gelogd voor monitoring
@@ -192,6 +199,7 @@ Applicatie start op
 ## Prioritering (MoSCoW)
 
 ### Must Have
+
 - [ ] FR-003.1: Data ophalen uit cache
 - [ ] FR-003.2: Dagelijkse synchronisatie
 - [ ] FR-003.3: Geforceerde cache bypass
@@ -199,14 +207,17 @@ Applicatie start op
 - [ ] FR-003.5: Cache metadata in response
 
 ### Should Have
+
 - [ ] FR-003.6: Fallback bij API fouten
 - [ ] Organizations endpoint
 
 ### Could Have
+
 - [ ] Cache status dashboard endpoint
 - [ ] Handmatige trigger voor sync via admin UI
 
 ### Won't Have (this release)
+
 - [ ] Real-time webhooks van Atlassian
 - [ ] Incrementele sync (alleen wijzigingen)
 
