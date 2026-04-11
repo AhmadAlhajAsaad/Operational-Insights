@@ -20,7 +20,7 @@ No custom login or user database.
 - Role-based access determines data visibility.
   Admins can access user-level details; non-admins (e.g., BU-managers) cannot.
 
-\\\mermaid
+\\mermaid
 flowchart TD
 Start([User Opens Application]) --> Login[Login Screen]
 Login --> Auth{Microsoft SSO<br/>Authentication}
