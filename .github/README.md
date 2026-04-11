@@ -2,23 +2,6 @@
 
 Dit document beschrijft de GitHub-specifieke configuratie voor het Equans Operational Insights project.
 
-### Locaties
-
-```
-.github/
-├── agents/
-│   ├── backend-engineer.agent.md      # Rust backend development
-│   ├── business-requirement.agent.md  # Business requirements
-│   ├── code-reviewer.agent.md         # Code quality reviews
-│   ├── security-reviewer.agent.md     # Security reviews
-│   └── solutions-architect.agent.md   # Architecture decisions
-├── prompts/
-│   └── docs-agent.prompt.md           # Documentation assistance
-└── workflows/
-    ├── code-review.yml                # Automated code quality checks
-    └── security-scan.yml              # Automated security scanning
-```
-
 ## GitHub Actions Workflows
 
 ### Security Scan (`security-scan.yml`)
@@ -55,18 +38,6 @@ Automatische code quality checks bij pull requests.
 | `code-analysis` | TODO check, documentatie coverage | Nee (informatief) |
 
 ## Gebruik
-
-### Agent aanroepen
-
-In VS Code met GitHub Copilot Chat:
-
-```
-@security-reviewer Review deze code op security issues
-
-@code-reviewer Analyseer dit endpoint voor best practices
-
-@solutions-architect Ik wil caching toevoegen, wat zijn de opties?
-```
 
 ### Workflow resultaten bekijken
 
