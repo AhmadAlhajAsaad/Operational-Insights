@@ -4,7 +4,6 @@
 
 &nbsp;
 
-- Versie: 1.0 
 - Schoolsbegeleider: Jeroen Boogaard 
 - Bedrijfsbegeleider: Viktor Klein (De Product Owner)
 - Studentnaam: Ahmad Alhaj Asaad 

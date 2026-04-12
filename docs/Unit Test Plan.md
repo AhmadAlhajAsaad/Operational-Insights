@@ -2,8 +2,6 @@
 
 **Equans Operational Insights Dashboard**
 
-Versie: 1.0
-
 Studentnaam: Ahmad Alhaj Asaad
 
 Project: Equans Operational Insights Dashboard
@@ -62,14 +60,14 @@ Dit UTP is een detailuitwerking van sectie 4.1 (Unit Testing) uit het Master Tes
 
 **1.3 Projectcontext**
 
-|     |     |
-| --- | --- |
-| Aspect | Invulling |
-| Project | Equans Operational Insights Dashboard |
-| Backend | Rust 1.7x, Axum 0.7, SQLx 0.8, PostgreSQL 16 |
-| Frontend | React 19, TypeScript 5.9, Vite 6.4, Tailwind CSS |
+|              |                                                               |
+| ------------ | ------------------------------------------------------------- |
+| Aspect       | Invulling                                                     |
+| Project      | Equans Operational Insights Dashboard                         |
+| Backend      | Rust 1.7x, Axum 0.7, SQLx 0.8, PostgreSQL 16                  |
+| Frontend     | React 19, TypeScript 5.9, Vite 6.4, Tailwind CSS              |
 | Testtools BE | Rust #\[test\] macro, cargo test, cargo tarpaulin, tokio-test |
-| Testtools FE | Vitest (aanbevolen), React Testing Library |
+| Testtools FE | Vitest (aanbevolen), React Testing Library                    |
 
 **2\. Scope**
 
@@ -79,45 +77,45 @@ De unit-testscope richt zich op componenten die businesslogica, datavalidatie of
 
 **Backend (Rust)**
 
-|     |     |     |     |
-| --- | --- | --- | --- |
-| Module | Component | Risicoprofiel | Argumentatie |
-| persons/gid_matcher | GID-matching algoritme | Hoog | Kernlogica voor persoon-identificatie; foutieve matching leidt tot onjuiste licentiekoppeling |
-| imports/validator | CSV/Excel-validatie | Hoog | Valideert externe invoer; fouten in validatie leiden tot corrupte data |
-| imports/parser | Bestandsparsing | Hoog | Verantwoordelijk voor correct inlezen van CSV/Excel-bestanden |
-| imports/merger | Datamerging | Midden | Samenvoegen van geïmporteerde en bestaande data; dedupplicatielogica |
-| auth/claims | JWT-claimsvalidatie | Hoog | Beveiligingskritiek: bepaalt gebruikersidentiteit en autorisatie |
-| auth/jwt | JWT-configuratie | Hoog | Foutieve configuratie leidt tot authenticatiefouten of beveiligingslekken |
-| auth/middleware | Authenticatiemiddleware | Hoog | Poortwachter voor alle beveiligde endpoints |
-| atlassian/service | Businesslogica | Midden | Verwerking van Atlassian-gebruikersdata en licentieberekeningen |
-| atlassian/link_service | Gebruikerskoppeling | Midden | Koppeling van personen aan Atlassian-accounts |
-| github/token_manager | Tokenmanagement | Hoog | Beheer van GitHub App-tokens; foutief beheer leidt tot API-storingen |
-| config | Applicatieconfiguratie | Laag | Inlezen en valideren van omgevingsvariabelen |
-| health | Health checks | Laag | Eenvoudige statuscontrole |
+|                        |                         |               |                                                                                               |
+| ---------------------- | ----------------------- | ------------- | --------------------------------------------------------------------------------------------- |
+| Module                 | Component               | Risicoprofiel | Argumentatie                                                                                  |
+| persons/gid_matcher    | GID-matching algoritme  | Hoog          | Kernlogica voor persoon-identificatie; foutieve matching leidt tot onjuiste licentiekoppeling |
+| imports/validator      | CSV/Excel-validatie     | Hoog          | Valideert externe invoer; fouten in validatie leiden tot corrupte data                        |
+| imports/parser         | Bestandsparsing         | Hoog          | Verantwoordelijk voor correct inlezen van CSV/Excel-bestanden                                 |
+| imports/merger         | Datamerging             | Midden        | Samenvoegen van geïmporteerde en bestaande data; dedupplicatielogica                          |
+| auth/claims            | JWT-claimsvalidatie     | Hoog          | Beveiligingskritiek: bepaalt gebruikersidentiteit en autorisatie                              |
+| auth/jwt               | JWT-configuratie        | Hoog          | Foutieve configuratie leidt tot authenticatiefouten of beveiligingslekken                     |
+| auth/middleware        | Authenticatiemiddleware | Hoog          | Poortwachter voor alle beveiligde endpoints                                                   |
+| atlassian/service      | Businesslogica          | Midden        | Verwerking van Atlassian-gebruikersdata en licentieberekeningen                               |
+| atlassian/link_service | Gebruikerskoppeling     | Midden        | Koppeling van personen aan Atlassian-accounts                                                 |
+| github/token_manager   | Tokenmanagement         | Hoog          | Beheer van GitHub App-tokens; foutief beheer leidt tot API-storingen                          |
+| config                 | Applicatieconfiguratie  | Laag          | Inlezen en valideren van omgevingsvariabelen                                                  |
+| health                 | Health checks           | Laag          | Eenvoudige statuscontrole                                                                     |
 
 **Frontend (React/TypeScript)**
 
-|     |     |     |
-| --- | --- | --- |
-| Component | Risicoprofiel | Argumentatie |
-| AuthContext | Hoog | Beheert authenticatiestatus; fouten leiden tot beveiligingsproblemen |
-| ProtectedRoute | Hoog | Route guard; foutieve werking geeft ongeautoriseerde toegang |
-| backendClient | Midden | Centraal API-communicatiepunt; foutafhandeling en tokenmanagement |
-| Chartcomponenten | Laag | UI-weergave; functioneel risico beperkt |
-| Importcomponenten | Midden | Bestandsupload en -validatie aan clientzijde |
+|                   |               |                                                                      |
+| ----------------- | ------------- | -------------------------------------------------------------------- |
+| Component         | Risicoprofiel | Argumentatie                                                         |
+| AuthContext       | Hoog          | Beheert authenticatiestatus; fouten leiden tot beveiligingsproblemen |
+| ProtectedRoute    | Hoog          | Route guard; foutieve werking geeft ongeautoriseerde toegang         |
+| backendClient     | Midden        | Centraal API-communicatiepunt; foutafhandeling en tokenmanagement    |
+| Chartcomponenten  | Laag          | UI-weergave; functioneel risico beperkt                              |
+| Importcomponenten | Midden        | Bestandsupload en -validatie aan clientzijde                         |
 
 **2.2 Out of scope**
 
-|     |     |
-| --- | --- |
-| Component | Reden |
-| Repository-laag (repository.rs) | Betreft databaseinteractie; valt onder integratietests (MTP-001, §4.2) |
-| Route handlers (routes/) | HTTP-request/response-afhandeling; getest via integratietests met testservers |
-| jobs/daily_sync | Orchestratielogica met externe afhankelijkheden; valt onder integratietests |
-| cache/repository | Database-caching; vereist databaseconnectie voor zinvolle tests |
-| Radix UI-componenten (ui/) | Third-party bibliotheek; verantwoordelijkheid van de library-maintainers |
-| Pagina-componenten (pages) | Vereisen volledige context (routing, data); vallen onder E2E-tests |
-| Layout-componenten | Puur presentationeel; beperkt functioneel risico |
+|                                 |                                                                               |
+| ------------------------------- | ----------------------------------------------------------------------------- |
+| Component                       | Reden                                                                         |
+| Repository-laag (repository.rs) | Betreft databaseinteractie; valt onder integratietests (MTP-001, §4.2)        |
+| Route handlers (routes/)        | HTTP-request/response-afhandeling; getest via integratietests met testservers |
+| jobs/daily_sync                 | Orchestratielogica met externe afhankelijkheden; valt onder integratietests   |
+| cache/repository                | Database-caching; vereist databaseconnectie voor zinvolle tests               |
+| Radix UI-componenten (ui/)      | Third-party bibliotheek; verantwoordelijkheid van de library-maintainers      |
+| Pagina-componenten (pages)      | Vereisen volledige context (routing, data); vallen onder E2E-tests            |
+| Layout-componenten              | Puur presentationeel; beperkt functioneel risico                              |
 
 **3\. Testobjecten**
 
@@ -281,36 +279,36 @@ expect(screen.queryByText('Dashboard')).not.toBeInTheDocument();
 
 Unit tests worden geïsoleerd uitgevoerd zonder afhankelijkheid van externe systemen (databases, API's, bestandssystemen). Isolatie wordt bereikt door:
 
-|     |     |     |
-| --- | --- | --- |
-| Techniek | Toepassing | Voorbeeld |
-| Pure functies testen | Functies zonder side effects direct aanroepen | GidMatcher::extract_gid_from_email() |
-| Testdata factory | Helper-functies die representatieve testobjecten genereren | create_test_person(), create_test_claims() |
-| Trait-based mocking (Rust) | Traits definiëren voor services; mock-implementaties in tests | Mock HttpClient trait voor API-calls |
-| Env-variabele injectie | Configuratie via std::env::set_var in testcontext | AuthConfig::from_env() tests |
-| React context mocking | Provider-componenten met gecontroleerde testwaarden | Mock AuthContext met vaste authenticatiestatus |
-| API mocking (frontend) | msw (Mock Service Worker) of vi.mock() voor fetch-calls | Backend Client tests met gemockte responses |
+|                            |                                                               |                                                |
+| -------------------------- | ------------------------------------------------------------- | ---------------------------------------------- |
+| Techniek                   | Toepassing                                                    | Voorbeeld                                      |
+| Pure functies testen       | Functies zonder side effects direct aanroepen                 | GidMatcher::extract_gid_from_email()           |
+| Testdata factory           | Helper-functies die representatieve testobjecten genereren    | create_test_person(), create_test_claims()     |
+| Trait-based mocking (Rust) | Traits definiëren voor services; mock-implementaties in tests | Mock HttpClient trait voor API-calls           |
+| Env-variabele injectie     | Configuratie via std::env::set_var in testcontext             | AuthConfig::from_env() tests                   |
+| React context mocking      | Provider-componenten met gecontroleerde testwaarden           | Mock AuthContext met vaste authenticatiestatus |
+| API mocking (frontend)     | msw (Mock Service Worker) of vi.mock() voor fetch-calls       | Backend Client tests met gemockte responses    |
 
 **4.3 Testtechnieken**
 
-|     |     |
-| --- | --- |
-| Techniek | Toepassing |
-| Equivalentieklassen | E-mailvalidatie: geldige domein, ongeldige string, lege invoer |
-| Grenswaarden | Confidence-score drempels: 0, 29, 30, 99, 100 |
-| Beslissingsafdekking | Alle branches in match_person(): bestaand ID vs. AUTO_ vs. geen match |
-| Foutpad-testen | Result&lt;T, E&gt; branches: Ok-pad én Err-pad afdekken |
+|                      |                                                                       |
+| -------------------- | --------------------------------------------------------------------- |
+| Techniek             | Toepassing                                                            |
+| Equivalentieklassen  | E-mailvalidatie: geldige domein, ongeldige string, lege invoer        |
+| Grenswaarden         | Confidence-score drempels: 0, 29, 30, 99, 100                         |
+| Beslissingsafdekking | Alle branches in match*person(): bestaand ID vs. AUTO* vs. geen match |
+| Foutpad-testen       | Result&lt;T, E&gt; branches: Ok-pad én Err-pad afdekken               |
 
 **5\. Tools en frameworks**
 
 **5.1 Backend (Rust)**
 
-|     |     |     |
-| --- | --- | --- |
-| Tool | Versie | Functie |
-| cargo test | —   | Ingebouwde testrunner voor Rust #\[test\] en #\[cfg(test)\] |
-| cargo tarpaulin | 0.27+ | Codecoverage-rapportage (LCOV/HTML) |
-| tokio-test | 0.4 | Async testmacro's voor tokio-gebaseerde code |
+|                 |        |                                                             |
+| --------------- | ------ | ----------------------------------------------------------- |
+| Tool            | Versie | Functie                                                     |
+| cargo test      | —      | Ingebouwde testrunner voor Rust #\[test\] en #\[cfg(test)\] |
+| cargo tarpaulin | 0.27+  | Codecoverage-rapportage (LCOV/HTML)                         |
+| tokio-test      | 0.4    | Async testmacro's voor tokio-gebaseerde code                |
 
 Rust maakt gebruik van het ingebouwde testframework via de #\[test\]-attribuutmacro en #\[cfg(test)\]-module. Er is geen extern testframework vereist — dit is een bewuste ontwerpkeuze van de Rust-taal die testinfrastructuur als eersteklas feature biedt.
 
@@ -330,13 +328,13 @@ cargo tarpaulin --out Html --output-dir target/coverage
 
 **5.2 Frontend (TypeScript/React)**
 
-|     |     |     |
-| --- | --- | --- |
-| Tool | Versie | Functie |
-| Vitest | 3.x | Testrunner, compatibel met Vite-buildconfiguratie |
-| React Testing Library | 16.x | Component-rendering en DOM-queries |
-| @testing-library/jest-dom | 6.x | Uitgebreide DOM-matchers (toBeInTheDocument, etc.) |
-| jsdom | —   | Browser-omgeving simulatie voor Node.js |
+|                           |        |                                                    |
+| ------------------------- | ------ | -------------------------------------------------- |
+| Tool                      | Versie | Functie                                            |
+| Vitest                    | 3.x    | Testrunner, compatibel met Vite-buildconfiguratie  |
+| React Testing Library     | 16.x   | Component-rendering en DOM-queries                 |
+| @testing-library/jest-dom | 6.x    | Uitgebreide DOM-matchers (toBeInTheDocument, etc.) |
+| jsdom                     | —      | Browser-omgeving simulatie voor Node.js            |
 
 **Opmerking:** Vitest is gekozen boven Jest vanwege de native integratie met de bestaande Vite-buildconfiguratie. Dit elimineert dubbele configuratie en maakt gebruik van dezelfde transformatiepipeline.
 
@@ -376,91 +374,91 @@ De onderstaande testcases zijn geselecteerd op basis van risicoprofiel en dekkin
 
 **TC-UT-001: GID-extractie uit e-mailadres**
 
-|     |     |
-| --- | --- |
-| Attribuut | Waarde |
-| ID  | TC-UT-001 |
-| Doel | Verifiëren dat het GID correct wordt geëxtraheerd uit een e-mailadres |
-| Testobject | GidMatcher::extract_gid_from_email() |
-| Scenario | Voer GID-extractie uit voor drie e-mailadressen: een standaard bedrijfsadres (thomas.wagensonner@equans.com), een extern adres (john.doe@gmail.com) en een adres met speciale tekens (Test_User-123@example.org). |
-| Arrange | Maak een nieuw GidMatcher-object aan. |
-| Act | Roep extract_gid_from_email() aan met elk e-mailadres. |
-| Verwacht resultaat | Respectievelijk Some("thomas.wagensonner"), Some("john.doe") en Some("test_user-123") (lowercase). |
-| Requirement | FR-005 (Person Management), TR-005 (Person Management) |
-| Prioriteit | Hoog |
+|                    |                                                                                                                                                                                                                   |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Attribuut          | Waarde                                                                                                                                                                                                            |
+| ID                 | TC-UT-001                                                                                                                                                                                                         |
+| Doel               | Verifiëren dat het GID correct wordt geëxtraheerd uit een e-mailadres                                                                                                                                             |
+| Testobject         | GidMatcher::extract_gid_from_email()                                                                                                                                                                              |
+| Scenario           | Voer GID-extractie uit voor drie e-mailadressen: een standaard bedrijfsadres (thomas.wagensonner@equans.com), een extern adres (john.doe@gmail.com) en een adres met speciale tekens (Test_User-123@example.org). |
+| Arrange            | Maak een nieuw GidMatcher-object aan.                                                                                                                                                                             |
+| Act                | Roep extract_gid_from_email() aan met elk e-mailadres.                                                                                                                                                            |
+| Verwacht resultaat | Respectievelijk Some("thomas.wagensonner"), Some("john.doe") en Some("test_user-123") (lowercase).                                                                                                                |
+| Requirement        | FR-005 (Person Management), TR-005 (Person Management)                                                                                                                                                            |
+| Prioriteit         | Hoog                                                                                                                                                                                                              |
 
 **TC-UT-002: Confidence-scoreberekening persoon-matching**
 
-|     |     |
-| --- | --- |
-| Attribuut | Waarde |
-| ID  | TC-UT-002 |
-| Doel | Verifiëren dat de confidence-score correct wordt berekend op basis van beschikbare identifiers |
-| Testobject | GidMatcher::match_person() |
-| Scenario | Test drie scenario's: (1) persoon met bestaand person_id → confidence 100 (MATCHED), (2) persoon met AUTO_-prefix → confidence 30–99 (PENDING), (3) persoon met AUTO_-prefix en onbekend e-mailadres → confidence <50 (UNMATCHED). |
-| Arrange | Maak testpersonen aan via create_test_person() met verschillende person_id- en e-mailcombinaties. |
-| Act | Roep match_person() aan voor elke testpersoon. |
-| Verwacht resultaat | Scenario 1: confidence = 100. Scenario 2: 30 ≤ confidence < 100. Scenario 3: confidence < 50. |
-| Requirement | FR-005 (Person Management), TR-005 (Person Management) |
-| Prioriteit | Hoog |
+|                    |                                                                                                                                                                                                                                     |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Attribuut          | Waarde                                                                                                                                                                                                                              |
+| ID                 | TC-UT-002                                                                                                                                                                                                                           |
+| Doel               | Verifiëren dat de confidence-score correct wordt berekend op basis van beschikbare identifiers                                                                                                                                      |
+| Testobject         | GidMatcher::match_person()                                                                                                                                                                                                          |
+| Scenario           | Test drie scenario's: (1) persoon met bestaand person*id → confidence 100 (MATCHED), (2) persoon met AUTO*-prefix → confidence 30–99 (PENDING), (3) persoon met AUTO\_-prefix en onbekend e-mailadres → confidence <50 (UNMATCHED). |
+| Arrange            | Maak testpersonen aan via create_test_person() met verschillende person_id- en e-mailcombinaties.                                                                                                                                   |
+| Act                | Roep match_person() aan voor elke testpersoon.                                                                                                                                                                                      |
+| Verwacht resultaat | Scenario 1: confidence = 100. Scenario 2: 30 ≤ confidence < 100. Scenario 3: confidence < 50.                                                                                                                                       |
+| Requirement        | FR-005 (Person Management), TR-005 (Person Management)                                                                                                                                                                              |
+| Prioriteit         | Hoog                                                                                                                                                                                                                                |
 
 **TC-UT-003: CSV-importvalidatie van persoonsgegevens**
 
-|     |     |
-| --- | --- |
-| Attribuut | Waarde |
-| ID  | TC-UT-003 |
-| Doel | Verifiëren dat de importvalidator persoonsrecords correct classificeert als valide of invalide |
-| Testobject | Validator::validate_persons() |
-| Scenario | Test drie scenario's: (1) geldig record met alle verplichte velden → valide, (2) record zonder e-mail → valide (accepteert alle invoer), (3) twee records met hetzelfde person_id → valide (deduplicatie in servicelaag). |
-| Arrange | Maak PersonImportRow-objecten aan met variërende velden. |
-| Act | Roep Validator::validate_persons() aan met de testdata. |
-| Verwacht resultaat | Alle drie scenario's: result.valid == true, geen fouten gerapporteerd. E-mailvalidatie-hulpfunctie: is_valid_email("test@example.com") == true, is_valid_email("invalid") == false. |
-| Requirement | FR-007 (Data Synchronization), TR-007 (Data Import) |
-| Prioriteit | Hoog |
+|                    |                                                                                                                                                                                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Attribuut          | Waarde                                                                                                                                                                                                                    |
+| ID                 | TC-UT-003                                                                                                                                                                                                                 |
+| Doel               | Verifiëren dat de importvalidator persoonsrecords correct classificeert als valide of invalide                                                                                                                            |
+| Testobject         | Validator::validate_persons()                                                                                                                                                                                             |
+| Scenario           | Test drie scenario's: (1) geldig record met alle verplichte velden → valide, (2) record zonder e-mail → valide (accepteert alle invoer), (3) twee records met hetzelfde person_id → valide (deduplicatie in servicelaag). |
+| Arrange            | Maak PersonImportRow-objecten aan met variërende velden.                                                                                                                                                                  |
+| Act                | Roep Validator::validate_persons() aan met de testdata.                                                                                                                                                                   |
+| Verwacht resultaat | Alle drie scenario's: result.valid == true, geen fouten gerapporteerd. E-mailvalidatie-hulpfunctie: is_valid_email("test@example.com") == true, is_valid_email("invalid") == false.                                       |
+| Requirement        | FR-007 (Data Synchronization), TR-007 (Data Import)                                                                                                                                                                       |
+| Prioriteit         | Hoog                                                                                                                                                                                                                      |
 
 **TC-UT-004: JWT-claimsvalidatie en autorisatie**
 
-|     |     |
-| --- | --- |
-| Attribuut | Waarde |
-| ID  | TC-UT-004 |
-| Doel | Verifiëren dat JWT-claims correct worden geparsed en autorisatiebeslissingen juist zijn |
-| Testobject | AzureAdClaims methodes: user_id(), has_role(), in_group(), is_admin() |
-| Scenario | Test vijf scenario's: (1) user_id() retourneert UPN als deze aanwezig is, (2) has_role("Viewer") retourneert true (case-insensitive), (3) in_group("group-1") retourneert true voor bestaande groep, (4) is_admin() retourneert true bij admin-groepslidmaatschap, (5) is_admin() retourneert true bij Admin-rol. |
-| Arrange | Maak testclaims aan via create_test_claims() met bekende rollen en groepen. |
-| Act | Roep de respectievelijke methodes aan op het claims-object. |
-| Verwacht resultaat | (1) "user@equans.com", (2) true, (3) true, (4) true met admin-groep / false met andere groep, (5) true met Admin-rol. |
-| Requirement | FR-004 (API Authentication), TR-004 (API Authentication) |
-| Prioriteit | Hoog |
+|                    |                                                                                                                                                                                                                                                                                                                   |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Attribuut          | Waarde                                                                                                                                                                                                                                                                                                            |
+| ID                 | TC-UT-004                                                                                                                                                                                                                                                                                                         |
+| Doel               | Verifiëren dat JWT-claims correct worden geparsed en autorisatiebeslissingen juist zijn                                                                                                                                                                                                                           |
+| Testobject         | AzureAdClaims methodes: user_id(), has_role(), in_group(), is_admin()                                                                                                                                                                                                                                             |
+| Scenario           | Test vijf scenario's: (1) user_id() retourneert UPN als deze aanwezig is, (2) has_role("Viewer") retourneert true (case-insensitive), (3) in_group("group-1") retourneert true voor bestaande groep, (4) is_admin() retourneert true bij admin-groepslidmaatschap, (5) is_admin() retourneert true bij Admin-rol. |
+| Arrange            | Maak testclaims aan via create_test_claims() met bekende rollen en groepen.                                                                                                                                                                                                                                       |
+| Act                | Roep de respectievelijke methodes aan op het claims-object.                                                                                                                                                                                                                                                       |
+| Verwacht resultaat | (1) "user@equans.com", (2) true, (3) true, (4) true met admin-groep / false met andere groep, (5) true met Admin-rol.                                                                                                                                                                                             |
+| Requirement        | FR-004 (API Authentication), TR-004 (API Authentication)                                                                                                                                                                                                                                                          |
+| Prioriteit         | Hoog                                                                                                                                                                                                                                                                                                              |
 
 **TC-UT-005: AuthConfig laden uit omgevingsvariabelen**
 
-|     |     |
-| --- | --- |
-| Attribuut | Waarde |
-| ID  | TC-UT-005 |
-| Doel | Verifiëren dat de authenticatieconfiguratie correct wordt geladen uit omgevingsvariabelen en dat de JWKS URI correct wordt geconstrueerd |
-| Testobject | AuthConfig::from_env(), JwtValidator::new() |
-| Scenario | Test twee scenario's: (1) stel omgevingsvariabelen in (AZURE_AD_TENANT_ID, AZURE_AD_CLIENT_ID, AZURE_AD_AUDIENCE, ADMIN_GROUP_ID) en laad de config, (2) maak een JwtValidator aan met een bekende tenant-ID en controleer de JWKS URI. |
-| Arrange | Stel omgevingsvariabelen in via std::env::set_var. Maak een AuthConfig-struct aan met bekende waarden. |
-| Act | Roep AuthConfig::from_env() aan. Maak een JwtValidator::new(&config) aan. |
-| Verwacht resultaat | (1) Config bevat tenant_id = "test-tenant", client_id = "test-client", audience = "api://test". (2) JWKS URI = "https://login.microsoftonline.com/my-tenant-id/discovery/v2.0/keys". |
-| Requirement | TR-004 (API Authentication), TR-011 (GitHub App Authentication) |
-| Prioriteit | Hoog |
+|                    |                                                                                                                                                                                                                                         |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Attribuut          | Waarde                                                                                                                                                                                                                                  |
+| ID                 | TC-UT-005                                                                                                                                                                                                                               |
+| Doel               | Verifiëren dat de authenticatieconfiguratie correct wordt geladen uit omgevingsvariabelen en dat de JWKS URI correct wordt geconstrueerd                                                                                                |
+| Testobject         | AuthConfig::from_env(), JwtValidator::new()                                                                                                                                                                                             |
+| Scenario           | Test twee scenario's: (1) stel omgevingsvariabelen in (AZURE_AD_TENANT_ID, AZURE_AD_CLIENT_ID, AZURE_AD_AUDIENCE, ADMIN_GROUP_ID) en laad de config, (2) maak een JwtValidator aan met een bekende tenant-ID en controleer de JWKS URI. |
+| Arrange            | Stel omgevingsvariabelen in via std::env::set_var. Maak een AuthConfig-struct aan met bekende waarden.                                                                                                                                  |
+| Act                | Roep AuthConfig::from_env() aan. Maak een JwtValidator::new(&config) aan.                                                                                                                                                               |
+| Verwacht resultaat | (1) Config bevat tenant_id = "test-tenant", client_id = "test-client", audience = "api://test". (2) JWKS URI = "https://login.microsoftonline.com/my-tenant-id/discovery/v2.0/keys".                                                    |
+| Requirement        | TR-004 (API Authentication), TR-011 (GitHub App Authentication)                                                                                                                                                                         |
+| Prioriteit         | Hoog                                                                                                                                                                                                                                    |
 
 **7\. Traceability matrix**
 
 De onderstaande matrix toont de koppeling tussen unit-testcases en requirements.
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| Testcase | Testobject | FR  | TR  | Risico |
-| TC-UT-001 | GidMatcher – extractie | FR-005 | TR-005 | Hoog |
-| TC-UT-002 | GidMatcher – confidence | FR-005 | TR-005 | Hoog |
-| TC-UT-003 | Validator – CSV-import | FR-007 | TR-007 | Hoog |
-| TC-UT-004 | AzureAdClaims – autorisatie | FR-004 | TR-004 | Hoog |
-| TC-UT-005 | AuthConfig – configuratie | —   | TR-004, TR-011 | Hoog |
+|           |                             |        |                |        |
+| --------- | --------------------------- | ------ | -------------- | ------ |
+| Testcase  | Testobject                  | FR     | TR             | Risico |
+| TC-UT-001 | GidMatcher – extractie      | FR-005 | TR-005         | Hoog   |
+| TC-UT-002 | GidMatcher – confidence     | FR-005 | TR-005         | Hoog   |
+| TC-UT-003 | Validator – CSV-import      | FR-007 | TR-007         | Hoog   |
+| TC-UT-004 | AzureAdClaims – autorisatie | FR-004 | TR-004         | Hoog   |
+| TC-UT-005 | AuthConfig – configuratie   | —      | TR-004, TR-011 | Hoog   |
 
 **8\. Acceptatiecriteria**
 
@@ -468,14 +466,14 @@ De unit-testfase wordt als succesvol afgerond beschouwd wanneer aan de volgende 
 
 **8.1 Kwantitatieve criteria**
 
-|     |     |     |     |
-| --- | --- | --- | --- |
-| Criterium | Drempelwaarde | Doelwaarde | Bron |
-| Codecoverage backend (Rust) | ≥ 70% | 85% | MTP-001 |
-| Codecoverage frontend (TypeScript) | ≥ 60% | 75% | MTP-001 |
-| Percentage geslaagde tests | 100% | 100% | —   |
-| Alle high-risk componenten gedekt | 100% | 100% | §2.1 |
-| Geen openstaande Critical/High defects | 0   | 0   | MTP-001 |
+|                                        |               |            |         |
+| -------------------------------------- | ------------- | ---------- | ------- |
+| Criterium                              | Drempelwaarde | Doelwaarde | Bron    |
+| Codecoverage backend (Rust)            | ≥ 70%         | 85%        | MTP-001 |
+| Codecoverage frontend (TypeScript)     | ≥ 60%         | 75%        | MTP-001 |
+| Percentage geslaagde tests             | 100%          | 100%       | —       |
+| Alle high-risk componenten gedekt      | 100%          | 100%       | §2.1    |
+| Geen openstaande Critical/High defects | 0             | 0          | MTP-001 |
 
 **8.2 Kwalitatieve criteria**
 
@@ -496,15 +494,15 @@ De unit-testfase is afgerond wanneer:
 
 **9\. Risico's en mitigatie**
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| #   | Risico | Impact | Kans | Mitigatie |
-| 1   | **Onvoldoende testdekking door tijdsdruk** | Hoog | Midden | Prioriteer high-risk componenten (auth, GID-matching, validatie); schrijf tests parallel aan implementatie (shift-left). |
-| 2   | **Moeilijk testbare async code** | Midden | Midden | Gebruik tokio-test macro's; isoleer async logica in aparte functies die synchroon testbaar zijn. |
-| 3   | **Gebrek aan frontend-testinfrastructuur** | Hoog | Hoog | Vitest en React Testing Library configureren in Sprint 5; begin met AuthContext en ProtectedRoute. |
-| 4   | **Flaky tests door shared state** | Midden | Laag | Vermijd static mut en globale state in tests; gebruik #\[serial\]-attribuut indien nodig. Gebruik std::env::set_var met zorg in tests (single-threaded). |
-| 5   | **Testdata reflecteert productiedata niet** | Midden | Midden | Baseer factory-functies op reële datavelden uit de CSV-importspecificatie; valideer met productierepresentatieve datasets. |
-| 6   | **Coverage rapportage onnauwkeurig** | Laag | Laag | Gebruik cargo tarpaulin met --ignore-tests flag; vergelijk met handmatige code-inspectie voor kritieke modules. |
+|     |                                             |        |        |                                                                                                                                                          |
+| --- | ------------------------------------------- | ------ | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| #   | Risico                                      | Impact | Kans   | Mitigatie                                                                                                                                                |
+| 1   | **Onvoldoende testdekking door tijdsdruk**  | Hoog   | Midden | Prioriteer high-risk componenten (auth, GID-matching, validatie); schrijf tests parallel aan implementatie (shift-left).                                 |
+| 2   | **Moeilijk testbare async code**            | Midden | Midden | Gebruik tokio-test macro's; isoleer async logica in aparte functies die synchroon testbaar zijn.                                                         |
+| 3   | **Gebrek aan frontend-testinfrastructuur**  | Hoog   | Hoog   | Vitest en React Testing Library configureren in Sprint 5; begin met AuthContext en ProtectedRoute.                                                       |
+| 4   | **Flaky tests door shared state**           | Midden | Laag   | Vermijd static mut en globale state in tests; gebruik #\[serial\]-attribuut indien nodig. Gebruik std::env::set_var met zorg in tests (single-threaded). |
+| 5   | **Testdata reflecteert productiedata niet** | Midden | Midden | Baseer factory-functies op reële datavelden uit de CSV-importspecificatie; valideer met productierepresentatieve datasets.                               |
+| 6   | **Coverage rapportage onnauwkeurig**        | Laag   | Laag   | Gebruik cargo tarpaulin met --ignore-tests flag; vergelijk met handmatige code-inspectie voor kritieke modules.                                          |
 
 **10\. Conventies en richtlijnen**
 
@@ -538,7 +536,7 @@ Frontend-tests worden naast het bronbestand geplaatst met het .test.tsx-suffix.
 
 **10.3 Naamgeving**
 
-- **Rust:** test_&lt;functienaam&gt;\_&lt;scenario&gt; — bijv. test_extract_gid_from_email
+- **Rust:** test\_&lt;functienaam&gt;\_&lt;scenario&gt; — bijv. test_extract_gid_from_email
 - **TypeScript:** Beschrijvende strings — bijv. 'redirects unauthenticated users to login'
 
 **10.4 Factory-functies**

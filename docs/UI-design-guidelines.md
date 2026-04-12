@@ -1,10 +1,8 @@
 # ADR-00X: UI Design Guidelines Based on Equans Corporate Style
 
 ## Status
-Accepted
 
-## Date
-2026-02-04
+Accepted
 
 ## Context
 
@@ -202,19 +200,19 @@ Buttons should be used for important actions that users need to take, such as fo
 **Variants**
 
 - **Primary Button**
-  - *Purpose:* Used for the main action in a section or page
-  - *Visual Style:* Bold, filled with the primary brand color (`#002439` Dark Blue or `#008163` Dark Green)
-  - *Usage:* One primary button per section to guide users toward the most important action
+  - _Purpose:_ Used for the main action in a section or page
+  - _Visual Style:_ Bold, filled with the primary brand color (`#002439` Dark Blue or `#008163` Dark Green)
+  - _Usage:_ One primary button per section to guide users toward the most important action
 
 - **Secondary Button**
-  - *Purpose:* Used for alternative or supporting actions
-  - *Visual Style:* Outlined with the primary color, transparent background
-  - *Usage:* Can appear alongside a primary button for less important actions
+  - _Purpose:_ Used for alternative or supporting actions
+  - _Visual Style:_ Outlined with the primary color, transparent background
+  - _Usage:_ Can appear alongside a primary button for less important actions
 
 - **Tertiary Button**
-  - *Purpose:* Used for the least important actions
-  - *Visual Style:* Text-only with no border, using primary color
-  - *Usage:* For actions that should be available but not emphasized
+  - _Purpose:_ Used for the least important actions
+  - _Visual Style:_ Text-only with no border, using primary color
+  - _Usage:_ For actions that should be available but not emphasized
 
 ---
 
@@ -235,7 +233,9 @@ Buttons should be used for important actions that users need to take, such as fo
 ## Alternatives Considered
 
 **Custom color palette**
-- *Rejected:* inconsistent with Equans branding
+
+- _Rejected:_ inconsistent with Equans branding
 
 **Multiple secondary colors per screen**
-- *Rejected:* reduces clarity and violates style guide
+
+- _Rejected:_ reduces clarity and violates style guide

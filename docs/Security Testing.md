@@ -8,7 +8,6 @@
 - Organisatie: Equans / SLS-DP-DevOps-Forge 
 - Technisch begeleider: Brian Veltman
 - Studiejaar: 2025 - 2026 
-- Versie: 1.0 
 
 Inhoudsopgave
 
