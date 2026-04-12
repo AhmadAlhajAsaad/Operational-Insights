@@ -7,7 +7,6 @@
 - Studentnaam: Ahmad Alhaj Asaad 
 - Opleiding: HBO-ICT Software Engineering 
 - Organisatie: Equans / SLS-DP-DevOps-Forge 
-- Schoolsbegeleider: Jeroen Boogaard 
 - Bedrijfsbegeleider: Viktor Klein (Business Owner)
 - Technisch begeleider: Brian Veltman
 
@@ -110,18 +109,18 @@ Dit plan is van toepassing op:
 
 Het systeem valt onder de AVG (Verordening (EU) 2016/679) aangezien het persoonsgegevens van EU-ingezetenen verwerkt (Regulation - 2016/679 - EN - Gdpr - EUR-Lex, z.d.; De AVG in het Kort, 2024). De volgende AVG-artikelen zijn direct van toepassing:
 
-|     |     |     |
-| --- | --- | --- |
-| AVG-artikel | Onderwerp | Toepassing in dit systeem |
-| Art. 5 | Beginselen gegevensverwerking | Dataminimalisatie, doelbinding, opslagbeperking |
-| Art. 6 | Rechtmatigheid verwerking | Gerechtvaardigd belang (licentiebeheer) als grondslag |
-| Art. 13/14 | Informatieplicht | Medewerkers worden geïnformeerd via intern privacybeleid |
-| Art. 17 | Recht op vergetelheid | Verwijderingsworkflows voor persoonsgegevens |
-| Art. 20 | Recht op overdraagbaarheid | Exportfunctionaliteit voor persoonsgebonden data |
-| Art. 25 | Privacy by design/default | Maskering standaard ingeschakeld; minimale datacollectie |
-| Art. 28 | Verwerkersovereenkomsten | DPA's met Atlassian, GitHub, JFrog |
-| Art. 32 | Beveiliging verwerking | Versleuteling, toegangscontrole, logging |
-| Art. 33/34 | Meldingsplicht datalekken | Incidentresponsprocedure bij datalekken |
+|             |                               |                                                          |
+| ----------- | ----------------------------- | -------------------------------------------------------- |
+| AVG-artikel | Onderwerp                     | Toepassing in dit systeem                                |
+| Art. 5      | Beginselen gegevensverwerking | Dataminimalisatie, doelbinding, opslagbeperking          |
+| Art. 6      | Rechtmatigheid verwerking     | Gerechtvaardigd belang (licentiebeheer) als grondslag    |
+| Art. 13/14  | Informatieplicht              | Medewerkers worden geïnformeerd via intern privacybeleid |
+| Art. 17     | Recht op vergetelheid         | Verwijderingsworkflows voor persoonsgegevens             |
+| Art. 20     | Recht op overdraagbaarheid    | Exportfunctionaliteit voor persoonsgebonden data         |
+| Art. 25     | Privacy by design/default     | Maskering standaard ingeschakeld; minimale datacollectie |
+| Art. 28     | Verwerkersovereenkomsten      | DPA's met Atlassian, GitHub, JFrog                       |
+| Art. 32     | Beveiliging verwerking        | Versleuteling, toegangscontrole, logging                 |
+| Art. 33/34  | Meldingsplicht datalekken     | Incidentresponsprocedure bij datalekken                  |
 
 **Grondslag voor verwerking**
 
@@ -131,17 +130,17 @@ De verwerking van persoonsgegevens vindt plaats op basis van **gerechtvaardigd 
 
 **4.1 Overzicht van verwerkte datapunten**
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| Gegeven | Bron | AVG-classificatie | Doel | Retentieperiode |
-| Naam (displaynaam) | Atlassian, GitHub | Persoonsgegeven | Identificatie bij licentiebeheer | Account-levensduur |
-| E-mailadres | Atlassian, GitHub | Persoonsgegeven | Matching personen aan vendor-accounts | Account-levensduur |
-| Account-ID | Atlassian, GitHub | Pseudo-identificator | Technische koppeling | Account-levensduur |
-| Accountstatus | Atlassian, GitHub | Persoonsgegeven | Actief/inactief licentiegebruik | Account-levensduur |
-| Productlicentietoewijzing | Atlassian | Bedrijfsgegeven | Kostentoewijzing | 2 jaar |
-| Laatste activiteitsdatum | Atlassian, GitHub | Persoonsgegeven | Detectie inactieve accounts | 2 jaar |
-| Organisatorische eenheid | CSV-import | Bedrijfsgegeven | Kostentoewijzing, rapportage | Account-levensduur |
-| IP-adres (in logs) | Backend-server | Persoonsgegeven | Beveiligingsmonitoring | 90 dagen |
+|                           |                   |                      |                                       |                    |
+| ------------------------- | ----------------- | -------------------- | ------------------------------------- | ------------------ |
+| Gegeven                   | Bron              | AVG-classificatie    | Doel                                  | Retentieperiode    |
+| Naam (displaynaam)        | Atlassian, GitHub | Persoonsgegeven      | Identificatie bij licentiebeheer      | Account-levensduur |
+| E-mailadres               | Atlassian, GitHub | Persoonsgegeven      | Matching personen aan vendor-accounts | Account-levensduur |
+| Account-ID                | Atlassian, GitHub | Pseudo-identificator | Technische koppeling                  | Account-levensduur |
+| Accountstatus             | Atlassian, GitHub | Persoonsgegeven      | Actief/inactief licentiegebruik       | Account-levensduur |
+| Productlicentietoewijzing | Atlassian         | Bedrijfsgegeven      | Kostentoewijzing                      | 2 jaar             |
+| Laatste activiteitsdatum  | Atlassian, GitHub | Persoonsgegeven      | Detectie inactieve accounts           | 2 jaar             |
+| Organisatorische eenheid  | CSV-import        | Bedrijfsgegeven      | Kostentoewijzing, rapportage          | Account-levensduur |
+| IP-adres (in logs)        | Backend-server    | Persoonsgegeven      | Beveiligingsmonitoring                | 90 dagen           |
 
 **4.2 Dataminimalisatie**
 
@@ -164,13 +163,13 @@ E-mailadressen worden op drie niveaus gemaskeerd:
 
 Alle logberichten die e-mailadressen bevatten worden automatisch gemaskeerd. Dit voorkomt dat persoonsgegevens in logbestanden terechtkomen, conform TM-04 uit de SRS en het beginsel van dataminimalisatie (Regulation - 2016/679 - EN - Gdpr - EUR-Lex, z.d., Art. 5).
 
-|     |     |     |
-| --- | --- | --- |
-| Gegeven | Ongemaskeerd | Gemaskeerd in logs |
-| E-mail | john.doe@equans.com | j\*\*\*@e\*\*\*.com |
-| IP-adres | 192.168.1.100 | 192.168.x.x |
-| API-token | ghp_xxxxxxxxxxxx | ghp_\*\*\* |
-| Account-ID | user-12345 | user-\*\*\*\*\* |
+|            |                     |                     |
+| ---------- | ------------------- | ------------------- |
+| Gegeven    | Ongemaskeerd        | Gemaskeerd in logs  |
+| E-mail     | john.doe@equans.com | j\*\*\*@e\*\*\*.com |
+| IP-adres   | 192.168.1.100       | 192.168.x.x         |
+| API-token  | ghp_xxxxxxxxxxxx    | ghp\_\*\*\*         |
+| Account-ID | user-12345          | user-\*\*\*\*\*     |
 
 **Niveau 2: Frontend-weergave (niet-beheerders)**
 
@@ -178,37 +177,37 @@ Voor gebruikers zonder beheerdersrol worden e-mailadressen gemaskeerd weergegeve
 
 Figuur 1 Implementatie van e-mailmaskering in Rust
 
-Deze functie toont het volledige e-mailadres alleen aan beheerders; voor alle andere gebruikers wordt het adres gemaskeerd volgens het patroon _"u\*\*\*@d\*\*\*.com"_. Dit implementeert zowel AVG-dataminimalisatie als role-based toegangscontrole.
+Deze functie toont het volledige e-mailadres alleen aan beheerders; voor alle andere gebruikers wordt het adres gemaskeerd volgens het patroon *"u\*\*\*@d\*\*\*.com"*. Dit implementeert zowel AVG-dataminimalisatie als role-based toegangscontrole.
 
-|     |     |
-| --- | --- |
-| Rol | Weergave e-mailadres |
-| Beheerder | john.doe@equans.com |
-| Gebruiker | j\*\*\*@e\*\*\*.com |
+|           |                      |
+| --------- | -------------------- |
+| Rol       | Weergave e-mailadres |
+| Beheerder | john.doe@equans.com  |
+| Gebruiker | j\*\*\*@e\*\*\*.com  |
 
 **Niveau 3: Staging-/testomgeving**
 
 In de staging-omgeving worden alle persoonsgegevens geanonimiseerd:
 
-|     |     |
-| --- | --- |
-| Veld | Anonimiseringsmethode |
-| E-mail | {hash}@anonymized.local |
-| Naam | Faker-gegenereerde namen |
-| IP-adres | Willekeurig privé-IP |
-| Account-ID | UUID-vervanging |
+|            |                          |
+| ---------- | ------------------------ |
+| Veld       | Anonimiseringsmethode    |
+| E-mail     | {hash}@anonymized.local  |
+| Naam       | Faker-gegenereerde namen |
+| IP-adres   | Willekeurig privé-IP     |
+| Account-ID | UUID-vervanging          |
 
 **5.2 Validatietests**
 
 De correcte werking van e-mailmaskering wordt gevalideerd door middel van geautomatiseerde tests (zie GDPR & Data Protection Testing):
 
-|     |     |     |
-| --- | --- | --- |
-| Test-ID | Testcase | Verwacht resultaat |
-| GDPR-001 | Controleer logs op ongemaskeerde PII | Geen ongemaskeerde e-mailadressen |
-| GDPR-002 | Controleer foutmeldingen op gevoelige data | Geen gevoelige data blootgesteld |
-| MIN-001 | API-response bevat alleen noodzakelijke data | Geen extra PII in responses |
-| MIN-003 | Logs bevatten minimale PII | Alleen gemaskeerde identificatoren |
+|          |                                              |                                    |
+| -------- | -------------------------------------------- | ---------------------------------- |
+| Test-ID  | Testcase                                     | Verwacht resultaat                 |
+| GDPR-001 | Controleer logs op ongemaskeerde PII         | Geen ongemaskeerde e-mailadressen  |
+| GDPR-002 | Controleer foutmeldingen op gevoelige data   | Geen gevoelige data blootgesteld   |
+| MIN-001  | API-response bevat alleen noodzakelijke data | Geen extra PII in responses        |
+| MIN-003  | Logs bevatten minimale PII                   | Alleen gemaskeerde identificatoren |
 
 **6\. Authenticatie en autorisatie**
 
@@ -216,13 +215,13 @@ De correcte werking van e-mailmaskering wordt gevalideerd door middel van geauto
 
 Alle gebruikersinteractie vereist authenticatie via Equans SSO (Microsoft Azure Active Directory / Entra ID) (Cilwerner, z.d.). De backend valideert alle inkomende JWT-tokens (RFC 7519: JSON Web Token (JWT), z.d.) op:
 
-|     |     |
-| --- | --- |
-| Claim | Validatie |
-| exp | Token is niet verlopen |
-| iss | Correcte Azure AD-tenant |
-| aud | Correcte applicatie-ID |
-| JWKS | Handtekeningvalidatie via Azure AD JWKS-endpoint |
+|       |                                                  |
+| ----- | ------------------------------------------------ |
+| Claim | Validatie                                        |
+| exp   | Token is niet verlopen                           |
+| iss   | Correcte Azure AD-tenant                         |
+| aud   | Correcte applicatie-ID                           |
+| JWKS  | Handtekeningvalidatie via Azure AD JWKS-endpoint |
 
 Er is geen ongeauthenticeerde toegang mogelijk in productie. Het enige onbeschermde endpoint is /health (systeemgezondheidscontrole).
 
@@ -230,56 +229,56 @@ Er is geen ongeauthenticeerde toegang mogelijk in productie. Het enige onbesch
 
 Rolgebaseerde toegangscontrole (RBAC) wordt afgedwongen via Azure AD-groepen (Google Books, z.d.):
 
-|     |     |
-| --- | --- |
-| Rol | Rechten |
-| Gebruiker | Dashboard raadplegen, gemaskeerde e-mailadressen zien |
+|           |                                                                 |
+| --------- | --------------------------------------------------------------- |
+| Rol       | Rechten                                                         |
+| Gebruiker | Dashboard raadplegen, gemaskeerde e-mailadressen zien           |
 | Beheerder | Volledige e-mailadressen zien, synchronisatie triggeren, import |
-| Finance | Kostendoorbelasting raadplegen, CSV-export |
+| Finance   | Kostendoorbelasting raadplegen, CSV-export                      |
 
 **6.3 Token-opslag**
 
 JWT-tokens worden opgeslagen conform de aanbevelingen van (Cilwerner, z.d.): de MSAL-bibliotheek slaat tokens op in sessiememory, waardoor tokens niet toegankelijk zijn voor kwaadaardige scripts (XSS-mitigatie).
 
-|     |     |     |
-| --- | --- | --- |
-| Component | Opslagmethode | Reden |
-| Frontend | MSAL sessiememory | Voorkomt XSS-exfiltratie (niet in localStorage) |
-| Backend | Geen token-opslag | Stateless JWT-validatie per verzoek |
+|           |                   |                                                 |
+| --------- | ----------------- | ----------------------------------------------- |
+| Component | Opslagmethode     | Reden                                           |
+| Frontend  | MSAL sessiememory | Voorkomt XSS-exfiltratie (niet in localStorage) |
+| Backend   | Geen token-opslag | Stateless JWT-validatie per verzoek             |
 
 **7\. Datatransmissie en versleuteling**
 
 **7.1 In transit**
 
-|     |     |     |
-| --- | --- | --- |
-| Verbinding | Protocol | Verificatie |
-| Browser → Frontend | TLS 1.2+ | SSL Labs-scan |
-| Frontend → Backend | TLS 1.2+ | Certificaatvalidatie |
-| Backend → PostgreSQL | TLS 1.2 | sslmode=require in connection string |
-| Backend → Atlassian API | TLS 1.2+ | HTTPS verplicht |
-| Backend → GitHub API | TLS 1.2+ | HTTPS verplicht |
+|                         |          |                                      |
+| ----------------------- | -------- | ------------------------------------ |
+| Verbinding              | Protocol | Verificatie                          |
+| Browser → Frontend      | TLS 1.2+ | SSL Labs-scan                        |
+| Frontend → Backend      | TLS 1.2+ | Certificaatvalidatie                 |
+| Backend → PostgreSQL    | TLS 1.2  | sslmode=require in connection string |
+| Backend → Atlassian API | TLS 1.2+ | HTTPS verplicht                      |
+| Backend → GitHub API    | TLS 1.2+ | HTTPS verplicht                      |
 
 HTTP-verzoeken worden automatisch omgeleid naar HTTPS. Het gebruik van minimaal TLS 1.2 is conform de richtlijnen van NIST (McKay & Cooper, 2019) en TM-01 uit de SRS.
 
 **7.2 At rest**
 
-|     |     |     |
-| --- | --- | --- |
-| Component | Versleutelingsmethode | Verificatie |
-| PostgreSQL | TDE / AES-256 | Controle van pg_settings |
-| Back-ups | AES-256 | Verificatie van back-upversleuteling |
-| Opslag | AES-256 | Volume-encryptie gevalideerd |
+|            |                       |                                      |
+| ---------- | --------------------- | ------------------------------------ |
+| Component  | Versleutelingsmethode | Verificatie                          |
+| PostgreSQL | TDE / AES-256         | Controle van pg_settings             |
+| Back-ups   | AES-256               | Verificatie van back-upversleuteling |
+| Opslag     | AES-256               | Volume-encryptie gevalideerd         |
 
 **7.3 Geheimenbeheer**
 
-|     |     |     |
-| --- | --- | --- |
-| Geheim | Opslaglocatie | Toegang |
-| Atlassian API-key | Environment variabele / Docker secret | Alleen backend-container |
-| GitHub App private key | Environment variabele / Docker secret | Alleen backend-container |
-| Database-wachtwoord | Environment variabele / Docker secret | Alleen backend-container |
-| Azure AD client secret | GitHub Secrets (CI/CD) | Alleen deployment pipeline |
+|                        |                                       |                            |
+| ---------------------- | ------------------------------------- | -------------------------- |
+| Geheim                 | Opslaglocatie                         | Toegang                    |
+| Atlassian API-key      | Environment variabele / Docker secret | Alleen backend-container   |
+| GitHub App private key | Environment variabele / Docker secret | Alleen backend-container   |
+| Database-wachtwoord    | Environment variabele / Docker secret | Alleen backend-container   |
+| Azure AD client secret | GitHub Secrets (CI/CD)                | Alleen deployment pipeline |
 
 **Harde regels:**
 
@@ -293,14 +292,14 @@ HTTP-verzoeken worden automatisch omgeleid naar HTTPS. Het gebruik van minimaal 
 
 **8.1 Retentiebeleid**
 
-|     |     |     |
-| --- | --- | --- |
-| Gegevenstype | Retentieperiode | Verwijderacte |
-| Gebruikersgegeven | Account-levensduur | Verwijdering bij verwijderingsverzoek |
-| Licentiegebruik | 2 jaar | Automatische purge na retentieperiode |
-| Login-historie | 1 jaar | Automatische purge na retentieperiode |
-| IP-adressen (logs) | 90 dagen | Automatische purge na retentieperiode |
-| Audit-logs | 2 jaar | Geanonimiseerd bewaard voor compliance |
+|                    |                    |                                        |
+| ------------------ | ------------------ | -------------------------------------- |
+| Gegevenstype       | Retentieperiode    | Verwijderacte                          |
+| Gebruikersgegeven  | Account-levensduur | Verwijdering bij verwijderingsverzoek  |
+| Licentiegebruik    | 2 jaar             | Automatische purge na retentieperiode  |
+| Login-historie     | 1 jaar             | Automatische purge na retentieperiode  |
+| IP-adressen (logs) | 90 dagen           | Automatische purge na retentieperiode  |
+| Audit-logs         | 2 jaar             | Geanonimiseerd bewaard voor compliance |
 
 **8.2 Databaseontwerp**
 
@@ -312,15 +311,15 @@ HTTP-verzoeken worden automatisch omgeleid naar HTTPS. Het gebruik van minimaal 
 
 De AVG geeft betrokkenen (medewerkers) specifieke rechten ten aanzien van hun persoonsgegevens (Regulation - 2016/679 - EN - Gdpr - EUR-Lex, z.d., Art. 15–21; De AVG in het Kort, 2024). Het systeem ondersteunt deze rechten als volgt:
 
-|     |     |     |
-| --- | --- | --- |
-| AVG-recht | Art. | Implementatie |
-| Recht op inzage | 15  | Beheerders kunnen persoonsgegevens opvragen via het persoonenoverzicht |
-| Recht op rectificatie | 16  | Gegevens worden bijgewerkt bij elke dagelijkse synchronisatie met vendor-API's |
-| Recht op vergetelheid | 17  | Verwijderingsworkflow: alle persoonsgebonden records worden verwijderd |
-| Recht op beperking verwerking | 18  | Gegevensverwerking kan per persoon worden stopgezet |
-| Recht op overdraagbaarheid | 20  | Exportfunctionaliteit genereert een machine-leesbaar pakket (JSON) |
-| Recht van bezwaar | 21  | Bezwaren worden afgehandeld via de privacyfunctionaris van Equans |
+|                               |      |                                                                                |
+| ----------------------------- | ---- | ------------------------------------------------------------------------------ |
+| AVG-recht                     | Art. | Implementatie                                                                  |
+| Recht op inzage               | 15   | Beheerders kunnen persoonsgegevens opvragen via het persoonenoverzicht         |
+| Recht op rectificatie         | 16   | Gegevens worden bijgewerkt bij elke dagelijkse synchronisatie met vendor-API's |
+| Recht op vergetelheid         | 17   | Verwijderingsworkflow: alle persoonsgebonden records worden verwijderd         |
+| Recht op beperking verwerking | 18   | Gegevensverwerking kan per persoon worden stopgezet                            |
+| Recht op overdraagbaarheid    | 20   | Exportfunctionaliteit genereert een machine-leesbaar pakket (JSON)             |
+| Recht van bezwaar             | 21   | Bezwaren worden afgehandeld via de privacyfunctionaris van Equans              |
 
 **Verwijderingsprocedure (Recht op vergetelheid)**
 
@@ -337,31 +336,31 @@ Bij een verwijderingsverzoek worden de volgende stappen doorlopen:
 
 Het systeem communiceert met externe leveranciers die als verwerker optreden. Voor elke leverancier is een verwerkersovereenkomst (Data Processing Agreement) vereist conform Art. 28 AVG (Regulation - 2016/679 - EN - Gdpr - EUR-Lex, z.d.):
 
-|     |     |     |     |
-| --- | --- | --- | --- |
-| Leverancier | Gedeelde gegevens | Doel | DPA-status |
-| Atlassian | Account-ID's, gebruiksdata | Licentiebeheer | Ondertekend |
-| GitHub | Account-ID's, gebruiksdata | Licentiebeheer | Ondertekend |
-| JFrog | Gebruiksstatistieken | Licentiebeheer | Ondertekend |
-| Microsoft | Azure AD-tokens | Authenticatie (SSO) | Ondertekend |
+|             |                            |                     |             |
+| ----------- | -------------------------- | ------------------- | ----------- |
+| Leverancier | Gedeelde gegevens          | Doel                | DPA-status  |
+| Atlassian   | Account-ID's, gebruiksdata | Licentiebeheer      | Ondertekend |
+| GitHub      | Account-ID's, gebruiksdata | Licentiebeheer      | Ondertekend |
+| JFrog       | Gebruiksstatistieken       | Licentiebeheer      | Ondertekend |
+| Microsoft   | Azure AD-tokens            | Authenticatie (SSO) | Ondertekend |
 
 **11\. Beveiligingsmaatregelen (OWASP Top 10)**
 
 Het systeem is ontworpen conform de OWASP Top 10 (2021) richtlijnen (OWASP Top Ten Web Application Security Risks | OWASP Foundation, z.d.):
 
-|     |     |
-| --- | --- |
-| OWASP Top 10 | Maatregel |
-| A01 — Broken Access Control | JWT-validatie middleware op alle endpoints; RBAC via Azure AD-groepen |
-| A02 — Cryptographic Failures | TLS 1.2+ voor alle verbindingen; AES-256 at rest; geen plaintext geheimen |
-| A03 — Injection | Geparametriseerde SQL via SQLx; geen dynamische query-opbouw |
-| A04 — Insecure Design | Privacy by design; threat modelling; dataminimalisatie |
-| A05 — Security Misconfiguration | Expliciete waarschuwing bij uitgeschakelde auth; geen debug-info in responses |
-| A06 — Vulnerable Components | Bekende kwetsbaarheden gedocumenteerd (SDD §6.3); afhankelijkheden gemonitord |
-| A07 — Identification & Auth Failures | Korte token-levensduur (1 uur); automatische vernieuwing via MSAL |
-| A08 — Data Integrity Failures | Versiegecontroleerde migraties; gevalideerde CSV-imports |
-| A09 — Security Logging & Monitoring | Structured logging met correlatie-ID's; alle requests gelogd via TraceLayer |
-| A10 — Server-Side Request Forgery | Backend maakt alleen verbinding met bekende, geconfigureerde API-endpoints |
+|                                      |                                                                               |
+| ------------------------------------ | ----------------------------------------------------------------------------- |
+| OWASP Top 10                         | Maatregel                                                                     |
+| A01 — Broken Access Control          | JWT-validatie middleware op alle endpoints; RBAC via Azure AD-groepen         |
+| A02 — Cryptographic Failures         | TLS 1.2+ voor alle verbindingen; AES-256 at rest; geen plaintext geheimen     |
+| A03 — Injection                      | Geparametriseerde SQL via SQLx; geen dynamische query-opbouw                  |
+| A04 — Insecure Design                | Privacy by design; threat modelling; dataminimalisatie                        |
+| A05 — Security Misconfiguration      | Expliciete waarschuwing bij uitgeschakelde auth; geen debug-info in responses |
+| A06 — Vulnerable Components          | Bekende kwetsbaarheden gedocumenteerd (SDD §6.3); afhankelijkheden gemonitord |
+| A07 — Identification & Auth Failures | Korte token-levensduur (1 uur); automatische vernieuwing via MSAL             |
+| A08 — Data Integrity Failures        | Versiegecontroleerde migraties; gevalideerde CSV-imports                      |
+| A09 — Security Logging & Monitoring  | Structured logging met correlatie-ID's; alle requests gelogd via TraceLayer   |
+| A10 — Server-Side Request Forgery    | Backend maakt alleen verbinding met bekende, geconfigureerde API-endpoints    |
 
 **12\. Logging en monitoring**
 
@@ -376,13 +375,13 @@ Het systeem is ontworpen conform de OWASP Top 10 (2021) richtlijnen (OWASP Top T
 
 Alle beheerdersacties worden gelogd met de volgende gegevens:
 
-|     |     |
-| --- | --- |
-| Veld | Beschrijving |
-| Wie | Geauthenticeerde gebruiker (JWT sub) |
-| Wat | Uitgevoerde actie |
-| Wanneer | Tijdstempel (UTC) |
-| Resultaat | Succes of fout |
+|           |                                      |
+| --------- | ------------------------------------ |
+| Veld      | Beschrijving                         |
+| Wie       | Geauthenticeerde gebruiker (JWT sub) |
+| Wat       | Uitgevoerde actie                    |
+| Wanneer   | Tijdstempel (UTC)                    |
+| Resultaat | Succes of fout                       |
 
 **12.3 Gezondheidscontrole**
 
@@ -394,42 +393,42 @@ Het endpoint /health verifieert:
 
 **13\. Risicobeoordeling**
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| ID  | Risico | Kans | Impact | Maatregel |
-| P-01 | Ongemaskeerde PII in logbestanden | Laag | Hoog | Automatische e-mailmaskering; GDPR-001/002 testcases |
-| P-02 | Ongeautoriseerde toegang tot persoonsgegevens | Laag | Hoog | JWT-authenticatie; RBAC; Azure AD-groepen |
-| P-03 | SQL-injectie leidt tot data-exfiltratie | Laag | Hoog | Geparametriseerde queries via SQLx; geen dynamische SQL |
-| P-04 | API-key blootgesteld in broncode of logs | Laag | Hoog | Environment variabelen; .gitignore; gemaskarrd in logs; rotatie elke 90d |
-| P-05 | XSS-aanval exfiltreert JWT-tokens | Laag | Hoog | MSAL sessiememory (niet localStorage); Content Security Policy |
-| P-06 | GDPR-verwijderingsverzoek niet volledig uitgevoerd | Middel | Hoog | Gestructureerde verwijderingsprocedure (§9); validatietests |
-| P-07 | Datalek naar onbevoegde medewerkers (ontbrekende rolcontrole) | Laag | Middel | E-mailmaskering voor niet-beheerders; RBAC |
-| P-08 | Vendor API stuurt onverwachte persoonsgegevens mee | Middel | Laag | Responsefiltering; alleen gedefinieerde velden worden opgeslagen |
+|      |                                                               |        |        |                                                                          |
+| ---- | ------------------------------------------------------------- | ------ | ------ | ------------------------------------------------------------------------ |
+| ID   | Risico                                                        | Kans   | Impact | Maatregel                                                                |
+| P-01 | Ongemaskeerde PII in logbestanden                             | Laag   | Hoog   | Automatische e-mailmaskering; GDPR-001/002 testcases                     |
+| P-02 | Ongeautoriseerde toegang tot persoonsgegevens                 | Laag   | Hoog   | JWT-authenticatie; RBAC; Azure AD-groepen                                |
+| P-03 | SQL-injectie leidt tot data-exfiltratie                       | Laag   | Hoog   | Geparametriseerde queries via SQLx; geen dynamische SQL                  |
+| P-04 | API-key blootgesteld in broncode of logs                      | Laag   | Hoog   | Environment variabelen; .gitignore; gemaskarrd in logs; rotatie elke 90d |
+| P-05 | XSS-aanval exfiltreert JWT-tokens                             | Laag   | Hoog   | MSAL sessiememory (niet localStorage); Content Security Policy           |
+| P-06 | GDPR-verwijderingsverzoek niet volledig uitgevoerd            | Middel | Hoog   | Gestructureerde verwijderingsprocedure (§9); validatietests              |
+| P-07 | Datalek naar onbevoegde medewerkers (ontbrekende rolcontrole) | Laag   | Middel | E-mailmaskering voor niet-beheerders; RBAC                               |
+| P-08 | Vendor API stuurt onverwachte persoonsgegevens mee            | Middel | Laag   | Responsefiltering; alleen gedefinieerde velden worden opgeslagen         |
 
 **14\. Testmaatregelen**
 
 Privacy- en beveiligingsmaatregelen worden gevalideerd door middel van de volgende testcategorieën:
 
-|     |     |     |
-| --- | --- | --- |
-| Categorie | Testdocument | Omvat |
-| GDPR-compliance | Security Testing | PII-maskering, versleuteling, recht op vergetelheid |
-| Authenticatie/autorisatie | Security Testing | SSO-login, JWT-validatie, RBAC-matrix |
-| Dataminimalisatie | Security Testing | Collection audit, schemacontrole |
-| Consent-beheer | Security Testing | Toestemming registratie, intrekking |
-| Versleutelingsvalidatie | Security Testing | TLS-controle, at-rest encryptie |
-| Beveiligingsscanning | SRS | HTTPS-afdwinging, secret scanning, OWASP |
+|                           |                  |                                                     |
+| ------------------------- | ---------------- | --------------------------------------------------- |
+| Categorie                 | Testdocument     | Omvat                                               |
+| GDPR-compliance           | Security Testing | PII-maskering, versleuteling, recht op vergetelheid |
+| Authenticatie/autorisatie | Security Testing | SSO-login, JWT-validatie, RBAC-matrix               |
+| Dataminimalisatie         | Security Testing | Collection audit, schemacontrole                    |
+| Consent-beheer            | Security Testing | Toestemming registratie, intrekking                 |
+| Versleutelingsvalidatie   | Security Testing | TLS-controle, at-rest encryptie                     |
+| Beveiligingsscanning      | SRS              | HTTPS-afdwinging, secret scanning, OWASP            |
 
 **15\. Verantwoordelijkheden**
 
-|     |     |
-| --- | --- |
-| Rol | Verantwoordelijkheid |
-| Ontwikkelteam | Implementatie van privacy by design; maskering; geparameteriseerde queries |
-| Systeembeheerder | Geheimenbeheer; key-rotatie; toegangscontrole; monitoring |
-| Privacyfunctionaris Equans | Behandeling van betrokkenenverzoeken; datalekmelding aan AP; DPA-beheer |
-| Business Owner | Goedkeuring van dataverzameling; bepaling retentiebeleid |
-| Technical Lead | Review van beveiligingsmaatregelen; goedkeuring van architectuurbeslissingen |
+|                            |                                                                              |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| Rol                        | Verantwoordelijkheid                                                         |
+| Ontwikkelteam              | Implementatie van privacy by design; maskering; geparameteriseerde queries   |
+| Systeembeheerder           | Geheimenbeheer; key-rotatie; toegangscontrole; monitoring                    |
+| Privacyfunctionaris Equans | Behandeling van betrokkenenverzoeken; datalekmelding aan AP; DPA-beheer      |
+| Business Owner             | Goedkeuring van dataverzameling; bepaling retentiebeleid                     |
+| Technical Lead             | Review van beveiligingsmaatregelen; goedkeuring van architectuurbeslissingen |
 
 **16\. Referenties**
 
