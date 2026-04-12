@@ -2,7 +2,6 @@
 title: "Software Design Document  Equans Operational Insights Dashboard"
 subtitle: "Afstudeerscriptie  Technisch Ontwerpdocument"
 author: "Ahmad Alhaj Asaad"
-date: "8 maart 2026"
 version: "1.0"
 status: "Definitief"
 ---
@@ -13,17 +12,17 @@ status: "Definitief"
 
 ---
 
-| Documentmeta     | Waarde                                                      |
-|------------------|-------------------------------------------------------------|
-| **Documentnummer** | SDD-001                                                   |
-| **Versie**         | 1.0                                                       |
-| **Status**         | Definitief                                                |
-| **Datum**          | 8 maart 2026                                              |
-| **Auteur**         | Ahmad Alhaj Asaad                                         |
-| **Instelling**     | Equans  SLS Digital Platforms / DevOps Forge             |
-| **Begeleider**     | Brian Veltman                                             |
-| **Opdrachtgever**  | Viktor Klein                                              |
-| **Gerelateerd SRS**| SRS-001 (Software Requirements Specification)             |
+| Documentmeta        | Waarde                                        |
+| ------------------- | --------------------------------------------- |
+| **Documentnummer**  | SDD-001                                       |
+| **Versie**          | 1.0                                           |
+| **Status**          | Definitief                                    |
+| **Datum**           | 8 maart 2026                                  |
+| **Auteur**          | Ahmad Alhaj Asaad                             |
+| **Instelling**      | Equans SLS Digital Platforms / DevOps Forge   |
+| **Begeleider**      | Brian Veltman                                 |
+| **Opdrachtgever**   | Viktor Klein                                  |
+| **Gerelateerd SRS** | SRS-001 (Software Requirements Specification) |
 
 ---
 
@@ -102,13 +101,14 @@ Dit fragmentatie veroorzaakt drie concrete bedrijfskundige knelpunten:
 
 De centrale onderzoeksvraag luidt derhalve:
 
-> *Hoe kan een gecentraliseerd, geautomatiseerd en visueel inzichtelijk dashboard worden ontworpen en geïmplementeerd waarmee Equans haar licentieverbruik en licentiekosten cross-platform kan monitoren en doorbelasten?*
+> _Hoe kan een gecentraliseerd, geautomatiseerd en visueel inzichtelijk dashboard worden ontworpen en geïmplementeerd waarmee Equans haar licentieverbruik en licentiekosten cross-platform kan monitoren en doorbelasten?_
 
 ### 1.3 Scope en afbakening
 
 Het ontwerp beschreven in dit document omvat:
 
 **Binnen scope:**
+
 - React/TypeScript Single Page Application (SPA) met Vite als build-tool;
 - Rust/Axum REST API-backend;
 - PostgreSQL-database voor persistente opslag;
@@ -118,6 +118,7 @@ Het ontwerp beschreven in dit document omvat:
 - Licentiekostendashboard (FR-010), personenbeheer (FR-005), organisatiebeheer (FR-006) en data-import (FR-007).
 
 **Buiten scope:**
+
 - Directe terugschrijfoperaties naar externe vendor-API's (read-only architectuur);
 - Real-time streamingdatacollectie (uitsluitend batch-/polling-verversing);
 - JFrog-integratie (gepland voor volgende iteratie);
@@ -143,13 +144,13 @@ De backend volgt het **Repository-patroon** voor data-abstractie en het **Handle
 
 De volgende ontwerpprincipes zijn leidend bij het ontwerp en de implementatie:
 
-| Principe | Toepassing in dit systeem |
-|----------|--------------------------|
-| **Separation of Concerns (SoC)** | Frontend, backend en database zijn strikte, gescheiden lagen met expliciete interfaces. |
-| **Single Responsibility Principle (SRP)** | Elke React-component en Rust-module heeft één duidelijk afgebakende verantwoordelijkheid. |
-| **DRY (Don't Repeat Yourself)** | Gedeelde TypeScript-types worden geëxporteerd via een centraal `types/index.ts`; productprijzen in één `productPricing.ts`. |
-| **Fail Fast** | API-fouten worden direct aan de gebruiker gerapporteerd; er wordt nooit stilzwijgend teruggevallen op verouderde data. |
-| **Security by Design** | Authenticatie is verplicht op alle endpoints; geheimen worden uitsluitend beheerd via omgevingsvariabelen. |
+| Principe                                  | Toepassing in dit systeem                                                                                                   |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Separation of Concerns (SoC)**          | Frontend, backend en database zijn strikte, gescheiden lagen met expliciete interfaces.                                     |
+| **Single Responsibility Principle (SRP)** | Elke React-component en Rust-module heeft één duidelijk afgebakende verantwoordelijkheid.                                   |
+| **DRY (Don't Repeat Yourself)**           | Gedeelde TypeScript-types worden geëxporteerd via een centraal `types/index.ts`; productprijzen in één `productPricing.ts`. |
+| **Fail Fast**                             | API-fouten worden direct aan de gebruiker gerapporteerd; er wordt nooit stilzwijgend teruggevallen op verouderde data.      |
+| **Security by Design**                    | Authenticatie is verplicht op alle endpoints; geheimen worden uitsluitend beheerd via omgevingsvariabelen.                  |
 
 ---
 
@@ -196,17 +197,17 @@ graph TB
 
 ### 3.2 Technologiestack
 
-| Laag | Technologie | Versie | Motivering |
-|------|------------|--------|------------|
-| **Frontend** | React | ^19.x | Component-gebaseerde UI; groot ecosysteem |
-| **Frontend** | TypeScript | ~5.9.x | Statische typering voor betrouwbaardere code |
-| **Frontend** | Vite | ^7.x | Snelle HMR en optimale productie-bundle |
-| **Backend** | Rust | stable | Geheugenveiligheid, hoge prestaties, geen GC-pauzes |
-| **Backend** | Axum | 0.7.x | Async HTTP-framework; naadloze Tokio-integratie |
-| **Backend** | SQLx | 0.8.x | Type-safe async SQL-queries; compile-time verificatie |
-| **Database** | PostgreSQL | 16 | ACID-compliant; rijke queryondersteuning |
-| **Container** | Docker Compose | v2 | Reproduceerbare lokale en productieomgeving |
-| **Authenticatie** | JWT + Azure AD |  | Equans SSO-standaard |
+| Laag              | Technologie    | Versie | Motivering                                            |
+| ----------------- | -------------- | ------ | ----------------------------------------------------- |
+| **Frontend**      | React          | ^19.x  | Component-gebaseerde UI; groot ecosysteem             |
+| **Frontend**      | TypeScript     | ~5.9.x | Statische typering voor betrouwbaardere code          |
+| **Frontend**      | Vite           | ^7.x   | Snelle HMR en optimale productie-bundle               |
+| **Backend**       | Rust           | stable | Geheugenveiligheid, hoge prestaties, geen GC-pauzes   |
+| **Backend**       | Axum           | 0.7.x  | Async HTTP-framework; naadloze Tokio-integratie       |
+| **Backend**       | SQLx           | 0.8.x  | Type-safe async SQL-queries; compile-time verificatie |
+| **Database**      | PostgreSQL     | 16     | ACID-compliant; rijke queryondersteuning              |
+| **Container**     | Docker Compose | v2     | Reproduceerbare lokale en productieomgeving           |
+| **Authenticatie** | JWT + Azure AD |        | Equans SSO-standaard                                  |
 
 ---
 
@@ -398,16 +399,16 @@ stateDiagram-v2
 
 `ProductCard.tsx` is een presentatiecomponent (geen eigen state) die de volgende gegevens visualiseert per Atlassian-product:
 
-| Veld | Type | Beschrijving |
-|------|------|-------------|
-| `productName` | `string` | Weergavenaam (bijv. "Jira Software") |
-| `userCount` | `number` | Aantal actieve gebruikers |
-| `costPerUser` | `number` | Inkoopprijs per gebruiker/maand (€) |
-| `billablePerUser` | `number` | Factureerbaar tarief per gebruiker/maand (€) |
-| `totalCost` | `number` | Totale maandelijkse inkoopkosten |
-| `totalBillable` | `number` | Totaal factureerbaar per maand |
-| `totalMargin` | `number` | Totale consultancymarge per maand |
-| `marginPercentage` | `string` | Margepercentage als geformatteerde string |
+| Veld               | Type     | Beschrijving                                 |
+| ------------------ | -------- | -------------------------------------------- |
+| `productName`      | `string` | Weergavenaam (bijv. "Jira Software")         |
+| `userCount`        | `number` | Aantal actieve gebruikers                    |
+| `costPerUser`      | `number` | Inkoopprijs per gebruiker/maand (€)          |
+| `billablePerUser`  | `number` | Factureerbaar tarief per gebruiker/maand (€) |
+| `totalCost`        | `number` | Totale maandelijkse inkoopkosten             |
+| `totalBillable`    | `number` | Totaal factureerbaar per maand               |
+| `totalMargin`      | `number` | Totale consultancymarge per maand            |
+| `marginPercentage` | `string` | Margepercentage als geformatteerde string    |
 
 #### 5.1.3 API-client (`api/client.ts`)
 
@@ -435,21 +436,21 @@ Alle tariefinformatie is gecentraliseerd in één enkel configuratiebestand om h
 
 ```typescript
 export interface ProductPricing {
-  name: string;          // Weergavenaam
-  product: string;       // API-sleutel
-  costPerUser: number;   // Inkoopprijs/gebruiker/maand (€)
+  name: string; // Weergavenaam
+  product: string; // API-sleutel
+  costPerUser: number; // Inkoopprijs/gebruiker/maand (€)
   billablePerUser: number; // Factureerbaar tarief/gebruiker/maand (€)
-  margin: number;        // billablePerUser  costPerUser
+  margin: number; // billablePerUser  costPerUser
 }
 ```
 
 **Huidige tariefconfiguratie:**
 
-| Product | Inkoopprijs/gebruiker | Factureerbaar/gebruiker | Marge | Margepercentage |
-|---------|----------------------|------------------------|-------|----------------|
-| Jira Software | € 8,50 | € 11,00 | € 2,50 | 29,4% |
-| Confluence | € 6,25 | € 9,00 | € 2,75 | 44,0% |
-| Trello | € 4,50 | € 6,00 | € 1,50 | 33,3% |
+| Product       | Inkoopprijs/gebruiker | Factureerbaar/gebruiker | Marge  | Margepercentage |
+| ------------- | --------------------- | ----------------------- | ------ | --------------- |
+| Jira Software | € 8,50                | € 11,00                 | € 2,50 | 29,4%           |
+| Confluence    | € 6,25                | € 9,00                  | € 2,75 | 44,0%           |
+| Trello        | € 4,50                | € 6,00                  | € 1,50 | 33,3%           |
 
 ### 5.2 Backend-laag (Rust/Axum)
 
@@ -618,17 +619,17 @@ flowchart LR
 
 De backend exposeert de volgende REST-endpoints. Alle endpoints vereisen de header `Content-Type: application/json`; geauthenticeerde endpoints vereisen bovendien `Authorization: Bearer <JWT>`.
 
-| Methode | Pad | Authenticatie | Response-type | Statuscode(s) |
-|---------|-----|--------------|--------------|--------------|
-| `GET` | `/api/health` |  | `{ status: "ok", version: string }` | 200 |
-| `GET` | `/api/atlassian/organizations` | JWT | `AtlassianOrg[]` | 200, 401, 502 |
-| `GET` | `/api/atlassian/organizations/:id/licenses/:product` | JWT | `LicenseCount` | 200, 401, 404, 502 |
-| `GET` | `/api/atlassian/organizations/:id/licenses/:product/details` | JWT | `LicenseDetails` | 200, 401, 404, 502 |
-| `GET` | `/api/atlassian/users` | JWT | `AtlassianUsersResponse` | 200, 401 |
-| `GET` | `/api/persons` | JWT | `PaginatedResponse<PersonSummary>` | 200, 401 |
-| `GET` | `/api/persons/:id` | JWT | `PersonDetail` | 200, 401, 404 |
-| `GET` | `/api/organizations` | JWT | `PaginatedResponse<OrganizationSummary>` | 200, 401 |
-| `POST` | `/api/import` | JWT | `ImportResult` | 202, 401, 422 |
+| Methode | Pad                                                          | Authenticatie | Response-type                            | Statuscode(s)      |
+| ------- | ------------------------------------------------------------ | ------------- | ---------------------------------------- | ------------------ |
+| `GET`   | `/api/health`                                                |               | `{ status: "ok", version: string }`      | 200                |
+| `GET`   | `/api/atlassian/organizations`                               | JWT           | `AtlassianOrg[]`                         | 200, 401, 502      |
+| `GET`   | `/api/atlassian/organizations/:id/licenses/:product`         | JWT           | `LicenseCount`                           | 200, 401, 404, 502 |
+| `GET`   | `/api/atlassian/organizations/:id/licenses/:product/details` | JWT           | `LicenseDetails`                         | 200, 401, 404, 502 |
+| `GET`   | `/api/atlassian/users`                                       | JWT           | `AtlassianUsersResponse`                 | 200, 401           |
+| `GET`   | `/api/persons`                                               | JWT           | `PaginatedResponse<PersonSummary>`       | 200, 401           |
+| `GET`   | `/api/persons/:id`                                           | JWT           | `PersonDetail`                           | 200, 401, 404      |
+| `GET`   | `/api/organizations`                                         | JWT           | `PaginatedResponse<OrganizationSummary>` | 200, 401           |
+| `POST`  | `/api/import`                                                | JWT           | `ImportResult`                           | 202, 401, 422      |
 
 ### 7.2 Sequentiediagrammen
 
@@ -796,16 +797,16 @@ flowchart TD
 
 ### 8.2 Beveiligingslagen
 
-| Laag | Maatregel | Implementatie |
-|------|----------|--------------|
-| **Transport** | HTTPS / TLS 1.2+ verplicht | Nginx reverse proxy of Docker-niveau |
-| **Authenticatie** | JWT (HS256/RS256) via Azure AD SSO | Axum middleware: `tower_http::auth` |
-| **Autorisatie** | Rolgebaseerde toegangscontrole (RBAC) | Rollen: `admin`, `viewer` in JWT-claims |
-| **Input-validatie** | Alle invoer gevalideerd vóór verwerking | Rust: `serde` + custom validators |
-| **Geheimbeheer** | API-tokens en DB-wachtwoorden in env-vars | Docker Compose `.env`; nooit in VCS |
-| **GDPR** | E-mailadressen gemaskeerd in logberichten | Custom `tracing` formatter |
-| **SQL-injectie** | Uitsluitend parameterized queries via SQLx | Compile-time type-checking |
-| **CORS** | Strikte origin-whitelist configureert | `tower_http::cors::CorsLayer` |
+| Laag                | Maatregel                                  | Implementatie                           |
+| ------------------- | ------------------------------------------ | --------------------------------------- |
+| **Transport**       | HTTPS / TLS 1.2+ verplicht                 | Nginx reverse proxy of Docker-niveau    |
+| **Authenticatie**   | JWT (HS256/RS256) via Azure AD SSO         | Axum middleware: `tower_http::auth`     |
+| **Autorisatie**     | Rolgebaseerde toegangscontrole (RBAC)      | Rollen: `admin`, `viewer` in JWT-claims |
+| **Input-validatie** | Alle invoer gevalideerd vóór verwerking    | Rust: `serde` + custom validators       |
+| **Geheimbeheer**    | API-tokens en DB-wachtwoorden in env-vars  | Docker Compose `.env`; nooit in VCS     |
+| **GDPR**            | E-mailadressen gemaskeerd in logberichten  | Custom `tracing` formatter              |
+| **SQL-injectie**    | Uitsluitend parameterized queries via SQLx | Compile-time type-checking              |
+| **CORS**            | Strikte origin-whitelist configureert      | `tower_http::cors::CorsLayer`           |
 
 ---
 
@@ -896,14 +897,14 @@ graph BT
 
 ### 10.2 Acceptatiescenario's (FR-010)
 
-| Test-ID | Scenario | Teststap | Verwacht resultaat |
-|---------|----------|----------|--------------------|
-| T-010-01 | Dashboard zonder backend | Open dashboard; backend offline | BackendStatus: rood; "Backend niet beschikbaar" |
-| T-010-02 | Dashboard met backend | Open dashboard; backend online | Drie ProductCards geladen (Jira, Confluence, Trello) |
-| T-010-03 | Organisatieselectie | Wijzig organisatie in dropdown | Gebruikersaantallen herladen per product |
-| T-010-04 | Prijswijziging | Pas `productPricing.ts` aan + rebuild | Dashboard toont bijgewerkte berekeningen |
-| T-010-05 | Totaalrij validatie | Controleer totaalrij | Som van drie producten overeenkomstig ProductCards |
-| T-010-06 | Valutaformaat | Inspecteer bedragen op scherm | Bedragen getoond als `€ 8,50` (nl-NL locale) |
+| Test-ID  | Scenario                 | Teststap                              | Verwacht resultaat                                   |
+| -------- | ------------------------ | ------------------------------------- | ---------------------------------------------------- |
+| T-010-01 | Dashboard zonder backend | Open dashboard; backend offline       | BackendStatus: rood; "Backend niet beschikbaar"      |
+| T-010-02 | Dashboard met backend    | Open dashboard; backend online        | Drie ProductCards geladen (Jira, Confluence, Trello) |
+| T-010-03 | Organisatieselectie      | Wijzig organisatie in dropdown        | Gebruikersaantallen herladen per product             |
+| T-010-04 | Prijswijziging           | Pas `productPricing.ts` aan + rebuild | Dashboard toont bijgewerkte berekeningen             |
+| T-010-05 | Totaalrij validatie      | Controleer totaalrij                  | Som van drie producten overeenkomstig ProductCards   |
+| T-010-06 | Valutaformaat            | Inspecteer bedragen op scherm         | Bedragen getoond als `€ 8,50` (nl-NL locale)         |
 
 ### 10.3 Stateovergangen bij fouten
 
@@ -933,11 +934,11 @@ stateDiagram-v2
 
 ### 11.1 Conclusie
 
-Dit Software Design Document beschrijft een coherent en volledig technisch ontwerp voor het Equans Operational Insights Dashboard. De gekozen drielagenarchitectuur  met een React/TypeScript-frontend, een Rust/Axum-backend en een PostgreSQL-database  biedt een robuuste scheiding van verantwoordelijkheden die zowel onderhoudbaarheid als schaalbaarheid bevordert.
+Dit Software Design Document beschrijft een coherent en volledig technisch ontwerp voor het Equans Operational Insights Dashboard. De gekozen drielagenarchitectuur met een React/TypeScript-frontend, een Rust/Axum-backend en een PostgreSQL-database biedt een robuuste scheiding van verantwoordelijkheden die zowel onderhoudbaarheid als schaalbaarheid bevordert.
 
 De implementatie van het licentiekostendashboard (FR-010) beantwoordt direct aan de geïdentificeerde probleemstelling: het systeem biedt een gecentraliseerd, geautomatiseerd en visueel inzichtelijk kostenoverzicht voor Atlassian-licenties, inclusief inkoopkosten, factureerbare bedragen en consultancymarges per product en per organisatie.
 
-De keuze voor een *client-side* kostenberekening op basis van een gecentraliseerd configuratiebestand (`productPricing.ts`) biedt de beheerder directe controle over tariefwijzigingen zonder codewijzigingen elders in het systeem, hetgeen de operationele wendbaarheid vergroot.
+De keuze voor een _client-side_ kostenberekening op basis van een gecentraliseerd configuratiebestand (`productPricing.ts`) biedt de beheerder directe controle over tariefwijzigingen zonder codewijzigingen elders in het systeem, hetgeen de operationele wendbaarheid vergroot.
 
 ### 11.2 Aanbevelingen
 
@@ -957,20 +958,19 @@ Op basis van de opgedane inzichten tijdens ontwerp en implementatie worden de vo
 
 ## 12. Referenties
 
-| Referentie | Beschrijving |
-|-----------|-------------|
-| IEEE Std 1016-2009 | *IEEE Standard for Information Technology  Systems Design  Software Design Descriptions.* IEEE, 2009. |
-| Fowler, M. (2002) | *Patterns of Enterprise Application Architecture.* Addison-Wesley. |
-| Martin, R.C. (2018) | *Clean Architecture: A Craftsman's Guide to Software Structure and Design.* Prentice Hall. |
-| Cohn, M. (2009) | *Succeeding with Agile: Software Development Using Scrum.* Addison-Wesley. |
-| Abramov, D. & Clark, A. (2015) | React Documentation: *Thinking in React.* Meta Open Source. |
-| Axum (2024) | *Axum  Ergonomic and modular web framework built with Tokio, Tower, and Hyper.* tokio-rs/axum. GitHub. |
-| Atlassian (2025) | *Atlassian Admin REST API Reference.* developer.atlassian.com. |
-| SRS-001 (2026) | Alhaj Asaad, A. *Software Requirements Specification  Equans Operational Insights Dashboard.* Versie 1.0. Equans SLS Digital Platforms. |
-| TR-010 (2026) | Alhaj Asaad, A. *TR-010: Frontend Vernieuwing  Technische Specificaties.* Equans SLS Digital Platforms. |
-| FR-010 (2026) | Alhaj Asaad, A. *FR-010: Frontend Vernieuwing  Operational Insights Dashboard.* Equans SLS Digital Platforms. |
+| Referentie                     | Beschrijving                                                                                                                           |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| IEEE Std 1016-2009             | _IEEE Standard for Information Technology Systems Design Software Design Descriptions._ IEEE, 2009.                                    |
+| Fowler, M. (2002)              | _Patterns of Enterprise Application Architecture._ Addison-Wesley.                                                                     |
+| Martin, R.C. (2018)            | _Clean Architecture: A Craftsman's Guide to Software Structure and Design._ Prentice Hall.                                             |
+| Cohn, M. (2009)                | _Succeeding with Agile: Software Development Using Scrum._ Addison-Wesley.                                                             |
+| Abramov, D. & Clark, A. (2015) | React Documentation: _Thinking in React._ Meta Open Source.                                                                            |
+| Axum (2024)                    | _Axum Ergonomic and modular web framework built with Tokio, Tower, and Hyper._ tokio-rs/axum. GitHub.                                  |
+| Atlassian (2025)               | _Atlassian Admin REST API Reference._ developer.atlassian.com.                                                                         |
+| SRS-001 (2026)                 | Alhaj Asaad, A. _Software Requirements Specification Equans Operational Insights Dashboard._ Versie 1.0. Equans SLS Digital Platforms. |
+| TR-010 (2026)                  | Alhaj Asaad, A. _TR-010: Frontend Vernieuwing Technische Specificaties._ Equans SLS Digital Platforms.                                 |
+| FR-010 (2026)                  | Alhaj Asaad, A. _FR-010: Frontend Vernieuwing Operational Insights Dashboard._ Equans SLS Digital Platforms.                           |
 
 ---
 
-*Dit document is opgesteld als onderdeel van een afstudeeronderzoek bij Equans SLS Digital Platforms (DevOps Forge). Alle genoemde architecturele beslissingen en technische specificaties zijn gebaseerd op de implementatierealiteit per 8 maart 2026.*
-
+_Dit document is opgesteld als onderdeel van een afstudeeronderzoek bij Equans SLS Digital Platforms (DevOps Forge). Alle genoemde architecturele beslissingen en technische specificaties zijn gebaseerd op de implementatierealiteit per 8 maart 2026._
