@@ -10,7 +10,6 @@
 **Student:** Ahmad Alhaj Asaad
 **Opleiding:** HBO-ICT
 **Bedrijf:** Equans
-**Datum:** November 2025
 **Versie:** 1.0
 
 ---
@@ -439,7 +438,7 @@ Het vaststellen van patronen die wijzen op inefficiënt of onbenut gebruik van A
 
 ### 6.1 Langdurig inactieve accounts
 
-Een eerste en meest voor de hand liggende indicator betreft langdurig inactieve accounts. Binnen Atlassian Cloud kan via de Organizations REST API per gebruiker een last_active timestamp worden opgevraagd (_The Organizations REST API REST API_, z.d.-a). Wanneer uit deze gegevens blijkt dat een gebruiker gedurende een periode van bijvoorbeeld 60 of 90 dagen geen activiteit heeft vertoond, terwijl de accountstatus nog steeds "active" is en de gebruiker lid blijft van een productgroep, kan worden geconcludeerd dat de toegewezen licentie mogelijk niet noodzakelijk is. Dit krijgt extra gewicht binnen het zogenoemde Maximum Quantity Billing-model, waarbij het hoogste aantal toegekende licenties in een factureringsperiode bepalend is voor de kosten, ongeacht feitelijk gebruik (Atlassian, z.d.-b). Dit betekent dat ook volledig inactieve accounts financieel worden doorbelast zolang zij niet expliciet worden gedeactiveerd. Een kwantitatieve analyse van last_active-gegevens in combinatie met groepslidmaatschap maakt het daarom mogelijk om concreet besparingspotentieel te identificeren.
+Een eerste en meest voor de hand liggende indicator betreft langdurig inactieve accounts. Binnen Atlassian Cloud kan via de Organizations REST API per gebruiker een last*active timestamp worden opgevraagd (\_The Organizations REST API REST API*, z.d.-a). Wanneer uit deze gegevens blijkt dat een gebruiker gedurende een periode van bijvoorbeeld 60 of 90 dagen geen activiteit heeft vertoond, terwijl de accountstatus nog steeds "active" is en de gebruiker lid blijft van een productgroep, kan worden geconcludeerd dat de toegewezen licentie mogelijk niet noodzakelijk is. Dit krijgt extra gewicht binnen het zogenoemde Maximum Quantity Billing-model, waarbij het hoogste aantal toegekende licenties in een factureringsperiode bepalend is voor de kosten, ongeacht feitelijk gebruik (Atlassian, z.d.-b). Dit betekent dat ook volledig inactieve accounts financieel worden doorbelast zolang zij niet expliciet worden gedeactiveerd. Een kwantitatieve analyse van last_active-gegevens in combinatie met groepslidmaatschap maakt het daarom mogelijk om concreet besparingspotentieel te identificeren.
 
 ### 6.2 Externe gebruikers met billable toegang
 
