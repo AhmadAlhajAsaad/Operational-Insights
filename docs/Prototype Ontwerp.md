@@ -20,8 +20,6 @@ Bedrijfsbegeleider: Viktor Klein (Business Owner), Brian Veltman (Technisch bege
 
 Studiejaar: 2025 - 2026
 
-Versie 1.0
-
  
 
 Inleiding
@@ -38,7 +36,7 @@ Dit document presenteert de resultaten van deze ontwerpcycli. Hoofdstuk 2 beschr
 
 **Hoofdstuk 2: Eerste Ontwerpiteratie — Low-Fidelity Wireframes**
 
-Dit hoofdstuk beschrijft de eerste ontwerpcyclus, waarin de nadruk lag op het valideren van de paginastructuur, de informatiearchitectuur en de algehele gebruikersreis. De hier gepresenteerde **low-fidelity wireframes** zijn bewust eenvoudig gehouden en bevatten minimale visuele detaillering. Deze aanpak, conform de principes van _lean UX_ (Gothelf & Seiden, 2016), maakt het mogelijk om snel te itereren en feedback te verzamelen op de functionele opzet, zonder afgeleid te worden door esthetische keuzes. Alle wireframes zijn ontwikkeld in Figma en dienden als basis voor de gebruikerssessies met stakeholders.
+Dit hoofdstuk beschrijft de eerste ontwerpcyclus, waarin de nadruk lag op het valideren van de paginastructuur, de informatiearchitectuur en de algehele gebruikersreis. De hier gepresenteerde **low-fidelity wireframes** zijn bewust eenvoudig gehouden en bevatten minimale visuele detaillering. Deze aanpak, conform de principes van *lean UX* (Gothelf & Seiden, 2016), maakt het mogelijk om snel te itereren en feedback te verzamelen op de functionele opzet, zonder afgeleid te worden door esthetische keuzes. Alle wireframes zijn ontwikkeld in Figma en dienden als basis voor de gebruikerssessies met stakeholders.
 
 **2.1 Inlogscherm met Microsoft SSO**
 
@@ -78,8 +76,8 @@ _Dit wireframe toont de initiële opzet van het organisatieoverzicht, met KPI-ka
 
 Figuur 2 toont het eerste ontwerp van het organisatieoverzicht, het centrale scherm van het dashboard. Het scherm is opgebouwd uit vier logische secties die de belangrijkste gebruikersvereisten adresseren:
 
-1.  **KPI-kaarten (bovenaan):** Vier kaarten tonen de belangrijkste metrieken: 'Total Monthly Cost', 'Organizations', 'Total Users' en 'Avg Utilization'. De plaatsing bovenaan het scherm volgt het _inverted pyramid_\-model (Krug, 2014), waarbij de meest cruciale informatie direct zichtbaar is zonder scrollen. Placeholders (#, XX%) geven aan dat de exacte waarden later worden ingevuld.
-2.  **Kostentrendgrafiek:** Een 'Monthly Cost Trend by Business Unit'-grafiek visualiseert de kostenontwikkeling over zes maanden. In dit low-fidelity stadium is de grafiek eenvoudig gehouden met louter blokken en placeholders, maar de _bedoeling_ (inzicht in trends) is duidelijk. De keuze voor een gestapelde grafiek (stacked chart) is een vooruitwijzing naar de definitieve visualisatie.
+1.  **KPI-kaarten (bovenaan):** Vier kaarten tonen de belangrijkste metrieken: 'Total Monthly Cost', 'Organizations', 'Total Users' en 'Avg Utilization'. De plaatsing bovenaan het scherm volgt het *inverted pyramid*\-model (Krug, 2014), waarbij de meest cruciale informatie direct zichtbaar is zonder scrollen. Placeholders (#, XX%) geven aan dat de exacte waarden later worden ingevuld.
+2.  **Kostentrendgrafiek:** Een 'Monthly Cost Trend by Business Unit'-grafiek visualiseert de kostenontwikkeling over zes maanden. In dit low-fidelity stadium is de grafiek eenvoudig gehouden met louter blokken en placeholders, maar de *bedoeling* (inzicht in trends) is duidelijk. De keuze voor een gestapelde grafiek (stacked chart) is een vooruitwijzing naar de definitieve visualisatie.
 3.  **Organisatietabel:** De 'Organizations by Cost'-tabel is het belangrijkste interactieve element. Gebruikers kunnen zoeken via een zoekbalk ('Search by Organization ID') en door de tabel bladeren. De kolommen (Org ID, Org Name, Business Unit, Licenses, Users, Cost, Utilization) zijn geselecteerd op basis van de Must Have-vereisten M-01 (licentieoverzicht) en M-11 (organisaties met personen).
 4.  **Voorbeelddata:** Enkele rijen zijn ingevuld met voorbeelddata (bijv. 'Energy Solutions', 'Smart Buildings') om de functionaliteit te illustreren tijdens presentaties.
 
@@ -106,7 +104,7 @@ De pagina is opgebouwd uit de volgende elementen:
 - **Top Customers by Usage:** Een tabel toont de grootste afnemers van het product, met kolommen voor 'Total Licenses', 'Active Users' en 'Monthly Cost'. Dit geeft inzicht in kostenconcentratie.
 - **Cost & User Trends:** Een eenvoudige trendgrafiek (lijn- of staafdiagram) toont de ontwikkeling van actieve gebruikers en maandelijkse kosten over tijd. Dit voorziet in de behoefte aan trendvisualisatie (M-01).
 
-Dit wireframe maakte duidelijk dat er behoefte was aan een _product selector_ (dropdown) om tussen producten te kunnen wisselen, wat in de tweede iteratie is toegevoegd.
+Dit wireframe maakte duidelijk dat er behoefte was aan een *product selector* (dropdown) om tussen producten te kunnen wisselen, wat in de tweede iteratie is toegevoegd.
 
 Figuur 3 Low-fidelity wireframes ProductDetails
 
@@ -126,7 +124,7 @@ De belangrijkste componenten zijn:
 
 - **KPI-kaarten:** Ook hier worden kerncijfers getoond ('Total Users', 'Active Users', 'Inactive Users', 'Avg Licenses/User'), met duidelijke trends (+15 this month, 80% of total). Dit geeft de beheerder direct inzicht in de algehele gebruikerspopulatie.
 - **Zoekbalk:** Een prominente zoekbalk ('Search users by name, email, or department...') stelt de beheerder in staat om snel een specifieke gebruiker te vinden.
-- **Filteropties:** Een _dropdown_ voor 'All Status' (later uitgebreid naar 'Active'/'Inactive') en een 'Export'-knop (voor CSV-export, UC-08) zijn al aanwezig in dit wireframe.
+- **Filteropties:** Een *dropdown* voor 'All Status' (later uitgebreid naar 'Active'/'Inactive') en een 'Export'-knop (voor CSV-export, UC-08) zijn al aanwezig in dit wireframe.
 - **Gebruikerstabel:** De centrale tabel toont alle gebruikers met de kolommen: User, Email, Department, Licenses, Last Active, Status. Dit zijn de essentiële velden voor gebruikersbeheer. De 'Status'-kolom gebruikt (zelfs in dit low-fidelity stadium) een visueel onderscheid ('Active' vs leeg) om de scanbaarheid te verbeteren.
 - **Voorbeelddata:** De rijen met 'Jan Vermeulen' en 'Sophie De Vries' dienen als realistische voorbeelden om de functionaliteit te demonstreren.
 
@@ -381,6 +379,6 @@ Bronnenlijst
 
 \[5\] Klein, V., & Veltman, B. (2026). Persoonlijke communicatie over dashboardvereisten. Stakeholderinterviews, januari-februari 2026.
 
-\[3\] Gothelf, J., & Seiden, J. (2016). _Lean UX: Designing Great Products with Agile Teams_ (2e ed.). O'Reilly Media.
+\[3\] Gothelf, J., & Seiden, J. (2016). *Lean UX: Designing Great Products with Agile Teams* (2e ed.). O'Reilly Media.
 
-\[4\] Krug, S. (2014). _Don't Make Me Think, Revisited: A Common Sense Approach to Web Usability_ (3e ed.). New Riders.
+\[4\] Krug, S. (2014). *Don't Make Me Think, Revisited: A Common Sense Approach to Web Usability* (3e ed.). New Riders.
