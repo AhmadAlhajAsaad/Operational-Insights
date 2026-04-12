@@ -6,8 +6,6 @@
 - Studentnaam: Ahmad Alhaj Asaad 
 - Opleiding: HBO-ICT Software Engineering 
 - Organisatie: Equans / SLS-DP-DevOps-Forge 
-- Schoolsbegeleider: Jeroen Boogaard 
-- Bedrijfsbegeleiders: Viktor Klein (Business Owner)
 - Technisch begeleider: Brian Veltman
 - Studiejaar: 2025 - 2026 
 - Versie: 1.0 
@@ -56,14 +54,14 @@ Het systematisch testen van authenticatiecontroles is een erkende beveiligingsen
 
 Authenticatie verifieert de identiteit van een gebruiker of systeem voordat toegang wordt verleend. De onderstaande testgevallen valideren de SSO-integratie via Microsoft Azure Active Directory (Entra ID), dat het OpenID Connect-protocol implementeert bovenop OAuth 2.0 (Cilwerner, z.d.; _Final: OpenID Connect Core 1.0 Incorporating Errata Set 2_, z.d.). Door het gehele document wordt een gestructureerde testontwerpaanpak gehanteerd (Myers et al., 2012).
 
-|     |     |     |
-| --- | --- | --- |
-| Test ID | Scenario | Expected Behavior |
-| AUTH-001 | Valid SSO login | User authenticated, JWT issued |
-| AUTH-002 | Invalid credentials | 401 Unauthorized, error message |
-| AUTH-003 | Expired session | Redirect to login |
-| AUTH-004 | Token refresh | New token issued before expiry |
-| AUTH-005 | Logout | Session invalidated, token revoked |
+|          |                     |                                    |
+| -------- | ------------------- | ---------------------------------- |
+| Test ID  | Scenario            | Expected Behavior                  |
+| AUTH-001 | Valid SSO login     | User authenticated, JWT issued     |
+| AUTH-002 | Invalid credentials | 401 Unauthorized, error message    |
+| AUTH-003 | Expired session     | Redirect to login                  |
+| AUTH-004 | Token refresh       | New token issued before expiry     |
+| AUTH-005 | Logout              | Session invalidated, token revoked |
 
 **Gedetailleerde testscenario's**
 
@@ -104,26 +102,26 @@ Authenticatie verifieert de identiteit van een gebruiker of systeem voordat toeg
 
 Autorisatie bepaalt welke acties een geauthenticeerde identiteit mag uitvoeren. Het platform implementeert Role-Based Access Control (RBAC), waarbij machtigingen worden toegewezen aan rollen in plaats van direct aan individuele gebruikers (Hu et al., 2014). Dit model is consistent met NIST SP 800-162 en vermindert het risico op privilege-escalatie (Hu et al., 2014). Schendingen moeten resulteren in HTTP 403 Forbidden-reacties, zoals gespecificeerd in RFC 9110 (Ed, 2022).
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| Test ID | Role | Resource | Action | Expected Result |
-| AUTHZ-001 | Admin | All dashboards | View | Allowed |
-| AUTHZ-003 | User | Own team dashboard | View | Allowed |
-| AUTHZ-004 | User | Other team dashboard | View | Denied (403) |
-| AUTHZ-005 | User | Admin settings | Modify | Denied (403) |
-| AUTHZ-006 | Anonymous | Any resource | Any | Denied (401) |
+|           |           |                      |        |                 |
+| --------- | --------- | -------------------- | ------ | --------------- |
+| Test ID   | Role      | Resource             | Action | Expected Result |
+| AUTHZ-001 | Admin     | All dashboards       | View   | Allowed         |
+| AUTHZ-003 | User      | Own team dashboard   | View   | Allowed         |
+| AUTHZ-004 | User      | Other team dashboard | View   | Denied (403)    |
+| AUTHZ-005 | User      | Admin settings       | Modify | Denied (403)    |
+| AUTHZ-006 | Anonymous | Any resource         | Any    | Denied (401)    |
 
 **Rollenrechtenmatrix**
 
-|     |     |     |     |
-| --- | --- | --- | --- |
-| Resource | Admin | User | Anonymous |
-| Overview Dashboard | ✓   | ✓   | ✗   |
-| Team Dashboard (own) | ✓   | ✓   | ✗   |
-| Team Dashboard (other) | ✓   | ✗   | ✗   |
-| Cost Reports | ✓   | ✓   | ✗   |
-| Export Data | ✓   | ✓   | ✗   |
-| System Settings | ✓   | ✗   | ✗   |
+|                        |       |      |           |
+| ---------------------- | ----- | ---- | --------- |
+| Resource               | Admin | User | Anonymous |
+| Overview Dashboard     | ✓     | ✓    | ✗         |
+| Team Dashboard (own)   | ✓     | ✓    | ✗         |
+| Team Dashboard (other) | ✓     | ✗    | ✗         |
+| Cost Reports           | ✓     | ✓    | ✗         |
+| Export Data            | ✓     | ✓    | ✗         |
+| System Settings        | ✓     | ✗    | ✗         |
 
 **4\. Token-beveiligingstesten**
 
@@ -139,15 +137,15 @@ JSON Web Tokens (JWT) worden gebruikt om claims te verzenden tussen de identitei
 
 **Token Validation Tests**
 
-|     |     |     |
-| --- | --- | --- |
-| Test ID | Scenario | Expected Result |
-| TOK-001 | Valid JWT signature | Request processed |
-| TOK-002 | Invalid JWT signature | 401 Unauthorized |
-| TOK-003 | Expired token | 401 Unauthorized |
-| TOK-004 | Token from different issuer | 401 Unauthorized |
-| TOK-005 | Malformed token | 400 Bad Request |
-| TOK-006 | Token in URL parameter | Token must be rejected |
+|         |                             |                        |
+| ------- | --------------------------- | ---------------------- |
+| Test ID | Scenario                    | Expected Result        |
+| TOK-001 | Valid JWT signature         | Request processed      |
+| TOK-002 | Invalid JWT signature       | 401 Unauthorized       |
+| TOK-003 | Expired token               | 401 Unauthorized       |
+| TOK-004 | Token from different issuer | 401 Unauthorized       |
+| TOK-005 | Malformed token             | 400 Bad Request        |
+| TOK-006 | Token in URL parameter      | Token must be rejected |
 
 **JWT Security Test Example**
 
@@ -159,39 +157,39 @@ Deze tests waarborgen dat ongeldige en verlopen JWT-tokens correct worden afgewe
 
 Correct sessiebeheer is cruciaal om session hijacking en fixation-aanvallen te voorkomen (_OWASP Top Ten Web Application Security Risks | OWASP Foundation_, z.d.). Na authenticatie moet een nieuwe sessie-identifier worden uitgegeven om session fixation te voorkomen (SESS-003). Sessietokens moeten gekoppeld zijn aan de geauthenticeerde gebruiker en worden ongeldig verklaard bij uitloggen of time-out, in overeenstemming met richtlijnen voor veilig sessiebeheer (Myers et al., 2012; _OWASP Top Ten Web Application Security Risks | OWASP Foundation_, z.d.).
 
-|     |     |     |
-| --- | --- | --- |
-| Test ID | Scenario | Expected Result |
-| SESS-001 | Session timeout | User logged out after inactivity |
-| SESS-002 | Concurrent sessions | Policy enforced (allow/deny) |
-| SESS-003 | Session fixation | New session ID after login |
-| SESS-004 | Session hijacking attempt | Session invalidated |
+|          |                           |                                  |
+| -------- | ------------------------- | -------------------------------- |
+| Test ID  | Scenario                  | Expected Result                  |
+| SESS-001 | Session timeout           | User logged out after inactivity |
+| SESS-002 | Concurrent sessions       | Policy enforced (allow/deny)     |
+| SESS-003 | Session fixation          | New session ID after login       |
+| SESS-004 | Session hijacking attempt | Session invalidated              |
 
 **6\. Validatie van beveiligingsheaders**
 
 HTTP-beveiligingsheaders zijn een defence-in-depth-maatregel die de browser instrueert aanvullende bescherming af te dwingen tegen veelvoorkomende aanvallen zoals cross-site scripting (XSS), clickjacking en MIME-type sniffing (_OWASP Top Ten Web Application Security Risks | OWASP Foundation_, z.d.; _HTTP Headers - HTTP | MDN_, 2025). De onderstaande headers moeten aanwezig zijn in alle reacties van de applicatie.
 
-|     |     |
-| --- | --- |
-| Header | Expected Value |
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| Header                    | Expected Value                      |
 | Strict-Transport-Security | max-age=31536000; includeSubDomains |
-| X-Content-Type-Options | nosniff |
-| X-Frame-Options | DENY |
-| Content-Security-Policy | Appropriate CSP directives |
-| X-XSS-Protection | 1; mode=block |
+| X-Content-Type-Options    | nosniff                             |
+| X-Frame-Options           | DENY                                |
+| Content-Security-Policy   | Appropriate CSP directives          |
+| X-XSS-Protection          | 1; mode=block                       |
 
 **7\. AVG-nalevingsvereisten**
 
 De volgende AVG-artikelen worden direct behandeld door dit testplan (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.):
 
-|     |     |     |
-| --- | --- | --- |
-| GDPR Article | Requirement | Test Approach |
-| Art. 5 | Data minimization | Verify only necessary data collected |
-| Art. 17 | Right to erasure | Test data deletion workflows |
-| Art. 20 | Data portability | Test data export functionality |
-| Art. 25 | Privacy by design | Review data handling in code |
-| Art. 32 | Security of processing | Penetration testing, encryption validation |
+|              |                        |                                            |
+| ------------ | ---------------------- | ------------------------------------------ |
+| GDPR Article | Requirement            | Test Approach                              |
+| Art. 5       | Data minimization      | Verify only necessary data collected       |
+| Art. 17      | Right to erasure       | Test data deletion workflows               |
+| Art. 20      | Data portability       | Test data export functionality             |
+| Art. 25      | Privacy by design      | Review data handling in code               |
+| Art. 32      | Security of processing | Penetration testing, encryption validation |
 
 Art. 25 (Privacy by Design) weerspiegelt het principe van Cavoukian en Information and Privacy Commissioner of Ontario (2009/2011) dat privacybescherming standaard in technologie moet zijn ingebouwd, in plaats van achteraf te worden toegevoegd. Art. 32 vereist dat organisaties passende technische maatregelen implementeren zoals versleuteling en pseudonimisering om een beveiligingsniveau te waarborgen dat passend is bij het risico (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.).
 
@@ -199,16 +197,16 @@ Art. 25 (Privacy by Design) weerspiegelt het principe van Cavoukian en Informati
 
 De onderstaande testgevallen zijn afgeleid van de AVG-nalevingsvereisten en volgen een gestructureerde testontwerpaanpak (Myers et al., 2012). Elk testgeval heeft betrekking op één of meer AVG-verplichtingen.
 
-|     |     |     |     |
-| --- | --- | --- | --- |
-| Test ID | Category | Test Case | Expected Result |
-| GDPR-001 | Logging | Check logs for PII | No unmasked email addresses |
-| GDPR-002 | Logging | Check error messages | No sensitive data exposed |
-| GDPR-003 | Storage | Verify encryption at rest | Database encryption enabled |
-| GDPR-004 | Transit | Verify encryption in transit | HTTPS only, TLS 1.2+ |
-| GDPR-005 | Retention | Data older than retention period | Automatically purged |
-| GDPR-006 | Export | User data export request | Complete data package generated |
-| GDPR-007 | Deletion | User deletion request | All user data removed |
+|          |           |                                  |                                 |
+| -------- | --------- | -------------------------------- | ------------------------------- |
+| Test ID  | Category  | Test Case                        | Expected Result                 |
+| GDPR-001 | Logging   | Check logs for PII               | No unmasked email addresses     |
+| GDPR-002 | Logging   | Check error messages             | No sensitive data exposed       |
+| GDPR-003 | Storage   | Verify encryption at rest        | Database encryption enabled     |
+| GDPR-004 | Transit   | Verify encryption in transit     | HTTPS only, TLS 1.2+            |
+| GDPR-005 | Retention | Data older than retention period | Automatically purged            |
+| GDPR-006 | Export    | User data export request         | Complete data package generated |
+| GDPR-007 | Deletion  | User deletion request            | All user data removed           |
 
 **9\. Validatie van datamaskering**
 
@@ -222,13 +220,13 @@ Deze test verifieert dat de maskeringsfunctie e-mailadressen correct anonimiseer
 
 **Log Output Validation**
 
-|     |     |     |
-| --- | --- | --- |
-| Data Type | Raw Value | Expected Masked Output |
-| Email | john.doe@equans.com | j\*\*\*@e\*\*\*.com |
-| IP Address | 192.168.1.100 | 192.168.x.x |
-| User ID | user-12345 | user-\*\*\*\*\* |
-| API Token | ghp_xxxxxxxxxxxx | ghp_\*\*\* |
+|            |                     |                        |
+| ---------- | ------------------- | ---------------------- |
+| Data Type  | Raw Value           | Expected Masked Output |
+| Email      | john.doe@equans.com | j\*\*\*@e\*\*\*.com    |
+| IP Address | 192.168.1.100       | 192.168.x.x            |
+| User ID    | user-12345          | user-\*\*\*\*\*        |
+| API Token  | ghp_xxxxxxxxxxxx    | ghp\_\*\*\*            |
 
 **10\. Testen van het recht op vergetelheid**
 
@@ -285,21 +283,21 @@ Versleuteling is een primaire technische maatregel die verplicht is op grond van
 
 **At-Rest Encryption**
 
-|     |     |     |
-| --- | --- | --- |
-| Component | Encryption Method | Verification |
-| PostgreSQL | TDE/AES-256 | Check pg_settings for encryption |
-| Backups | AES-256 | Verify backup encryption settings |
-| File Storage | AES-256 | Check volume encryption |
+|              |                   |                                   |
+| ------------ | ----------------- | --------------------------------- |
+| Component    | Encryption Method | Verification                      |
+| PostgreSQL   | TDE/AES-256       | Check pg_settings for encryption  |
+| Backups      | AES-256           | Verify backup encryption settings |
+| File Storage | AES-256           | Check volume encryption           |
 
 **In-Transit Encryption**
 
-|     |     |     |
-| --- | --- | --- |
-| Connection | Protocol | Verification |
-| Client → Frontend | TLS 1.2+ | SSL Labs scan |
-| Frontend → Backend | TLS 1.2+ | Certificate validation |
-| Backend → Database | TLS 1.2 | sslmode=require in connection |
+|                    |          |                               |
+| ------------------ | -------- | ----------------------------- |
+| Connection         | Protocol | Verification                  |
+| Client → Frontend  | TLS 1.2+ | SSL Labs scan                 |
+| Frontend → Backend | TLS 1.2+ | Certificate validation        |
+| Backend → Database | TLS 1.2  | sslmode=require in connection |
 
 **13\. Testen van dataminimalisatie**
 
@@ -307,33 +305,33 @@ Het principe van dataminimalisatie (Art. 5, lid 1, sub c AVG) vereist dat persoo
 
 **Collection Audit**
 
-|     |     |     |
-| --- | --- | --- |
-| Data Point Collected | Business Justification | Retention Period |
-| User email | Identity, notifications | Account lifetime |
-| License usage | Billing, analytics | 2 years |
-| Login history | Security audit | 1 year |
-| IP addresses | Security monitoring | 90 days |
+|                      |                         |                  |
+| -------------------- | ----------------------- | ---------------- |
+| Data Point Collected | Business Justification  | Retention Period |
+| User email           | Identity, notifications | Account lifetime |
+| License usage        | Billing, analytics      | 2 years          |
+| Login history        | Security audit          | 1 year           |
+| IP addresses         | Security monitoring     | 90 days          |
 
 **Validation Tests**
 
-|     |     |     |
-| --- | --- | --- |
-| Test ID | Scenario | Expected Result |
+|         |                                        |                           |
+| ------- | -------------------------------------- | ------------------------- |
+| Test ID | Scenario                               | Expected Result           |
 | MIN-001 | API response contains only needed data | No extra PII in responses |
-| MIN-002 | Database stores only required fields | Schema matches spec |
-| MIN-003 | Logs contain minimal PII | Only masked identifiers |
+| MIN-002 | Database stores only required fields   | Schema matches spec       |
+| MIN-003 | Logs contain minimal PII               | Only masked identifiers   |
 
 **14\. Testen van toestemmingsbeheer**
 
 Waar toestemming wordt gebruikt als wettelijke grondslag voor gegevensverwerking, vereist Art. 7 AVG dat toestemming vrij, specifiek, geïnformeerd en ondubbelzinnig wordt gegeven (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.). Toestemming moet even gemakkelijk intrekbaar zijn als te verlenen. De volgende testen verifiëren de correcte implementatie van toestemmingsbeheer (_De AVG in het Kort_, 2024).
 
-|     |     |     |
-| --- | --- | --- |
-| Test ID | Scenario | Expected Result |
-| CON-001 | First login consent prompt | User must accept before proceeding |
-| CON-002 | Consent withdrawal | Data processing stopped |
-| CON-003 | Consent audit trail | All consent changes logged with timestamp |
+|         |                            |                                           |
+| ------- | -------------------------- | ----------------------------------------- |
+| Test ID | Scenario                   | Expected Result                           |
+| CON-001 | First login consent prompt | User must accept before proceeding        |
+| CON-002 | Consent withdrawal         | Data processing stopped                   |
+| CON-003 | Consent audit trail        | All consent changes logged with timestamp |
 
 **15\. Gegevensdeling met derden**
 
@@ -341,12 +339,12 @@ Waar persoonsgegevens worden gedeeld met externe leveranciers die optreden als v
 
 **Vendor Data Handling**
 
-|     |     |     |     |
-| --- | --- | --- | --- |
-| Vendor | Data Shared | Purpose | DPA Status |
-| Atlassian | User IDs, usage | License management | Signed |
-| GitHub | User IDs, usage | License management | Signed |
-| JFrog | Usage metrics | License management | Signed |
+|           |                 |                    |            |
+| --------- | --------------- | ------------------ | ---------- |
+| Vendor    | Data Shared     | Purpose            | DPA Status |
+| Atlassian | User IDs, usage | License management | Signed     |
+| GitHub    | User IDs, usage | License management | Signed     |
+| JFrog     | Usage metrics   | License management | Signed     |
 
 **DPA = Data Processing Agreement** (Art. 28 AVG — _Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.)
 

@@ -20,7 +20,7 @@ No custom login or user database.
 - Role-based access determines data visibility.
   Admins can access user-level details; non-admins (e.g., BU-managers) cannot.
 
-\\mermaid
+```mermaid
 flowchart TD
 Start([User Opens Application]) --> Login[Login Screen]
 Login --> Auth{Microsoft SSO<br/>Authentication}
@@ -39,7 +39,7 @@ style RoleCheck fill:#cfe2ff
 style AdminDash fill:#d4edda
 style BUManagerDash fill:#fff3cd
 
-\\\
+```
 
 **Key Entry Points:**
 
@@ -53,7 +53,7 @@ style BUManagerDash fill:#fff3cd
 
 This shows the interactions available from the main dashboard screen.
 
-\\\mermaid
+```mermaid
 flowchart TD
 AdminDash[Admin Dashboard] --> NavA{Navigation}
 BUManagerDash[BU Manager Dashboard] --> NavB{Navigation}
@@ -77,7 +77,7 @@ style SettingsA fill:#f8d7da
 style ProductsB fill:#fff3cd
 style SettingsB fill:#f8d7da
 
-\\\
+```
 
 **Key Difference:**
 Admins have access to the "Users" section for user-level management, while BU Managers do not. Both roles can access the Dashboard and Product Analysis sections, but BU Managers see only aggregated data.
@@ -88,7 +88,7 @@ Admins have access to the "Users" section for user-level management, while BU Ma
 
 This diagram illustrates the user journey through product-specific insights.
 
-\\\mermaid
+```mermaid
 flowchart TD
 Auth[Authenticated] --> RoleCheck{Role Check}
 RoleCheck -->|Admin| DrillAdmin[Drill-down: BU → Org → Product → User]
@@ -101,7 +101,8 @@ style DrillBU fill:#fff3cd
 style UserDetail fill:#cfe2ff
 style NoUserDetail fill:#f8d7da
 
-\\\
+```
+
 **Key Entry Points:**
 
 - **Dashboard KPI Cards**: Clickable cards that lead to product-specific insights
@@ -113,7 +114,7 @@ style NoUserDetail fill:#f8d7da
 
 This shows how users navigate through the user management section.
 
-\\\mermaid
+```mermaid
 flowchart TD
 Auth[Authenticated] --> RoleCheck{Role Check}
 RoleCheck -->|Admin| DataAccessA[Access: Aggregated & User-Level Data]
@@ -131,7 +132,7 @@ style UserDetailA fill:#cfe2ff
 style NoUserTable fill:#f8d7da
 style NoUserDetail fill:#f8d7da
 
-\\\
+```
 
 **GDPR Principle:**
 
@@ -144,7 +145,7 @@ style NoUserDetail fill:#f8d7da
 
 Detailed view of individual user interactions and information access.
 
-\\\mermaid
+```mermaid
 flowchart TD
 AdminDash[Admin Dashboard] --> UserMgmtA[User Management]
 UserMgmtA --> SearchFilterA[Search & Filter Users]
@@ -161,7 +162,7 @@ style UserDetailA fill:#cfe2ff
 style EmailUserA fill:#cfe2ff
 style ExportA fill:#cfe2ff
 
-\\\
+```
 
 **User Actions:**
 
@@ -174,7 +175,7 @@ style ExportA fill:#cfe2ff
 
 High-level view of all navigation paths and relationships.
 
-\\\mermaid
+```mermaid
 flowchart TD
 Entry[From Dashboard] --> ProductPage[Product Analysis]
 ProductPage --> SelectProduct[Select Product]
@@ -190,7 +191,8 @@ ProductPage --> ViewCharts[View Charts]
 style ProductPage fill:#fff3cd
 style Entry fill:#d4edda
 
-\\\
+```
+
 **Note:** Both Admins and BU Managers can access the Product Analysis page, but only Admins can drill down to user-level details from this page.
 
 ---

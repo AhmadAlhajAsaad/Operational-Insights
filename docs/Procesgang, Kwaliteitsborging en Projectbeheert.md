@@ -7,7 +7,6 @@
 - Versie: 1.0 
 - Schoolsbegeleider: Jeroen Boogaard 
 - Bedrijfsbegeleider: Viktor Klein (De Product Owner)
-- Technisch begeleider: Brian Veltman
 - Studentnaam: Ahmad Alhaj Asaad 
 - Instelling: Equans — SLS Digital Platforms / DevOps Forge 
 - Studiejaar: 2025 - 2026 
@@ -65,14 +64,14 @@ Figuur 5 bevat een lijst van taken die nog moeten worden afgerond, waarvan een d
 
 De traceerbaarheid van het projectwerk is aantoonbaar via de volgende artefacten:
 
-|     |     |
-| --- | --- |
-| Artefact | Beschrijving |
-| Jira-issues | Status Done of Closed per afgeronde taak |
-| GitHub-commits | Commitberichten met expliciete verwijzing naar Jira PAN-nummer |
-| Feature branches | Eén branch per functionaliteit, direct gekoppeld aan Jira-issue |
+|                       |                                                                          |
+| --------------------- | ------------------------------------------------------------------------ |
+| Artefact              | Beschrijving                                                             |
+| Jira-issues           | Status Done of Closed per afgeronde taak                                 |
+| GitHub-commits        | Commitberichten met expliciete verwijzing naar Jira PAN-nummer           |
+| Feature branches      | Eén branch per functionaliteit, direct gekoppeld aan Jira-issue          |
 | Confluence-documenten | Alle opgestelde documenten zijn geverifieerd en vastgelegd in Confluence |
-| Openstaande taken | Figuur 5 toont resterende taken; een deel hiervan is inmiddels voltooid |
+| Openstaande taken     | Figuur 5 toont resterende taken; een deel hiervan is inmiddels voltooid  |
 
 Figuur 6 toont een volledig overzicht van door de auteur opgestelde en in Confluence geverifieerde documenten.
 
