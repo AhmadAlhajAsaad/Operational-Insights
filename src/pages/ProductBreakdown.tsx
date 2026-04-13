@@ -184,16 +184,9 @@ export function ProductBreakdown({ onNavigateToUser }: ProductBreakdownProps) {
             data={userTableData}
             onRowClick={(row) => onNavigateToUser(row.id)}
             headerClassName="custom-table-header"
-            rowClassName={(row: any, index: number) => {
-              const colors = [
-                "var(--equans-lightblue-20)",
-                "var(--equans-green-20)",
-                "var(--color-accent-20)",
-                "var(--equans-blue-20)",
-                "var(--color-primary-20)",
-              ];
-              return { backgroundColor: colors[index % colors.length] };
-            }}
+            rowClassName={(_row: any, index: number) =>
+              ({ backgroundColor: index % 2 === 0 ? "#ffffff" : "#F4F9FF" })
+            }
           />
         </div>
       </Card>
