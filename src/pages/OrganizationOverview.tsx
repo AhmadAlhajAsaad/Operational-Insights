@@ -260,7 +260,7 @@ export function OrganizationOverview({
             <table className="w-full caption-bottom text-sm">
               <thead
                 className="border-b border-[#EAF1F9]"
-                style={{ backgroundColor: "var(--color-equans-turquoise)" }}
+                style={{ backgroundColor: "var(--color-equans-dark-blue)" }}
               >
                 <tr>
                   {tableColumns.map((column) => (
@@ -280,10 +280,8 @@ export function OrganizationOverview({
                 </tr>
               </thead>
               <tbody>
-                {filteredOrganizations.map((org) => {
-                  const bgColor = getBusinessUnitBackgroundColor(
-                    org.businessUnit,
-                  );
+                {filteredOrganizations.map((org, index) => {
+                  const bgColor = index % 2 === 0 ? "#ffffff" : "#F4F9FF";
 
                   return (
                     <tr
@@ -378,7 +376,7 @@ export function OrganizationOverview({
               .map((org, index) => (
                 <div
                   key={org.id}
-                  className="flex items-center justify-between p-3 rounded-full"
+                  className="flex items-center justify-between p-3 rounded-xl"
                   style={{ backgroundColor: "var(--color-equans-white)" }}
                 >
                   <div className="flex items-center gap-3">
