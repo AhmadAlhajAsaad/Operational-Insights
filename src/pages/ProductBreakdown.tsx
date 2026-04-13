@@ -65,7 +65,7 @@ export function ProductBreakdown({ onNavigateToUser }: ProductBreakdownProps) {
   return (
     <div className="space-y-6">
       {/* Filter Section */}
-      <Card className="p-6  rounded-r-full">
+      <Card className="p-6 rounded-2xl">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="mb-1 text-lg font-semibold">Product Analysis</h3>
@@ -178,7 +178,7 @@ export function ProductBreakdown({ onNavigateToUser }: ProductBreakdownProps) {
             </p>
           </div>
         </div>
-        <div className="relative w-full overflow-x-auto rounded-full border border-[#EAF1F9]">
+        <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
           <Table
             columns={userTableColumns}
             data={userTableData}
@@ -200,3 +200,4 @@ export function ProductBreakdown({ onNavigateToUser }: ProductBreakdownProps) {
     </div>
   );
 }
+
