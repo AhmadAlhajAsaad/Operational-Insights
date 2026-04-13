@@ -346,23 +346,15 @@ export function Users({ onNavigateToUser }: UsersPageProps) {
         style={{ borderRadius: "16px" }}
       >
         <div className="p-6">
-          <div className="relative w-full overflow-x-auto rounded-full border border-[#EAF1F9]">
+          <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
             <Table
               columns={tableColumns}
               data={tableData}
               onRowClick={(row) => onNavigateToUser(row.id)}
               headerClassName="custom-table-header"
-              rowClassName={(row: any, index: number) => {
-                const colors = [
-                  "var(--equans-lightblue-20)",
-                  "var(--equans-green-20)",
-                  "var(--color-accent-20)",
-                  "var(--equans-blue-20)",
-                  "var(--color-primary-20)",
-                ];
-                return { backgroundColor: colors[index % colors.length] };
-              }}
-            />
+              rowClassName={(_row: any, index: number) =>
+                ({ backgroundColor: index % 2 === 0 ? "#ffffff" : "#F4F9FF" })
+              }
           </div>
         </div>
       </Card>
@@ -373,8 +365,8 @@ export function Users({ onNavigateToUser }: UsersPageProps) {
           className="shadow-sm"
           style={{
             borderRadius: "16px",
-            backgroundColor: "var(--equans-violet-20)",
-            borderColor: "var(--equans-violet-60)",
+            backgroundColor: "var(--color-equans-white)",
+            borderColor: "var(--color-primary-20)",
           }}
         >
           <div className="p-6">
