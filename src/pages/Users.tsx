@@ -355,6 +355,7 @@ export function Users({ onNavigateToUser }: UsersPageProps) {
               rowClassName={(_row: any, index: number) =>
                 ({ backgroundColor: index % 2 === 0 ? "#ffffff" : "#F4F9FF" })
               }
+            />
           </div>
         </div>
       </Card>
