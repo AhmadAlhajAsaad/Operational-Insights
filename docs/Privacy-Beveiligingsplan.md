@@ -3,7 +3,6 @@
 **Equans Operational Insights Dashboard**
 
 - Versie: 1.0
-- Studiejaar: 2025 - 2026 
 - Studentnaam: Ahmad Alhaj Asaad 
 - Opleiding: HBO-ICT Software Engineering 
 - Organisatie: Equans / SLS-DP-DevOps-Forge 

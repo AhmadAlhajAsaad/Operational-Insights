@@ -65,7 +65,7 @@ export function ProductBreakdown({ onNavigateToUser }: ProductBreakdownProps) {
   return (
     <div className="space-y-6">
       {/* Filter Section */}
-      <Card className="p-6  rounded-r-full">
+      <Card className="p-6 rounded-2xl">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="mb-1 text-lg font-semibold">Product Analysis</h3>
@@ -178,25 +178,19 @@ export function ProductBreakdown({ onNavigateToUser }: ProductBreakdownProps) {
             </p>
           </div>
         </div>
-        <div className="relative w-full overflow-x-auto rounded-full border border-[#EAF1F9]">
+        <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
           <Table
             columns={userTableColumns}
             data={userTableData}
             onRowClick={(row) => onNavigateToUser(row.id)}
             headerClassName="custom-table-header"
-            rowClassName={(row: any, index: number) => {
-              const colors = [
-                "var(--equans-lightblue-20)",
-                "var(--equans-green-20)",
-                "var(--color-accent-20)",
-                "var(--equans-blue-20)",
-                "var(--color-primary-20)",
-              ];
-              return { backgroundColor: colors[index % colors.length] };
-            }}
+            rowClassName={(_row: any, index: number) =>
+              ({ backgroundColor: index % 2 === 0 ? "#ffffff" : "#F4F9FF" })
+            }
           />
         </div>
       </Card>
     </div>
   );
 }
+
