@@ -298,7 +298,7 @@ Versleuteling is een primaire technische maatregel die verplicht is op grond van
 | Frontend → Backend | TLS 1.2+ | Certificate validation        |
 | Backend → Database | TLS 1.2  | sslmode=require in connection |
 
-**13\. Testen van dataminimalisatie**
+## 13\. Testen van dataminimalisatie
 
 Het principe van dataminimalisatie (Art. 5, lid 1, sub c AVG) vereist dat persoonsgegevens toereikend, ter zake dienend en beperkt zijn tot wat noodzakelijk is voor de doeleinden waarvoor zij worden verwerkt (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.). De onderstaande collectie-audit verifieert dat elk datapunt een gedocumenteerde zakelijke rechtvaardiging en een gedefinieerde retentieperiode heeft (_De AVG in het Kort_, 2024).
 
@@ -321,7 +321,7 @@ Het principe van dataminimalisatie (Art. 5, lid 1, sub c AVG) vereist dat persoo
 | MIN-002 | Database stores only required fields   | Schema matches spec       |
 | MIN-003 | Logs contain minimal PII               | Only masked identifiers   |
 
-**14\. Testen van toestemmingsbeheer**
+## 14\. Testen van toestemmingsbeheer\*
 
 Waar toestemming wordt gebruikt als wettelijke grondslag voor gegevensverwerking, vereist Art. 7 AVG dat toestemming vrij, specifiek, geïnformeerd en ondubbelzinnig wordt gegeven (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.). Toestemming moet even gemakkelijk intrekbaar zijn als te verlenen. De volgende testen verifiëren de correcte implementatie van toestemmingsbeheer (_De AVG in het Kort_, 2024).
 
@@ -332,7 +332,7 @@ Waar toestemming wordt gebruikt als wettelijke grondslag voor gegevensverwerking
 | CON-002 | Consent withdrawal         | Data processing stopped                   |
 | CON-003 | Consent audit trail        | All consent changes logged with timestamp |
 
-## 15\. Gegevensdeling met derden\*\*
+## 15\. Gegevensdeling met derden
 
 Waar persoonsgegevens worden gedeeld met externe leveranciers die optreden als verwerkers, is een Data Processing Agreement (DPA) wettelijk vereist op grond van Art. 28 AVG (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.). Elke DPA moet het onderwerp, de duur, de aard en het doel van de verwerking specificeren. Onderstaande tabel documenteert de huidige DPA-status per leverancier.
 
