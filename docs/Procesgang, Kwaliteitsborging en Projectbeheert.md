@@ -24,7 +24,7 @@ Inhoud
 
 [**6.** **Bronnen** 10](#_Toc224328051)
 
-1.  **Inleiding**
+## 1. Inleiding
 
 Dit hoofdstuk beschrijft de werkwijze die is gehanteerd gedurende de uitvoeringsfase van het afstudeerproject, met specifieke aandacht voor het wijzigingsbeheer, de kwaliteitsborging van de ontwikkelde software en de gebruikte projectbeheermethoden. De beschreven praktijken zijn gebaseerd op de werkelijk gehanteerde aanpak en worden ondersteund door concrete artefacten die zijn vastgelegd in Jira en Confluence.
 
