@@ -332,7 +332,7 @@ Waar toestemming wordt gebruikt als wettelijke grondslag voor gegevensverwerking
 | CON-002 | Consent withdrawal         | Data processing stopped                   |
 | CON-003 | Consent audit trail        | All consent changes logged with timestamp |
 
-**15\. Gegevensdeling met derden**
+## 15\. Gegevensdeling met derden\*\*
 
 Waar persoonsgegevens worden gedeeld met externe leveranciers die optreden als verwerkers, is een Data Processing Agreement (DPA) wettelijk vereist op grond van Art. 28 AVG (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.). Elke DPA moet het onderwerp, de duur, de aard en het doel van de verwerking specificeren. Onderstaande tabel documenteert de huidige DPA-status per leverancier.
 
@@ -347,7 +347,7 @@ Waar persoonsgegevens worden gedeeld met externe leveranciers die optreden als v
 
 **DPA = Data Processing Agreement** (Art. 28 AVG — _Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.)
 
-**16\. Referenties**
+## 16\. Referenties\*\*
 
 1.  Cavoukian, A. & Information and Privacy Commissioner of Ontario. (2011). _Privacy by Design_. Information and Privacy Commissioner of Ontario. https://www.sfu.ca/~palys/Cavoukian-2011-PrivacyByDesign-7FoundationalPrinciples.pdf (Oorspronkelijk gepubliceerd 2009)
 2.  Cilwerner. (z.d.). _Overview of the Microsoft Authentication Library (MSAL) - Microsoft identity platform_. Microsoft Learn. https://learn.microsoft.com/en-us/entra/identity-platform/msal-overview
