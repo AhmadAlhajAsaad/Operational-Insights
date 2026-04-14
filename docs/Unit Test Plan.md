@@ -48,7 +48,7 @@ Dit Unit Test Plan (UTP) beschrijft de aanpak voor het geïsoleerd testen van in
 
 Unit testing vormt de basis van de testpyramide (Myers et al., 2012) en is gericht op het vroegtijdig detecteren van defecten in businesslogica, validatie en dataverwerking. De nadruk ligt op white-box testen van Rust-backendlogica en black-box testen van React-frontendcomponenten, conform de risk-based teststrategie uit het Master Test Plan (MTP-001).
 
-**1\. Inleiding**
+## 1\. Inleiding
 
 **1.1 Doel van dit document**
 
@@ -69,7 +69,7 @@ Dit UTP is een detailuitwerking van sectie 4.1 (Unit Testing) uit het Master Tes
 | Testtools BE | Rust #\[test\] macro, cargo test, cargo tarpaulin, tokio-test |
 | Testtools FE | Vitest (aanbevolen), React Testing Library                    |
 
-**2\. Scope**
+## 2\. Scope
 
 **2.1 In scope**
 
@@ -117,11 +117,11 @@ De unit-testscope richt zich op componenten die businesslogica, datavalidatie of
 | Pagina-componenten (pages)      | Vereisen volledige context (routing, data); vallen onder E2E-tests            |
 | Layout-componenten              | Puur presentationeel; beperkt functioneel risico                              |
 
-**3\. Testobjecten**
+## 3\. Testobjecten
 
 De onderstaande testobjecten zijn geïdentificeerd op basis van de broncode-analyse en de architectuur zoals beschreven in het Software Design Document (SDD).
 
-**3.1 Backend-testobjecten**
+### 3.1 Backend-testobjecten
 
 **3.1.1 GID Matcher (backend/src/persons/gid_matcher.rs)**
 
@@ -133,7 +133,7 @@ De onderstaande testobjecten zijn geïdentificeerd op basis van de broncode-anal
 - Confidence-scoreberekening op basis van beschikbare identifiers (person_id, email, local_id)
 - Drielaags classificatie: MATCHED (100), PENDING (30–99), UNMATCHED (<30)
 
-**3.1.2 Import Validator (backend/src/imports/validator.rs)**
+### 3.1.2 Import Validator (backend/src/imports/validator.rs)
 
 **Verantwoordelijkheid:** Validatie van geïmporteerde CSV/Excel-persoongegevens voordat deze worden opgeslagen.
 
@@ -155,7 +155,7 @@ De onderstaande testobjecten zijn geïdentificeerd op basis van de broncode-anal
 - Afhandeling van ontbrekende of onjuiste kolommen
 - Bestandstype-detectie
 
-**3.1.4 JWT Claims (backend/src/auth/claims.rs)**
+### 3.1.4 JWT Claims (backend/src/auth/claims.rs)
 
 **Verantwoordelijkheid:** Parsing en validatie van Azure AD JWT-claims voor authenticatie en autorisatie.
 
@@ -176,7 +176,7 @@ De onderstaande testobjecten zijn geïdentificeerd op basis van de broncode-anal
 - Constructie van JWKS URI op basis van tenant-ID
 - Foutafhandeling bij ontbrekende configuratie
 
-**3.1.6 Import Merger (backend/src/imports/merger.rs)**
+### 3.1.6 Import Merger (backend/src/imports/merger.rs)
 
 **Verantwoordelijkheid:** Samenvoegen van geïmporteerde persoongegevens met bestaande records.
 
@@ -186,7 +186,7 @@ De onderstaande testobjecten zijn geïdentificeerd op basis van de broncode-anal
 - Veldprioriteitsregels bij conflicten
 - Merge-resultaat rapportage
 
-**3.1.7 GitHub Token Manager (backend/src/github/token_manager.rs)**
+### 3.1.7 GitHub Token Manager (backend/src/github/token_manager.rs)
 
 **Verantwoordelijkheid:** Beheer van GitHub App-installatietokens.
 
@@ -195,7 +195,7 @@ De onderstaande testobjecten zijn geïdentificeerd op basis van de broncode-anal
 - Token-expiratie detectie
 - JWT-generatie voor GitHub App-authenticatie
 
-**3.2 Frontend-testobjecten**
+### 3.2 Frontend-testobjecten
 
 **3.2.1 AuthContext (frontend/src/context/AuthContext.tsx)**
 
@@ -227,9 +227,9 @@ De onderstaande testobjecten zijn geïdentificeerd op basis van de broncode-anal
 - Toevoeging van Authorization-header
 - Foutafhandeling bij HTTP-fouten
 
-**4\. Testaanpak**
+## 4\. Testaanpak
 
-**4.1 Arrange-Act-Assert (AAA)**
+### 4.1 Arrange-Act-Assert (AAA)
 
 Alle unit tests volgen het Arrange-Act-Assert-patroon (Myers et al., 2012):
 
