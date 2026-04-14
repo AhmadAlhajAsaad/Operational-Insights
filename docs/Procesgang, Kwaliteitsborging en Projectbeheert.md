@@ -28,7 +28,7 @@ Inhoud
 
 Dit hoofdstuk beschrijft de werkwijze die is gehanteerd gedurende de uitvoeringsfase van het afstudeerproject, met specifieke aandacht voor het wijzigingsbeheer, de kwaliteitsborging van de ontwikkelde software en de gebruikte projectbeheermethoden. De beschreven praktijken zijn gebaseerd op de werkelijk gehanteerde aanpak en worden ondersteund door concrete artefacten die zijn vastgelegd in Jira en Confluence.
 
-1.  **Ontwikkelwerkwijze en Wijzigingsbeheer**
+## 2. Ontwikkelwerkwijze en Wijzigingsbeheer\*
 
 Hoewel het afstudeerproject in hoofdzaak zelfstandig is uitgevoerd, is er gedurende het gehele traject expliciet aandacht besteed aan verantwoord wijzigingsbeheer en een gestructureerde ontwikkelwerkwijze. Wijzigingen zijn incrementeel doorgevoerd met behulp van een featuregerichte branchstrategie, waarbij elke functionaliteit werd ontwikkeld op een afzonderlijke feature branch, vernoemd naar het corresponderende Jira-issue (bijv. Figuur 9: SDPDOFS-546-ophalen-van-gebruikerslijst).
 
@@ -40,7 +40,7 @@ Voltooide taken en documenten zijn bijgehouden in Confluence, dat fungeerde als
 
 Figuur 2 geeft een gedetailleerde beschrijving van taken in Jira inclusief bijbehorende acceptatiecriteria.
 
-1.  **Kwaliteitsbewaking en Code Review**
+## 3. Kwaliteitsbewaking en Code Review
 
 Gedurende het ontwikkeltraject is informele code review toegepast in nauwe samenwerking met de technisch begeleider, Brian Veltman. Nieuwe functionaliteiten werden besproken en inhoudelijk beoordeeld voordat zij werden samengevoegd in de main branch. De nadruk lag daarbij op de volgende kwaliteitsaspecten:
 
@@ -53,7 +53,7 @@ De verkregen feedback is systematisch verwerkt in opeenvolgende commits. Voorafg
 
 Figuur 3 illustreert hoe duidelijke opmerkingen worden toegevoegd aan voltooide taken voordat ze naar GitHub worden gepusht.
 
-1.  **Issue Tracking en Traceerbaarheid**
+## 4. Issue Tracking en Traceerbaarheid
 
 Voor de planning, bewaking en traceerbaarheid van de werkzaamheden is Jira ingezet als primaire issue tracker (projectcode: SDPDOFS). Alle taken, user stories en technische verbeteringen zijn als afzonderlijke issues vastgelegd en verdeeld over sprints. Grote user stories zijn systematisch opgesplitst in kleinere, beter beheersbare subtaken, conform de in Figuur 4 geïllustreerde structuur. Dit maakte het mogelijk om voortgang nauwkeurig te bewaken en na afronding gerichte opmerkingen of beoordelingen toe te voegen.
 
@@ -76,7 +76,7 @@ Figuur 6 toont een volledig overzicht van door de auteur opgestelde en in Conflu
 
 Figuur 7 biedt een voorbeeld sprintoverzicht in Jira met alle opgenomen en afgeronde issues.
 
-1.  **Teamcommunicatie en Samenwerking**
+## 5. Teamcommunicatie en Samenwerking
 
 Het project is uitgevoerd binnen het bredere DevOps Forge-team bij Equans SLS Digital Platforms. De dagelijkse afstemming vond plaats via een stand-up overleg elke ochtend, waarin de voortgang, eventuele blokkades en de planning voor de dag werden besproken. Deze structuur conformeert aan de Scrum-methodiek die binnen het team wordt gehanteerd.
 
@@ -88,6 +88,7 @@ Figuur 9 een branch en een link naar GitHub toegewezen
 
 De gehanteerde werkwijze borgt hiermee niet alleen de kwaliteit van het ontwikkelde product, maar demonstreert tevens de toepassing van professionele software-ontwikkelpraktijken conform de standaarden van de ICT-beroepspraktijk.
 
-1.  **Bronnen**
-2.  Atlassian. (z.d.-a). Confluence | Your Remote-Friendly Team workspace | Atlassian. https://www.atlassian.com/software/confluence
-3.  Atlassian. (z.d.). Jira | Issue & Project Tracking Software | Atlassian. https://www.atlassian.com/software/jira
+## 6. Bronnen
+
+1.  Atlassian. (z.d.-a). Confluence | Your Remote-Friendly Team workspace | Atlassian. https://www.atlassian.com/software/confluence
+2.  Atlassian. (z.d.). Jira | Issue & Project Tracking Software | Atlassian. https://www.atlassian.com/software/jira
