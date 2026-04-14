@@ -43,13 +43,13 @@ Inhoudsopgave
 
 [**16\. Referenties** 19](#_Toc224420132)
 
-**1\. Overzicht**
+## 1. Overzicht
 
 Dit document beschrijft testgevallen voor het verifiëren van authenticatie- en autorisatiemechanismen, inclusief SSO-integratie, JWT-validatie en rolgebaseerde toegangscontrole, alsmede voor het waarborgen van AVG-conformiteit en gegevensbescherming binnen het Equans Operational Insights platform.
 
 Het systematisch testen van authenticatiecontroles is een erkende beveiligingsengineeringpraktijk en is vereist om naleving aan te tonen van OWASP Top 10-categorieën A01 (Broken Access Control) en A07 (Identification and Authentication Failures) (_OWASP Top Ten Web Application Security Risks | OWASP Foundation_, z.d.). JWT-gebaseerde authenticatie en SSO via OAuth 2.0 / OpenID Connect zijn industriestandaarden voor het beveiligen van API-gedreven applicaties (_RFC 7519: JSON Web Token (JWT)_, z.d.; _Final: OpenID Connect Core 1.0 Incorporating Errata Set 2_, z.d.). De Algemene Verordening Gegevensbescherming (AVG) legt bovendien strikte verplichtingen op aan organisaties die persoonsgegevens van EU-ingezetenen verwerken (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.). Het systematisch testen van gegevensbeschermingsmaatregelen is een erkende best practice voor het aantonen van naleving en het beperken van het risico op datalekken (Cavoukian & Information and Privacy Commissioner of Ontario, 2009/2011; _OWASP Top Ten Web Application Security Risks | OWASP Foundation_, z.d.).
 
-**2\. Authenticatietestgevallen**
+## 2. Authenticatietestgevallen
 
 Authenticatie verifieert de identiteit van een gebruiker of systeem voordat toegang wordt verleend. De onderstaande testgevallen valideren de SSO-integratie via Microsoft Azure Active Directory (Entra ID), dat het OpenID Connect-protocol implementeert bovenop OAuth 2.0 (Cilwerner, z.d.; _Final: OpenID Connect Core 1.0 Incorporating Errata Set 2_, z.d.). Door het gehele document wordt een gestructureerde testontwerpaanpak gehanteerd (Myers et al., 2012).
 
@@ -97,7 +97,7 @@ Authenticatie verifieert de identiteit van een gebruiker of systeem voordat toeg
 - No token issued
 - Failed attempt logged
 
-**3\. Autorisatietestgevallen**
+## 3. Autorisatietestgevallen
 
 Autorisatie bepaalt welke acties een geauthenticeerde identiteit mag uitvoeren. Het platform implementeert Role-Based Access Control (RBAC), waarbij machtigingen worden toegewezen aan rollen in plaats van direct aan individuele gebruikers (Hu et al., 2014). Dit model is consistent met NIST SP 800-162 en vermindert het risico op privilege-escalatie (Hu et al., 2014). Schendingen moeten resulteren in HTTP 403 Forbidden-reacties, zoals gespecificeerd in RFC 9110 (Ed, 2022).
 
@@ -122,7 +122,7 @@ Autorisatie bepaalt welke acties een geauthenticeerde identiteit mag uitvoeren. 
 | Export Data            | ✓     | ✓    | ✗         |
 | System Settings        | ✓     | ✗    | ✗         |
 
-**4\. Token-beveiligingstesten**
+## 4. Token-beveiligingstesten
 
 JSON Web Tokens (JWT) worden gebruikt om claims te verzenden tussen de identiteitsprovider (Azure AD) en de backend-API (_RFC 7519: JSON Web Token (JWT)_, z.d.). De backend moet op elk verzoek de tokenhandtekening, vervaldatum (exp), uitgever (iss) en doelgroep (aud) valideren om tokenvervalsing en replay-aanvallen te voorkomen (_RFC 7519: JSON Web Token (JWT)_, z.d.; _OWASP Top Ten Web Application Security Risks | OWASP Foundation_, z.d.).
 
@@ -152,7 +152,7 @@ Figuur Voorbeeld van JWT-beveiligingstests in Rust
 
 Deze tests waarborgen dat ongeldige en verlopen JWT-tokens correct worden afgewezen door de Rust-backend.
 
-**5\. Sessiebeheer-testen**
+## 5. Sessiebeheer-testen
 
 Correct sessiebeheer is cruciaal om session hijacking en fixation-aanvallen te voorkomen (_OWASP Top Ten Web Application Security Risks | OWASP Foundation_, z.d.). Na authenticatie moet een nieuwe sessie-identifier worden uitgegeven om session fixation te voorkomen (SESS-003). Sessietokens moeten gekoppeld zijn aan de geauthenticeerde gebruiker en worden ongeldig verklaard bij uitloggen of time-out, in overeenstemming met richtlijnen voor veilig sessiebeheer (Myers et al., 2012; _OWASP Top Ten Web Application Security Risks | OWASP Foundation_, z.d.).
 
@@ -164,7 +164,7 @@ Correct sessiebeheer is cruciaal om session hijacking en fixation-aanvallen te v
 | SESS-003 | Session fixation          | New session ID after login       |
 | SESS-004 | Session hijacking attempt | Session invalidated              |
 
-**6\. Validatie van beveiligingsheaders**
+## 6. Validatie van beveiligingsheaders
 
 HTTP-beveiligingsheaders zijn een defence-in-depth-maatregel die de browser instrueert aanvullende bescherming af te dwingen tegen veelvoorkomende aanvallen zoals cross-site scripting (XSS), clickjacking en MIME-type sniffing (_OWASP Top Ten Web Application Security Risks | OWASP Foundation_, z.d.; _HTTP Headers - HTTP | MDN_, 2025). De onderstaande headers moeten aanwezig zijn in alle reacties van de applicatie.
 
@@ -177,7 +177,7 @@ HTTP-beveiligingsheaders zijn een defence-in-depth-maatregel die de browser inst
 | Content-Security-Policy   | Appropriate CSP directives          |
 | X-XSS-Protection          | 1; mode=block                       |
 
-**7\. AVG-nalevingsvereisten**
+## 7. AVG-nalevingsvereisten
 
 De volgende AVG-artikelen worden direct behandeld door dit testplan (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.):
 
@@ -192,7 +192,7 @@ De volgende AVG-artikelen worden direct behandeld door dit testplan (_Regulation
 
 Art. 25 (Privacy by Design) weerspiegelt het principe van Cavoukian en Information and Privacy Commissioner of Ontario (2009/2011) dat privacybescherming standaard in technologie moet zijn ingebouwd, in plaats van achteraf te worden toegevoegd. Art. 32 vereist dat organisaties passende technische maatregelen implementeren zoals versleuteling en pseudonimisering om een beveiligingsniveau te waarborgen dat passend is bij het risico (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.).
 
-**8\. Testgevallen gegevensbescherming**
+## 8. Testgevallen gegevensbescherming
 
 De onderstaande testgevallen zijn afgeleid van de AVG-nalevingsvereisten en volgen een gestructureerde testontwerpaanpak (Myers et al., 2012). Elk testgeval heeft betrekking op één of meer AVG-verplichtingen.
 
@@ -207,7 +207,7 @@ De onderstaande testgevallen zijn afgeleid van de AVG-nalevingsvereisten en volg
 | GDPR-006 | Export    | User data export request         | Complete data package generated |
 | GDPR-007 | Deletion  | User deletion request            | All user data removed           |
 
-**9\. Validatie van datamaskering**
+## 9. Validatie van datamaskering
 
 Pseudonimisering en maskering van persoonsgegevens in logs en niet-geprivilegieerde weergaven zijn vereist op grond van Art. 32 AVG en aanbevolen als belangrijke technische maatregel (_Regulation - 2016/679 - EN - Gdpr - EUR-Lex_, z.d.; _De AVG in het Kort_, 2024). De volgende testen valideren dat geen Personally Identifiable Information (PII) wordt blootgesteld aan onbevoegde partijen.
 
