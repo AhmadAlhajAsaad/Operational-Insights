@@ -48,17 +48,7 @@ Automatische code quality checks bij pull requests.
 
 ## Onderhoud
 
-### Agent updates
-
-Agents moeten bijgewerkt worden wanneer:
-
-- Nieuwe dependencies worden toegevoegd
-- Project structuur verandert
-- Security standaarden updaten (bijv. nieuwe OWASP versie)
-- Best practices evolueren
-
-**Verantwoordelijke:** Team lead of security officer
-**Frequentie:** Minimaal elk kwartaal reviewen
+- **Workflow updates**: Bij wijzigingen in dependencies, security tools of CI/CD requirements moeten workflows worden bijgewerkt.
 
 ### Workflow updates
 
