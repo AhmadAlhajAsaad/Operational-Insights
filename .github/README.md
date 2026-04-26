@@ -2,6 +2,35 @@
 
 Dit document beschrijft de GitHub-specifieke configuratie voor het Equans Operational Insights project.
 
+## AI Agents
+
+De volgende GitHub Copilot agents zijn beschikbaar voor dit project. Gebruik ze door `@agent-naam` te typen in Copilot Chat.
+
+| Agent                     | Beschrijving                 | Gebruik voor                                                 |
+| ------------------------- | ---------------------------- | ------------------------------------------------------------ |
+| **@backend-engineer**     | Rust backend specialist      | Backend code schrijven, Axum endpoints, async patterns       |
+| **@business-requirement** | Business requirements expert | BR documentatie, stakeholder requirements                    |
+| **@security-reviewer**    | Security specialist          | Security reviews, OWASP/CWE compliance, vulnerability checks |
+| **@code-reviewer**        | Code quality expert          | Code reviews, Rust/TypeScript best practices                 |
+| **@solutions-architect**  | Architectuur specialist      | Architectuur beslissingen, ADR generatie, tech stack keuzes  |
+
+### Locaties
+
+```
+.github/
+├── agents/
+│   ├── backend-engineer.agent.md      # Rust backend development
+│   ├── business-requirement.agent.md  # Business requirements
+│   ├── code-reviewer.agent.md         # Code quality reviews
+│   ├── security-reviewer.agent.md     # Security reviews
+│   └── solutions-architect.agent.md   # Architecture decisions
+├── prompts/
+│   └── docs-agent.prompt.md           # Documentation assistance
+└── workflows/
+    ├── code-review.yml                # Automated code quality checks
+    └── security-scan.yml              # Automated security scanning
+```
+
 ## GitHub Actions Workflows
 
 ### Security Scan (`security-scan.yml`)
@@ -39,6 +68,18 @@ Automatische code quality checks bij pull requests.
 
 ## Gebruik
 
+### Agent aanroepen
+
+In VS Code met GitHub Copilot Chat:
+
+```
+@security-reviewer Review deze code op security issues
+
+@code-reviewer Analyseer dit endpoint voor best practices
+
+@solutions-architect Ik wil caching toevoegen, wat zijn de opties?
+```
+
 ### Workflow resultaten bekijken
 
 1. Ga naar de **Actions** tab in GitHub
@@ -48,7 +89,17 @@ Automatische code quality checks bij pull requests.
 
 ## Onderhoud
 
-- **Workflow updates**: Bij wijzigingen in dependencies, security tools of CI/CD requirements moeten workflows worden bijgewerkt.
+### Agent updates
+
+Agents moeten bijgewerkt worden wanneer:
+
+- Nieuwe dependencies worden toegevoegd
+- Project structuur verandert
+- Security standaarden updaten (bijv. nieuwe OWASP versie)
+- Best practices evolueren
+
+**Verantwoordelijke:** Team lead of security officer
+**Frequentie:** Minimaal elk kwartaal reviewen
 
 ### Workflow updates
 
