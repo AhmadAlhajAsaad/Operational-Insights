@@ -6,7 +6,7 @@ A complete Rust backend with Atlassian and GitHub API integrations as specified 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 backend/
