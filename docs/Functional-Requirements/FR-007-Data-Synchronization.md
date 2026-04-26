@@ -2,7 +2,7 @@
 
 **Status:** In Review
 **Datum:** 2026-02-18
-**Auteur(s):** Functional Requirements Engineer
+**Auteur(s):** Ahmad Alhaj Asaad
 **Gerelateerde BR:** [BR-002](../Business-Requirements/BR-002-Person-Organization-Management.md)
 
 ---
