@@ -1,7 +1,7 @@
 # FR-006: Organisatie Beheer
 
 **Datum:** 2026-02-17
-**Auteur(s):** Functional Requirements Agent
+**Auteur(s):** Ahmad Alhaj Asaad
 **Gerelateerde BR:** [BR-002-Person-Organization-Management](../Business-Requirements/BR-002-Person-Organization-Management.md)
 
 ---
