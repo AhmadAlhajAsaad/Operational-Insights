@@ -1,0 +1,155 @@
+﻿import React, { useState } from "react";
+import { Sidebar } from "./components/layout/Sidebar";
+import { Topbar } from "./components/layout/Topbar";
+import { OrganizationOverview } from "./pages/OrganizationOverview";
+import { OrganizationDetail } from "./pages/OrganizationDetail";
+import { Users } from "./pages/Users";
+import { UserDetail } from "./pages/UserDetail";
+import { ProductBreakdown } from "./pages/ProductBreakdown";
+import { DataImport } from "./pages/DataImport";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+
+function App() {
+  const [currentPage, setCurrentPage] = useState("organizations");
+  const [selectedOrganization, setSelectedOrganization] = useState<
+    string | null
+  >(null);
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+
+  const handleNavigate = (page: string) => {
+    setCurrentPage(page);
+    setSelectedOrganization(null);
+    setSelectedUser(null);
+  };
+
+  const handleNavigateToOrganization = (orgId: string) => {
+    setSelectedOrganization(orgId);
+    setCurrentPage("organization-detail");
+  };
+
+  const handleNavigateToUser = (userId: string) => {
+    setSelectedUser(userId);
+    setCurrentPage("user-detail");
+  };
+
+  const handleNavigateToProduct = (orgId: string, productName: string) => {
+    setCurrentPage("products");
+  };
+
+  const handleBackToOrganizations = () => {
+    setSelectedOrganization(null);
+    setCurrentPage("organizations");
+  };
+
+  const handleBackToUsers = () => {
+    setSelectedUser(null);
+    setCurrentPage("users");
+  };
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case "organizations":
+        return (
+          <OrganizationOverview
+            onNavigateToOrganization={handleNavigateToOrganization}
+          />
+        );
+      case "organization-detail":
+        return selectedOrganization ? (
+          <OrganizationDetail
+            organizationId={selectedOrganization}
+            onBack={handleBackToOrganizations}
+            onNavigateToProduct={handleNavigateToProduct}
+            onNavigateToUser={(userId: number) =>
+              handleNavigateToUser(String(userId))
+            }
+          />
+        ) : (
+          <OrganizationOverview
+            onNavigateToOrganization={handleNavigateToOrganization}
+          />
+        );
+      case "users":
+        return <Users onNavigateToUser={handleNavigateToUser} />;
+      case "user-detail":
+        return selectedUser !== null ? (
+          <UserDetail
+            userId={Number(selectedUser)}
+            onBack={handleBackToUsers}
+          />
+        ) : (
+          <Users onNavigateToUser={handleNavigateToUser} />
+        );
+      case "products":
+        return (
+          <ProductBreakdown
+            onNavigateToUser={(userId: number) =>
+              handleNavigateToUser(String(userId))
+            }
+          />
+        );
+      case "import":
+        return <DataImport />;
+      default:
+        return (
+          <OrganizationOverview
+            onNavigateToOrganization={handleNavigateToOrganization}
+          />
+        );
+    }
+  };
+
+  const getPageTitle = () => {
+    switch (currentPage) {
+      case "organizations":
+        return "Organizations";
+      case "organization-detail":
+        return "Organization Detail";
+      case "users":
+        return "Users";
+      case "user-detail":
+        return "User Detail";
+      case "products":
+        return "Product Breakdown";
+      case "import":
+        return "Data Import";
+      default:
+        return "Organizations";
+    }
+  };
+
+  const getBreadcrumb = () => {
+    switch (currentPage) {
+      case "organizations":
+        return "Home / Organizations";
+      case "organization-detail":
+        return "Home / Organizations / Detail";
+      case "users":
+        return "Home / Users";
+      case "user-detail":
+        return "Home / Users / Detail";
+      case "products":
+        return "Home / Products";
+      case "import":
+        return "Home / Data Import";
+      default:
+        return "Home / Organizations";
+    }
+  };
+
+  return (
+    <ProtectedRoute>
+      <div className="flex h-screen bg-background">
+        <Sidebar currentPage={currentPage} onNavigate={handleNavigate} />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Topbar title={getPageTitle()} breadcrumb={getBreadcrumb()} />
+          <main className="flex-1 overflow-y-auto p-6">
+            <div className="max-w-7xl mx-auto">{renderPage()}</div>
+          </main>
+        </div>
+      </div>
+    </ProtectedRoute>
+  );
+}
+
+export default App;

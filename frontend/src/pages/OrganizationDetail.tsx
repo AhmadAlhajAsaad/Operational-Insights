@@ -1,0 +1,512 @@
+﻿import React from "react";
+import { StatCard } from "../components/ui/StatCard";
+import { Card } from "../components/ui/card";
+import { TrendChart } from "../components/charts/TrendChart";
+import { Button } from "../components/ui/button";
+import {
+  DollarSign,
+  Users,
+  Package,
+  TrendingUp,
+  ArrowLeft,
+  User,
+  Briefcase,
+  Clock,
+  EuroIcon,
+} from "lucide-react";
+import { organizations } from "../data/organizationData";
+import { users as allUsers } from "../data/mockData";
+
+interface OrganizationDetailProps {
+  organizationId: string;
+  onBack: () => void;
+  onNavigateToProduct: (orgId: string, productName: string) => void;
+  onNavigateToUser: (userId: number) => void;
+}
+
+export function OrganizationDetail({
+  organizationId,
+  onBack,
+  onNavigateToProduct,
+  onNavigateToUser,
+}: OrganizationDetailProps) {
+  const organization = organizations.find((org) => org.id === organizationId);
+
+  if (!organization) {
+    return <div>Organization not found</div>;
+  }
+
+  const utilization = Math.round(
+    (organization.activeUsers / organization.totalLicenses) * 100,
+  );
+
+  // Get users for this organization
+  const orgUsers = allUsers.slice(0, 5);
+
+  const productColumns = [
+    { key: "name", label: "Product" },
+    { key: "licenses", label: "Licenses", align: "center" as const },
+    { key: "activeUsers", label: "Active Users", align: "center" as const },
+    { key: "cost", label: "Monthly Cost", align: "right" as const },
+    { key: "utilization", label: "Utilization", align: "center" as const },
+  ];
+
+  const userColumns = [
+    { key: "name", label: "User Name" },
+    { key: "email", label: "Email" },
+    { key: "department", label: "Department" },
+    { key: "licenseCount", label: "Licenses", align: "center" as const },
+    { key: "status", label: "Status", align: "center" as const },
+  ];
+
+  const productColors = [
+    "#EFF6FF",
+    "#ECFDF5",
+    "#FEF3C7",
+    "#F3E8FF",
+    "#FCE7F3",
+    "#DBEAFE",
+    "#D1FAE5",
+    "#FDE68A",
+  ];
+
+  const userRowColors = ["#FFFFFF", "#F4F9FF"] as const;
+
+  const userAvatarPalette = [
+    { bg: "#276FD1", text: "#fff" },
+    { bg: "#10B981", text: "#fff" },
+    { bg: "#7C3AED", text: "#fff" },
+    { bg: "#F59E0B", text: "#fff" },
+    { bg: "#EF4444", text: "#fff" },
+  ] as const;
+
+  return (
+    <div className="space-y-6">
+      {/* Back Button and Header */}
+      <div className="flex items-center gap-4">
+        <Button
+          variant="outline"
+          onClick={onBack}
+          className="border-[#EAF1F9] hover:bg-[#F1F8FE] hover:border-[#276FD1] text-neutral-700"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Overview
+        </Button>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-bold text-neutral-900 mb-1">
+          {organization.name}
+        </h2>
+        <p className="text-neutral-600">
+          <span className="inline-flex px-2.5 py-1 bg-[#EAF1F9] text-[#276FD1] rounded-full text-sm font-medium mr-2">
+            {organization.businessUnit}
+          </span>
+          Detailed cost and product analysis
+        </p>
+      </div>
+
+      {/* Organization KPIs with Consultancy */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        <StatCard
+          icon={<DollarSign className="w-5 h-5" />}
+          label="License Cost"
+          value={`EUR ${organization.licenseCost.toLocaleString()}`}
+          change={{ value: "+3.2% vs last month", trend: "up" }}
+          variant="blue"
+        />
+        <StatCard
+          icon={<Briefcase className="w-5 h-5" />}
+          label="Consultancy Cost"
+          value={`EUR ${organization.consultancyCost.toLocaleString()}`}
+          change={{ value: "+4.8% vs last month", trend: "up" }}
+          variant="purple"
+        />
+        <StatCard
+          icon={<DollarSign className="w-5 h-5" />}
+          label="Total Monthly Cost"
+          value={`EUR ${organization.monthlyCost.toLocaleString()}`}
+          change={{ value: "+4.1% vs last month", trend: "up" }}
+          variant="cyan"
+        />
+        <StatCard
+          icon={<TrendingUp className="w-5 h-5" />}
+          label="Forecast (Next Mo)"
+          value={`EUR ${organization.forecast.nextMonth.toLocaleString()}`}
+          change={{
+            value: `+${organization.forecast.percentageChange}%`,
+            trend: organization.forecast.trend,
+          }}
+          variant="yellow"
+        />
+        <StatCard
+          icon={<EuroIcon className="w-5 h-5" />}
+          label="Chargeback"
+          value={`EUR ${organization.chargebackAmount.toLocaleString()}`}
+          change={{ value: "Complete", trend: "neutral" }}
+          variant="green"
+        />
+        <StatCard
+          icon={<Users className="w-5 h-5" />}
+          label="Utilization Rate"
+          value={`${utilization}%`}
+          change={{
+            value: `${organization.activeUsers} active`,
+            trend: "neutral",
+          }}
+          variant="mint"
+        />
+      </div>
+
+      {/* Cost Trend with Stacked Areas */}
+      <Card
+        className="bg-white shadow-sm border-[#EAF1F9]"
+        style={{ borderRadius: "16px" }}
+      >
+        <div className="p-6">
+          <h3 className="text-lg font-bold text-neutral-900 mb-1">
+            Cost Trend - {organization.name}
+          </h3>
+          <p className="text-sm text-neutral-500 mb-4">
+            License and consultancy costs over time
+          </p>
+          <TrendChart
+            data={organization.costTrend}
+            showForecast={true}
+            forecastData={organization.forecast}
+          />
+        </div>
+      </Card>
+
+      {/* Products Table */}
+      <Card
+        className="bg-white shadow-sm border-[#EAF1F9]"
+        style={{ borderRadius: "16px" }}
+      >
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-bold text-neutral-900 mb-1">
+                Products & Licenses
+              </h3>
+              <p className="text-sm text-neutral-500">
+                Click any product to view user-level details
+              </p>
+            </div>
+            <div className="text-right">
+              <span
+                className="text-2xl font-bold"
+                style={{ color: "var(--color-equans-dark-green)" }}
+              >
+                EUR {organization.licenseCost.toLocaleString()}
+              </span>
+              <p className="text-xs text-neutral-500">Total license cost</p>
+            </div>
+          </div>
+
+          <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
+            <table className="w-full caption-bottom text-sm">
+              <thead
+                className="border-b border-[#EAF1F9]"
+                style={{ backgroundColor: "var(--color-equans-turquoise)" }}
+              >
+                <tr>
+                  {productColumns.map((column) => (
+                    <th
+                      key={column.key}
+                      className={`h-12 px-4 align-middle font-semibold text-white whitespace-nowrap ${
+                        column.align === "center"
+                          ? "text-center"
+                          : column.align === "right"
+                            ? "text-right"
+                            : "text-left"
+                      }`}
+                    >
+                      {column.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {organization.products.map((product, index) => {
+                  const productUtilization = Math.round(
+                    (product.activeUsers / product.licenses) * 100,
+                  );
+                  const bgColor = productColors[index % productColors.length];
+
+                  return (
+                    <tr
+                      key={product.name}
+                      onClick={() =>
+                        onNavigateToProduct(organizationId, product.name)
+                      }
+                      className="border-b border-[#EAF1F9] last:border-0 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.01]"
+                      style={{ backgroundColor: bgColor }}
+                    >
+                      <td className="p-4 align-middle whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <Package
+                            className="w-4 h-4 text-[#276FD1]"
+                            strokeWidth={2}
+                          />
+                          <span className="font-semibold text-neutral-900">
+                            {product.name}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="p-4 align-middle whitespace-nowrap text-center">
+                        <span className="font-semibold text-neutral-900">
+                          {product.licenses}
+                        </span>
+                      </td>
+                      <td className="p-4 align-middle whitespace-nowrap text-center">
+                        <span className="font-semibold text-neutral-900">
+                          {product.activeUsers}
+                        </span>
+                      </td>
+                      <td className="p-4 align-middle whitespace-nowrap text-right">
+                        <span className="font-bold text-neutral-900">
+                          EUR {product.cost.toLocaleString()}
+                        </span>
+                      </td>
+                      <td className="p-4 align-middle whitespace-nowrap text-center">
+                        <span
+                          className={`inline-flex px-3 py-1.5 rounded-full text-xs font-bold ${
+                            productUtilization >= 75
+                              ? "bg-[#E9FDF2] text-[#059669]"
+                              : "bg-[#FEFBEA] text-[#b45309]"
+                          }`}
+                        >
+                          {productUtilization}%
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Card>
+
+      {/* Consultancy Services Table */}
+      <Card
+        className="bg-white shadow-sm border-[#EAF1F9]"
+        style={{ borderRadius: "16px" }}
+      >
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-bold text-neutral-900 mb-1">
+                Consultancy Services
+              </h3>
+              <p className="text-sm text-neutral-500">
+                External consultancy costs breakdown
+              </p>
+            </div>
+            <div className="text-right">
+              <span className="text-2xl font-bold" style={{ color: "#C865FF" }}>
+                EUR {organization.consultancyCost.toLocaleString()}
+              </span>
+              <p className="text-xs text-neutral-500">Total this month</p>
+            </div>
+          </div>
+
+          <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
+            <table className="w-full caption-bottom text-sm">
+              <thead
+                className="border-b border-[#EAF1F9]"
+                style={{ backgroundColor: "#C865FF" }}
+              >
+                <tr>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-left">
+                    Service Type
+                  </th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-center">
+                    Hours
+                  </th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-right">
+                    Hourly Rate
+                  </th>
+                  <th className="h-12 px-4 align-middle font-semibold text-white text-right">
+                    Cost
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {organization.consultancyServices.map((service, index) => (
+                  <tr
+                    key={service.type}
+                    className="border-b border-[#EAF1F9] last:border-0"
+                    style={{
+                      backgroundColor: index % 2 === 0 ? "#F3E8FF" : "#EDE9FE",
+                    }}
+                  >
+                    <td className="p-4 align-middle whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <Briefcase
+                          className="w-4 h-4 text-purple-600"
+                          strokeWidth={2}
+                        />
+                        <span className="font-semibold text-neutral-900">
+                          {service.type}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap text-center">
+                      <div className="flex items-center justify-center gap-1">
+                        <Clock className="w-3 h-3 text-neutral-500" />
+                        <span className="font-semibold text-neutral-900">
+                          {service.hours}h
+                        </span>
+                      </div>
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap text-right">
+                      <span className="text-neutral-600">
+                        EUR {service.hourlyRate}/hr
+                      </span>
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap text-right">
+                      <span className="font-bold" style={{ color: "#C865FF" }}>
+                        EUR {service.cost.toLocaleString()}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Card>
+
+      {/* Users in Organization */}
+      <Card
+        className="bg-white shadow-sm border-[#EAF1F9]"
+        style={{ borderRadius: "16px" }}
+      >
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-bold text-neutral-900 mb-1">
+                Users in Organization
+              </h3>
+              <p className="text-sm text-neutral-500">
+                <span className="font-semibold text-[#276FD1]">
+                  {orgUsers.length} users
+                </span>{" "}
+                - Click to view individual details
+              </p>
+            </div>
+          </div>
+
+          <div className="relative w-full overflow-x-auto rounded-xl border border-[#EAF1F9]">
+            <table className="w-full caption-bottom text-sm">
+              <thead
+                className="border-b border-[#EAF1F9]"
+                style={{ backgroundColor: "var(--color-equans-turquoise)" }}
+              >
+                <tr>
+                  {userColumns.map((column) => (
+                    <th
+                      key={column.key}
+                      className={`h-12 px-4 align-middle font-semibold text-white whitespace-nowrap ${
+                        column.align === "center"
+                          ? "text-center"
+                          : column.align === "right"
+                            ? "text-right"
+                            : "text-left"
+                      }`}
+                    >
+                      {column.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {orgUsers.map((user, index) => {
+                  const bgColor = userRowColors[index % 2];
+                  const avatar =
+                    userAvatarPalette[index % userAvatarPalette.length];
+                  const initials = user.name
+                    .split(" ")
+                    .slice(0, 2)
+                    .map((n: string) => n[0])
+                    .join("")
+                    .toUpperCase();
+
+                  return (
+                    <tr
+                      key={user.id}
+                      onClick={() => onNavigateToUser(user.id)}
+                      className="border-b border-[#EAF1F9] last:border-0 transition-colors duration-150 cursor-pointer hover:bg-[#E8F3FD]"
+                      style={{ backgroundColor: bgColor }}
+                    >
+                      {/* User Name + Initials avatar */}
+                      <td className="p-4 align-middle whitespace-nowrap">
+                        <div className="flex items-center gap-3">
+                          <span
+                            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold shrink-0 select-none"
+                            style={{
+                              backgroundColor: avatar.bg,
+                              color: avatar.text,
+                            }}
+                          >
+                            {initials}
+                          </span>
+                          <span className="font-semibold text-neutral-900">
+                            {user.name}
+                          </span>
+                        </div>
+                      </td>
+
+                      {/* Email */}
+                      <td className="p-4 align-middle whitespace-nowrap">
+                        <span className="text-[#276FD1] text-sm hover:underline">
+                          {user.email}
+                        </span>
+                      </td>
+
+                      {/* Department pill */}
+                      <td className="p-4 align-middle whitespace-nowrap">
+                        <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EEF2FF] text-[#4338CA]">
+                          {user.department}
+                        </span>
+                      </td>
+
+                      {/* License count badge */}
+                      <td className="p-4 align-middle whitespace-nowrap text-center">
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#276FD1] text-white font-bold text-xs">
+                          {user.licenses.length}
+                        </span>
+                      </td>
+
+                      {/* Status badge met dot-indicator */}
+                      <td className="p-4 align-middle whitespace-nowrap text-center">
+                        <span
+                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold ${
+                            user.status === "active"
+                              ? "bg-[#DCFCE7] text-[#15803D]"
+                              : "bg-[#F1F5F9] text-[#64748B]"
+                          }`}
+                        >
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              user.status === "active"
+                                ? "bg-[#16A34A]"
+                                : "bg-[#94A3B8]"
+                            }`}
+                          />
+                          {user.status}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}
