@@ -123,7 +123,7 @@ curl http://localhost:8080/api/github/enterprises/equans/licenses
 
 ---
 
-## 🛠️ Key Implementation Details
+## Key Implementation Details
 
 ### Service Layer Pattern
 
