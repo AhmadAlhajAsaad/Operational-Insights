@@ -3,7 +3,7 @@
 | Metadata | Details |
 |----------|---------|
 | **Status** | Geaccepteerd |
-| **Datum** | 2025-12-04 |
+| **Datum** | 2025-11-04 |
 | **Auteur** | Ahmad Alhaj Asaad |
 | **Laatst bijgewerkt** | 2025-12-05 |
 
