@@ -6,8 +6,6 @@
 - Project: Equans Operational Insights Dashboard
 - Opleiding: Informatica – Hogeschool Rotterdam
 - Organisatie: Equans Nederland – SLS Digital Platforms (DevOps Forge)
-- Begeleiders: Viktor Klein (bedrijf), Brian Veltman (technisch), Jeroen Boogaard (school)
-- Studiejaar: 2025 - 2026 
 
 Inhoudsopgave
 
